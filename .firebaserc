@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "angular-56426": {
+      "hosting": {
+        "ngx-admin-demo": [
+          "angular-56426"
+        ]
+      }
+    }
+  }
+}

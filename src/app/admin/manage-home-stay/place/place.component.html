@@ -1,0 +1,16 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <mat-icon type="button" aria-hidden="false" routerLink="/admin/" aria-label="Example home icon">home</mat-icon>
+    <li class="breadcrumb-item"><a routerLink="/admin/">Trang chủ</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Địa điểm</li>
+  </ol>
+</nav>
+<nb-card>
+  <nb-card-header>
+    Quản lý địa điểm
+  </nb-card-header>
+  <nb-card-body>
+      <ng2-smart-table [settings]="settingsTable" [source]="listPlace" #table>
+      </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

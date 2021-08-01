@@ -1,0 +1,39 @@
+<h4 *ngIf="idPost" mat-dialog-title>SỬA BÀI VIẾT</h4>
+<h4 *ngIf="!idPost" mat-dialog-title>THÊM BÀI VIẾT</h4>
+<form (ngSubmit)="submitAction()" [formGroup]="postForm">
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Tiêu đề</mat-label>
+      <input matInput placeholder="Vui lòng nhập tiêu đề" [formControlName]="'title'" required>
+      <mat-icon [ngClass]="{'red-icon': !postForm.get('title').valid && postForm.get('title').touched}"
+                matSuffix>Title
+      </mat-icon>
+      <mat-hint *ngIf="!postForm.get('title').valid && postForm.get('title').touched"
+                style="color: rgb(211, 102, 102);">Error is blank
+      </mat-hint>
+    </mat-form-field>
+  </p>
+  <p *ngIf="idPost">
+    <mat-form-field appearance="standard">
+      <mat-label>Loại bài viết</mat-label>
+      <mat-select [formControlName]="'id_typePost'">
+        <mat-option *ngFor="let typePost of typePosts" [value]="typePost.id">
+          {{typePost.typeName}}
+        </mat-option>
+      </mat-select>
+      <mat-icon [ngClass]="{'red-icon': !postForm.get('id_typePost').valid && postForm.get('id_typePost').touched}"
+                matSuffix>assignment
+      </mat-icon>
+      <mat-hint *ngIf="!postForm.get('id_typePost').valid && postForm.get('id_typePost').touched"
+                style="color: rgb(211, 102, 102);">Error is blank
+      </mat-hint>
+    </mat-form-field>
+  </p>
+  <div style="font-size: 16px; padding-bottom: 5px; " >Bài viết:</div>
+  <ckeditor [config]="{ extraPlugins: 'divarea', height: '150', width:'750'}" [formControlName]="'description'"></ckeditor>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button *ngIf="idPost" [disabled]="(!postForm.valid)" mat-flat-button color="primary">Sửa</button>
+    <button *ngIf="!idPost" [disabled]="(!postForm.valid)" mat-flat-button color="primary">Thêm</button>
+  </mat-dialog-actions>
+</form>

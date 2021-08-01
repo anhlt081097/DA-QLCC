@@ -1,0 +1,15 @@
+<div *ngIf="enable===false" class="dropzone"
+     dropzone [ngStyle]="{'width': (width !==null ? width : '250px' ), 'height': (height !==null ? height : '69px')}"
+     (hovered)="toggleHover($event)"
+     (dropped)="onDrop($event)"
+     [class.hovering]="isHovering">
+  <p>{{type}}</p>
+  <div class="file">
+    <label class="file-label">
+      <input class="file-input" type="file" (change)="onDrop($event.target.files)" multiple>
+    </label>
+  </div>
+</div>
+  <div *ngFor="let file of files">
+    <ngx-upload-task  [hiddenImage]="hiddenImage" (linkFile)="linkFile($event)" [file]="file"></ngx-upload-task>
+  </div>

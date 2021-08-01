@@ -1,0 +1,139 @@
+<h4 mat-dialog-title>TRA CỨU ĐƠN ĐẶT</h4>
+  <form [formGroup]="searchForm" (ngSubmit)="searchBooking()">
+    <b *ngIf="status === true" style="color: red; text-align: center; padding: 5px 0px 5px 0px ;">Không tìm thấy đơn hàng</b>
+    <div class="full-name-inputs">
+      <p style="width: 405px">
+        <mat-form-field appearance="fill" style="width: 405px">
+          <mat-label>Số điện thoại</mat-label>
+          <input matInput placeholder="Vui lòng nhập số điện thoại" [formControlName]="'phone'" required>
+          <mat-icon [ngClass]="{'red-icon': !searchForm.get('phone').valid && searchForm.get('phone').touched}"
+                    matSuffix>phone
+          </mat-icon>
+          <mat-hint *ngIf="!searchForm.get('phone').valid && searchForm.get('phone').touched"
+                    style="color: rgb(211, 102, 102);">Error is blank
+          </mat-hint>
+        </mat-form-field>
+      </p>
+      <p style="width: 405px">
+        <mat-form-field appearance="fill" style="width: 405px">
+          <mat-label>Mã đơn</mat-label>
+          <input matInput placeholder="Vui lòng nhập mã đơn" [formControlName]="'id'" required>
+          <mat-icon [ngClass]="{'red-icon': !searchForm.get('id').valid && searchForm.get('id').touched}"
+                    matSuffix>code
+          </mat-icon>
+          <mat-hint *ngIf="!searchForm.get('id').valid && searchForm.get('id').touched"
+                    style="color: rgb(211, 102, 102);">Error is blank
+          </mat-hint>
+        </mat-form-field>
+      </p>
+      <button  [disabled]="(!searchForm.valid)"  style="height: 50px" mat-raised-button color="primary">Tìm kiếm</button>
+    </div>
+  </form>
+  <div class="mat-elevation-z8" *ngIf="this.bookingResponses">
+    <table mat-table [dataSource]="dataSource" >
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Mã đơn</th>
+        <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)" [nbPopover]="card"> {{row.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button [matMenuTriggerFor]="menu"
+                  aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button [disabled]="row.bookingHistoryResponses.length === 0" (click)="history(row.id)" mat-menu-item>
+              <mat-icon>Detail</mat-icon>
+              <span>Lịch sử chuyển đổi</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fullname">
+        <th mat-header-cell *matHeaderCellDef > Họ và tên</th>
+        <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)" [nbPopover]="card"> {{row.fullName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dateIn">
+        <th mat-header-cell *matHeaderCellDef > Ngày nhận phòng</th>
+        <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)"
+            [nbPopover]="card"> {{row.dateIn | date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dateOut">
+        <th mat-header-cell *matHeaderCellDef > Ngày trả phòng</th>
+        <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)"
+            [nbPopover]="card"> {{row.dateOut | date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef > Giá nhà</th>
+        <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)" [nbPopover]="card"> {{row.price}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="creatorName">
+        <th mat-header-cell *matHeaderCellDef >Người tạo</th>
+        <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)" [nbPopover]="card"> {{row.creatorName}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="houseName">
+        <th mat-header-cell *matHeaderCellDef >Tên nhà</th>
+        <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)" [nbPopover]="card"> {{row.houseName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef >Trạng thái</th>
+        <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)" [nbPopover]="card">
+          {{row.status === 'Not' ? row.deposit === true ? 'Đơn đã cọc' : 'Đơn chưa cọc' : row.status === 'CheckIn' ? 'Đã nhận phòng' : row.status === 'CheckOut' ? 'Đã thanh toán hóa đơn' :
+          row.status === 'Processing' ? 'Chờ hoàn cọc' : row.status === 'Refunded' ? 'Đã hoàn cọc' : row.status === 'Cancel' ? 'Không hoàn cọc' : 'Không trạng thái'}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Không có dữ liệu"</td>
+      </tr>
+    </table>
+
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+  </mat-dialog-actions>
+
+
+<ng-template #card>
+  <nb-card class="popover-card">
+    <nb-card-header status="warning">
+      Chi tiết đơn
+    </nb-card-header>
+    <nb-card-body>
+      <div style="display: flex;">
+        <p style=" font-weight: bold; padding-right: 5px">Địa chỉ người đặt:</p>{{order.address}}
+        <p style="margin-left: 20px; font-weight: bold; padding-right: 5px">Email: </p>{{order.email}}
+      </div>
+      <div style="display: flex;">
+        <p style=" font-weight: bold; padding-right: 5px">Số điện thoại:</p>{{order.phone}}
+        <p style="margin-left: 20px; font-weight: bold; padding-right: 5px">Đã cọc: </p>{{order.depositPrice}}
+      </div>
+      <div style="display: flex;">
+        <p style=" font-weight: bold; padding-right: 5px">Chi phí giảm:</p>{{order.discount}}
+        <p style="margin-left: 20px; font-weight: bold; padding-right: 5px">Chi phí tăng:</p>{{order.costsIncurred}}
+      </div>
+      <div style="display: flex;">
+        <p style=" font-weight: bold; padding-right: 5px">Ngày
+          đặt: </p>{{order.createDate | date:'HH:mm:ss dd/MM/yyyy'}}
+        <p style="margin-left: 20px; font-weight: bold; padding-right: 5px" *ngIf="order.userName">Tài khoản
+          đặt: </p>{{order.userName}}
+      </div>
+      <div style="display: flex;">
+        <p style=" font-weight: bold; padding-right: 5px">Ghi chú: </p>{{order.description}}
+      </div>
+    </nb-card-body>
+  </nb-card>
+</ng-template>

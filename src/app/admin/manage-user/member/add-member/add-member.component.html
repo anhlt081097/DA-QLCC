@@ -1,0 +1,37 @@
+<h4 mat-dialog-title>THÊM KHÁCH HÀNG</h4>
+<form (ngSubmit)="createMembers()" [formGroup]="memberForm">
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Tài khoản</mat-label>
+      <input matInput placeholder="Vui lòng nhập tài khoản" [formControlName]="'userName'" required>
+      <mat-icon [ngClass]="{'red-icon': !memberForm.get('userName').valid && memberForm.get('userName').touched}"
+        matSuffix>account_circle</mat-icon>
+      <mat-hint *ngIf="!memberForm.get('userName').valid && memberForm.get('userName').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="pat@example.com" [formControlName]="'email'" required>
+      <mat-icon [ngClass]="{'red-icon': !memberForm.get('email').valid && memberForm.get('email').touched}" matSuffix>
+        email</mat-icon>
+      <mat-hint *ngIf="!memberForm.get('email').valid && memberForm.get('email').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Số điện thoại</mat-label>
+      <input matInput placeholder="Vui lòng nhập số điện thoại" [formControlName]="'phone'"  required>
+      <mat-icon [ngClass]="{'red-icon': !memberForm.get('phone').valid && memberForm.get('phone').touched}" matSuffix>
+        phone</mat-icon>
+      <mat-hint *ngIf="!memberForm.get('phone').valid && memberForm.get('phone').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <mat-dialog-actions align="end">
+  <button mat-flat-button mat-dialog-close>Thoát</button>
+  <button [disabled]="(!memberForm.valid)" mat-flat-button color="primary" >Thêm</button>
+</mat-dialog-actions>
+</form>

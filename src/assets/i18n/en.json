@@ -1,0 +1,16 @@
+{
+  "HEADER": {
+    "HOME": "Home",
+    "ABOUT": "About us",
+    "ACCMODATION": "Accomodation",
+    "GALLERY": "Gallery",
+    "BLOG": "Blog",
+    "BLOG_D": "Blog Details",
+    "ELEMESTS": "Elemests",
+    "CONTACT": "Contact",
+    "LOGIN": "Login",
+    "HELLO": "Hello",
+    "PROFILE": "Profile",
+    "LOGOUT": "Logout"
+  }
+}

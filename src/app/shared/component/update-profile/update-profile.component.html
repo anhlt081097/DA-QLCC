@@ -1,0 +1,97 @@
+<nb-stepper #stepper>
+  <nb-step [stepControl]="firstForm" label="Bước đầu">
+    <form [formGroup]="firstForm" class="step-container">
+      <p class="lorem">
+        Hãy nhập họ tên đầy đủ của bạn
+      </p><br>
+      <div class="input-group">
+        <p style="margin-right: 5px">
+          <mat-form-field appearance="outline">
+            <mat-label>Họ</mat-label>
+            <input matInput placeholder="Vui lòng nhập họ của bạn" [formControlName]="'lastName'" required>
+            <mat-icon [ngClass]="{'red-icon': !firstForm.get('lastName').valid && firstForm.get('lastName').touched}"
+              matSuffix>account_circle</mat-icon>
+            <mat-hint *ngIf="!firstForm.get('lastName').valid && firstForm.get('lastName').touched"
+              style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+          </mat-form-field>
+        </p>
+        <p style="margin-left: 5px">
+          <mat-form-field appearance="outline">
+            <mat-label>Tên (Tên đệm)</mat-label>
+            <input matInput placeholder="Vui lòng nhập tên của bạn" [formControlName]="'firstName'" required>
+            <mat-icon [ngClass]="{'red-icon': !firstForm.get('firstName').valid && firstForm.get('firstName').touched}"
+                      matSuffix>account_circle</mat-icon>
+            <mat-hint *ngIf="!firstForm.get('firstName').valid && firstForm.get('firstName').touched"
+                      style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+          </mat-form-field>
+        </p>
+      </div>
+      <button nbButton nbStepperNext (click)="onFirstSubmit()">Tiếp tục</button>
+    </form>
+  </nb-step>
+  <nb-step [stepControl]="secondForm" label="Bước hai">
+    <form [formGroup]="secondForm" class="step-container">
+      <p class="lorem">
+       Thông tin cá nhân
+      </p><br>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Địa chỉ của bạn</mat-label>
+          <input matInput placeholder="Vui lòng nhập địa chỉ của bạn" [formControlName]="'address'" required>
+          <mat-icon [ngClass]="{'red-icon': !secondForm.get('address').valid && secondForm.get('address').touched}"
+            matSuffix>map</mat-icon>
+          <mat-hint *ngIf="!secondForm.get('address').valid && secondForm.get('address').touched"
+            style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Ngày sinh</mat-label>
+          <input type="date" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'dateOfBirth'" required>
+          <mat-icon
+            [ngClass]="{'red-icon': !secondForm.get('dateOfBirth').valid && secondForm.get('dateOfBirth').touched}"
+            matSuffix>date_range</mat-icon>
+          <mat-hint *ngIf="!secondForm.get('dateOfBirth').valid && secondForm.get('dateOfBirth').touched"
+            style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Giới tính</mat-label>
+          <mat-select [formControlName]="'sex'" required>
+            <mat-option [value]="'Nam'">Nam</mat-option>
+            <mat-option [value]="'Nữ'">Nữ</mat-option>
+            <mat-option [value]="'Khác'">Khác</mat-option>
+          </mat-select>
+          <mat-icon [ngClass]="{'red-icon': !secondForm.get('sex').valid && secondForm.get('sex').touched}"
+          matSuffix>people</mat-icon>
+          <mat-hint *ngIf="!secondForm.get('sex').valid && secondForm.get('sex').touched"
+            style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+        </mat-form-field>
+      </p>
+      <button nbButton nbStepperPrevious>Quay lại</button>
+      <button nbButton nbStepperNext (click)="onSecondSubmit()">Tiếp tục</button>
+    </form>
+  </nb-step>
+  <nb-step [stepControl]="thirdForm" label="Bước cuối">
+    <form [formGroup]="thirdForm" class="step-container">
+      <p class="lorem">
+       Xác nhận hình ảnh
+      </p><br>
+      <p>
+          <ngx-uploader hiddenImage="true"  (linkFile)="getImage($event)" [type]="'Hình ảnh cá nhân'" ></ngx-uploader>
+      </p>
+      <p *ngIf="this.thirdForm.get('image').value !=null">
+        <img  [src]="this.thirdForm.get('image').value" style="height: 197px; width: 250px">
+      </p>
+      <button nbButton nbStepperPrevious>Quay lại</button>
+      <button nbButton nbStepperNext (click)="onThirdSubmit()">Kết thúc</button>
+    </form>
+  </nb-step>
+  <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
+    <div class="step-container">
+      <h3>Bạn đã hoàn thành khai báo thông tin!</h3>
+      <button nbButton mat-dialog-close>Thoát</button>
+    </div>
+  </nb-step>
+</nb-stepper>

@@ -1,0 +1,46 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <mat-icon type="button" aria-hidden="false" routerLink="/admin/" aria-label="Example home icon">home</mat-icon>
+    <li class="breadcrumb-item"><a routerLink="/admin/">Trang chủ</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Loại bài viết</li>
+  </ol>
+</nav>
+<nb-card>
+  <nb-card-header>
+    Quản lý loại bài viết
+  </nb-card-header>
+  <nb-card-body>
+    <div class="example-button-container">
+      <button *ngIf="auth" (click)="addTypePost()" mat-flat-button color="primary">Thêm loại bài viết</button>
+
+    </div>
+    <mat-card class="example-card" *ngFor="let typePost of typePosts"   >
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <div style="width: 85%; float: left">
+        <mat-card-title>{{typePost.typeName}}</mat-card-title>
+        <mat-card-subtitle>Số bài viết: {{typePost.countPost}}</mat-card-subtitle>
+        </div>
+        <div style="width: 25%">
+        <button mat-mini-fab color="primary" style="margin-left: 85%" [matMenuTriggerFor]="menu" aria-label="Example icon button with a delete icon">
+          <mat-icon>menu</mat-icon>
+        </button>
+        </div>
+      </mat-card-header>
+      <mat-menu #menu="matMenu" >
+        <button routerLink="/admin/manage-post/post/{{typePost.id}}"  mat-menu-item>
+          <mat-icon>auto_stories</mat-icon>
+          <span>Xem các bài viết</span>
+        </button>
+        <button [disabled]="auth === false" (click)="editTypePost(typePost.id)"   mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Sửa loại bài viết</span>
+        </button>
+        <button [disabled]="auth === false" (click)="deleteType(typePost.id)" mat-menu-item >
+          <mat-icon>delete</mat-icon>
+          <span>Xóa loại bài viết</span>
+        </button>
+      </mat-menu>
+    </mat-card>
+  </nb-card-body>
+</nb-card>

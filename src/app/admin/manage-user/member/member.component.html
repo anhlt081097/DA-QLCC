@@ -1,0 +1,152 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <mat-icon type="button" aria-hidden="false" routerLink="/admin/" aria-label="Example home icon">home</mat-icon>
+    <li class="breadcrumb-item"><a routerLink="/admin/">Trang chủ</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Khách hàng</li>
+  </ol>
+</nav>
+<nb-card>
+  <nb-card-header>
+  Quản lý khách hàng
+  </nb-card-header>
+  <nb-card-body>
+    <mat-tab-group mat-align-tabs="center" animationDuration="800ms">
+      <mat-tab label="Danh sách khách hàng"><br>
+        <button (click)="openAdd()" mat-flat-button color="primary">Thêm khách hàng</button>
+        <mat-form-field>
+          <mat-label>Tìm kiếm</mat-label>
+          <input matInput (keyup)="applyFilterMember($event)" placeholder="Nhập mục cần tìm..." #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="member" multiTemplateDataRows class="mat-elevation-z8" matSort>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button (click)="openEdit(row.id)" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Chỉnh sửa</span>
+                </button>
+                <button (click)="onDelete(row.id)" mat-menu-item>
+                  <mat-icon>lock</mat-icon>
+                  <span>Khóa</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <td mat-cell *matCellDef="let element"> <img src="{{element.image}}" style="width:50px;height:50px;"> </td>
+          </ng-container>
+          <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tài khoản </th>
+            <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ và tên </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastName}} {{element.firstName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+          </ng-container>
+          <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Số điện thoại </th>
+            <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+          </ng-container>
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+              <div class="example-element-detail"
+                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-description">
+                  <span *ngIf="element.address != null" class="example-element-description-attribution">Địa chỉ: </span>{{element.address}}
+                  <span *ngIf="element.sex != null" class="example-element-description-attribution">Giới tính: </span>{{element.sex}}
+                  <span *ngIf="element.dateOfBirth != null" class="example-element-description-attribution">Ngày sinh: </span>{{element.dateOfBirth | date : 'dd-MM-yyyy'}}
+                  <span *ngIf="element.enabled != null" class="example-element-description-attribution">Tình trạng: </span>{{element.enabled ? "Đã kích hoạt":"Chưa kích hoạt"}}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+          </tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">Không có dữ liệu: "{{input.value}}"</td>
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </mat-tab>
+      <mat-tab label="Danh sách khóa">
+        <br><br><br>
+        <mat-form-field>
+          <mat-label>Tìm kiếm</mat-label>
+          <input matInput (keyup)="applyFilterMemberLock($event)" placeholder="Nhập mục cần tìm..." #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="memberLock" multiTemplateDataRows class="mat-elevation-z8" matSort>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button (click)="onUnlock(row.id)" mat-menu-item>
+                  <mat-icon>lock</mat-icon>
+                  <span>Mở khóa</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let element"> <img src="{{element.image}}" style="width:50px;height:50px;"> </td>
+          </ng-container>
+          <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tài khoản </th>
+            <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Họ và tên </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastName}} {{element.firstName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+          </ng-container>
+          <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Số điện thoại </th>
+            <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+          </ng-container>
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+              <div class="example-element-detail"
+                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-description">
+                  <span *ngIf="element.address != null" class="example-element-description-attribution">Địa chỉ: </span>{{element.address}}
+                  <span *ngIf="element.sex != null" class="example-element-description-attribution">Giới tính: </span>{{element.sex}}
+                  <span *ngIf="element.dateOfBirth  != null" class="example-element-description-attribution">Ngày sinh: </span>{{element.dateOfBirth | date : 'dd-MM-yyyy'}}
+                  <span *ngIf="element.enabled != null" class="example-element-description-attribution">Tình trạng: </span>{{element.enabled ? " Đã kích hoạt":"Chưa kích hoạt"}}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+          </tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">Không có dữ liệu: "{{input.value}}"</td>
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </mat-tab>
+    </mat-tab-group>
+  </nb-card-body>
+</nb-card>

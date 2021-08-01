@@ -1,0 +1,6 @@
+
+<div style="text-align: center; margin-top: 150px"><ngx-paypal [config]="payPalConfig"></ngx-paypal>
+
+   <h1 *ngIf="showSuccess===true" style="color: green">Hóa đơn đã được thanh toán, Hãy đợi vài giây để trở lại</h1>
+   <h1 *ngIf="showSuccess===false" style="color: red" >Hóa đơn chưa được thanh toán</h1>
+ </div>

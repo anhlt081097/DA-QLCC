@@ -1,0 +1,65 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <mat-icon type="button" aria-hidden="false" routerLink="/admin/" aria-label="Example home icon">home</mat-icon>
+    <li class="breadcrumb-item"><a routerLink="/admin/">Trang chủ</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Tiện ích</li>
+  </ol>
+</nav>
+<nb-card>
+  <nb-card-header>
+    Quản lý tiện ích
+  </nb-card-header>
+  <nb-card-body>
+    <div class="example-button-container">
+      <button (click)="addTypeUtility()" mat-flat-button color="primary">Thêm loại tiện ích</button>
+    </div>
+    <mat-card class="example-card" *ngFor="let typeUtility of typeUtilitys">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <div style="width: 85%; float: left">
+        <mat-card-title>Loại tiện ích: {{typeUtility.typeName}}</mat-card-title>
+        <mat-card-subtitle>Tiện ích của loại tiện ích {{typeUtility.typeName}}:</mat-card-subtitle>
+        </div>
+        <div style="width: 25%">
+          <button style=" float : right" mat-mini-fab color="primary" [matMenuTriggerFor]="menu" aria-label="Example icon button with a delete icon">
+          <mat-icon>menu</mat-icon>
+          </button></div>
+      </mat-card-header>
+
+      <mat-menu #menu="matMenu">
+        <button (click)="editTypeUtility(typeUtility.id)" mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Sửa loại tiện ích</span>
+        </button>
+        <button (click)="addUtility(typeUtility.id)" mat-menu-item>
+          <mat-icon>add</mat-icon>
+          <span>Thêm tiện ích</span>
+        </button>
+        <button (click)="deleteType(typeUtility.id)" mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          <span>Xóa loại tiện ích</span>
+        </button>
+      </mat-menu>
+      <mat-card-content>
+        <div class="row show-grid" >
+          <div class="col-6 col-sm-3" *ngFor="let utility of typeUtility.utility">
+            <mat-card class="example-card2" >
+              <mat-card-header>
+                <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + utility.image + ')','background-size': 'cover', 'width':'50px', 'height':'50px'}">
+                </div>
+                <mat-card-title>Tiện ích:</mat-card-title>
+                <mat-card-subtitle>{{utility.utilityName}}</mat-card-subtitle>
+              </mat-card-header>
+              <!-- <img mat-card-image src="{{utility.image}}" alt="Display error"> -->
+              <mat-card-actions>
+                <button mat-button (click)="editUtility(utility.id)">Sửa</button>
+                <button mat-button (click)="deleteUtility(utility.id)">Xóa</button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+  </nb-card-body>
+</nb-card>

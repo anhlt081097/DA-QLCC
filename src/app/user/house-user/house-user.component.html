@@ -1,0 +1,164 @@
+<section *ngIf="home === false" class="facilities_area section_gap">
+  <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+  <div class="container">
+    <div class="page-cover text-center">
+      <h2 class="page-cover-tittle" style="color: white">Danh sách nhà</h2>
+      <ol class="breadcrumb">
+        <li><a style="color:white;" [routerLink]="'/user'">Trang chủ</a></li>
+        <li *ngIf="idHomeStay != undefined"><a style="color:white;" [routerLink]="'/user/homestay'">Cơ sở</a></li>
+        <li class="active">Nhà</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="about_history_area section_gap">
+  <div *ngIf="homeStays" class="container">
+    <div class="row">
+      <div class="col-md-6 d_flex align-items-center">
+        <div class="about_content ">
+          <h2 class="title title_color">Về chúng tôi <br>Thông tin & Mô tả</h2>
+          <a [innerHTML]="homeStays.description"> </a>
+          <a style="color: white" class="button_hover theme_btn_two" nbPopoverTrigger="hint" [nbPopover]="card">Thông
+            tin thêm</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <ng-image-slider [images]="image" [autoSlide]="true" [infinite]="true" [animationSpeed]="2.5"
+                         [showArrow]="false" [imageSize]="{width: '555', height: '450'}" [imagePopup]="false"
+                         #nav></ng-image-slider>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="home === false" class="container" style="padding: 40px 0px 40px 0px">
+    <div class="section_title text-center">
+      <h2 class="title_color">Danh sách các nhà</h2>
+      <p>Tất cả chúng ta đang sống trong một thời đại thuộc về tuổi trẻ. Cuộc sống đang trở nên cực kỳ nhanh chóng.</p>
+    </div>
+    <form [formGroup]="dateForm">
+      <section class="hotel_booking_area">
+        <div class="container">
+          <div class="row hotel_booking_table">
+            <div class="col-md-2">
+              <h2>Tìm<br> Nhà</h2>
+            </div>
+            <div class="col-md-10">
+              <div class="boking_table">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="book_tabel_item">
+                      <div class="form-group">
+                        <div class='input-group date' id='datetimepicker11'>
+                          <mat-form-field appearance="fill" class="example-form-field"
+                                          style="color: white; border: 2px solid #ffffff;">
+                            <mat-label style="color: white">Ngày đến</mat-label>
+                            <input [min]="today" [formControlName]="'dateIn'" style="color: white" matInput
+                                   [matDatepicker]="datepicker">
+                            <mat-datepicker-toggle style="color: white" matSuffix
+                                                   [for]="datepicker"></mat-datepicker-toggle>
+                            <mat-datepicker disabled="false" #datepicker>
+                            </mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="book_tabel_item">
+                      <div class="form-group">
+                        <div class='input-group date' id='datetimepicker11'>
+                          <mat-form-field appearance="fill" class="example-form-field"
+                                          style="color: white; border: 2px solid #ffffff;">
+                            <mat-label style="color: white">Ngày đi</mat-label>
+                            <input [min]="today" [formControlName]="'dateOut'" style="color: white" matInput
+                                   [matDatepicker]="datepicker2">
+                            <mat-datepicker-toggle matSuffix style="color: white"
+                                                   [for]="datepicker2"></mat-datepicker-toggle>
+                            <mat-datepicker disabled="false" #datepicker2>
+                            </mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <button style="margin: 5px 0px 0px 70px" mat-raised-button color="warn">Tìm kiếm</button>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="book_tabel_item">
+                      <div class="form-group">
+                        <div class='input-group date' id='datetimepicker11'>
+                          <mat-form-field appearance="fill" style="color: white; border: 2px solid #ffffff;">
+                            <mat-label style="color: white">Số người</mat-label>
+                            <input style="color: white" matInput type="number" placeholder="Vui lòng nhập số người"
+                                   min="0" [formControlName]="'capacity'">
+                            <mat-icon style="color: white"
+                                      [ngClass]="{'red-icon': !dateForm.get('capacity').valid && dateForm.get('capacity').touched}"
+                                      matSuffix>
+                              people
+                            </mat-icon>
+                            <mat-hint *ngIf="!dateForm.get('capacity').valid && dateForm.get('capacity').touched"
+                                      style="color: rgb(211, 102, 102);">Error is blank
+                            </mat-hint>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
+  </div>
+  <h6 style="text-align: center; padding: 10px 0px 10px 0px">Có {{houses?.length}} nhà</h6>
+  <div class="container">
+    <div class="row accomodation_two">
+      <div class="col-lg-3 col-sm-6" *ngFor="let house of houses">
+        <div class="accomodation_item text-center">
+          <div class="hotel_img">
+            <img style="width:263px; height: 270px " [src]="getImage(house.id)" alt="">
+            <a [routerLink]="'/user/house/detail/'+house.id" class="btn theme_btn button_hover">Xem nhà</a>
+          </div>
+          <a><h4 class="sec_h4">{{house.houseName}}</h4></a>
+          <h5>{{house.price}} <small style="color: #3e3d3d">/ Ngày</small></h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav *ngIf="houses?.length !== 0" style="margin-top: 100px " class="blog-pagination justify-content-center d-flex">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" aria-label="Previous">
+		                                    <span aria-hidden="true">
+		                                        <span class="lnr lnr-chevron-left"></span>
+		                                    </span>
+        </a>
+      </li>
+      <li class="page-item active"><a class="page-link">01</a></li>
+      <li class="page-item"><a class="page-link">02</a></li>
+      <li class="page-item"><a class="page-link">03</a></li>
+      <li class="page-item"><a class="page-link">04</a></li>
+      <li class="page-item"><a class="page-link">05</a></li>
+      <li class="page-item">
+        <a class="page-link" aria-label="Next">
+		                                    <span aria-hidden="true">
+		                                        <span class="lnr lnr-chevron-right"></span>
+		                                    </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</section>
+
+
+<ng-template #card>
+  <nb-card class="popover-card">
+    <nb-card-body>
+      <a style=" font-weight: bold; padding-right: 5px">Tên cơ sở:</a>{{homeStays.homeStayName}}<br>
+      <a style=" font-weight: bold; padding-right: 5px">Số điện thoại liên hệ: </a>{{homeStays.phone}}<br>
+      <a style=" font-weight: bold; padding-right: 5px">Địa chỉ:</a>{{homeStays.villageName}}
+      , {{homeStays.districtName}}, {{homeStays.cityName}}
+    </nb-card-body>
+  </nb-card>
+</ng-template>

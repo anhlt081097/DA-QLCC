@@ -1,0 +1,19 @@
+<h4 *ngIf="idType" mat-dialog-title>SỬA LOẠI TIỆN ÍCH</h4>
+<h4 *ngIf="!idType" mat-dialog-title>THÊM LOẠI TIỆN ÍCH </h4>
+<form (ngSubmit)="submitAction()" [formGroup]="typeUtilityForm">
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Tên loại tiện ích</mat-label>
+      <input matInput placeholder="Vui lòng nhập tên loại" [formControlName]="'typeName'" required>
+      <mat-icon [ngClass]="{'red-icon': !typeUtilityForm.get('typeName').valid && typeUtilityForm.get('typeName').touched}"
+        matSuffix>assignment</mat-icon>
+      <mat-hint *ngIf="!typeUtilityForm.get('typeName').valid && typeUtilityForm.get('typeName').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+  <button *ngIf="idType" [disabled]="(!typeUtilityForm.valid)" mat-flat-button color="primary">Sửa</button>
+  <button *ngIf="!idType" [disabled]="(!typeUtilityForm.valid)" mat-flat-button color="primary">Thêm</button>
+</mat-dialog-actions>
+</form>

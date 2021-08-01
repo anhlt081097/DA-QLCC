@@ -1,0 +1,53 @@
+<h4 *ngIf="idDistrict" mat-dialog-title>SỬA QUẬN</h4>
+<h4 *ngIf="!idDistrict" mat-dialog-title>THÊM QUẬN</h4>
+  <form (ngSubmit)="submitAction()" [formGroup]="districtForm">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Tên quận</mat-label>
+        <input matInput placeholder="Vui lòng nhập tên quận" [formControlName]="'districtName'" required>
+        <mat-icon
+          [ngClass]="{'red-icon': !districtForm.get('districtName').valid && districtForm.get('districtName').touched}"
+          matSuffix>location_city
+        </mat-icon>
+        <mat-hint *ngIf="!districtForm.get('districtName').valid && districtForm.get('districtName').touched"
+                  style="color: rgb(211, 102, 102);">Error is blank
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Loại</mat-label>
+        <input matInput placeholder="Vui lòng nhập loại" [formControlName]="'type'">
+        <mat-icon [ngClass]="{'red-icon': !districtForm.get('type').valid && districtForm.get('type').touched}"
+                  matSuffix>
+          filter_none
+        </mat-icon>
+        <mat-hint *ngIf="!districtForm.get('type').valid && districtForm.get('type').touched"
+                  style="color: rgb(211, 102, 102);">Error is blank
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Thành phố</mat-label>
+        <input type="text" matInput [formControlName]="'cityName'" [matAutocomplete]="auto" required>
+        <mat-icon
+          [ngClass]="{'red-icon': !districtForm.get('cityName').valid && districtForm.get('cityName').touched}"
+          matSuffix>location_city
+        </mat-icon>
+        <mat-hint *ngIf="!districtForm.get('cityName').valid && districtForm.get('cityName').touched"
+                  style="color: rgb(211, 102, 102);">Error is blank
+        </mat-hint>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+          <mat-option *ngFor="let node of filteredOptionsEdit | async | slice : 0 : 30" [value]="node.cityName">
+            {{node.cityName}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </p>
+    <mat-dialog-actions align="end">
+      <button mat-flat-button mat-dialog-close>Thoát</button>
+      <button *ngIf="idDistrict" [disabled]="(!districtForm.valid)" mat-flat-button color="primary">Sửa</button>
+      <button *ngIf="!idDistrict" [disabled]="(!districtForm.valid)" mat-flat-button color="primary">Thêm</button>
+    </mat-dialog-actions>
+  </form>

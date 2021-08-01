@@ -1,0 +1,440 @@
+<mat-accordion *ngIf="this.typeAction == 'add'">
+  <mat-expansion-panel expanded="true" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Thông tin cư dân
+      </mat-panel-title>
+
+      <mat-panel-description>
+        Thay đổi thông tin cá nhân
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form (ngSubmit)="createCuDan()" [formGroup]="cuDanAddForm">
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Họ tên</mat-label>
+            <input matInput placeholder="Vui lòng nhập họ tên" [formControlName]="'hoTen'" required>
+            <mat-icon [ngClass]="{'red-icon': !cuDanAddForm.get('hoTen').valid && cuDanAddForm.get('hoTen').touched}"
+              matSuffix>account_circle
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('hoTen').valid && cuDanAddForm.get('hoTen').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Giới tính</mat-label>
+            <mat-select [formControlName]="'gioiTinh'">
+              <mat-option [value]="1">Nam</mat-option>
+              <mat-option [value]="0">Nữ</mat-option>
+            </mat-select>
+            <mat-icon
+              [ngClass]="{'red-icon': !cuDanAddForm.get('gioiTinh').valid && cuDanAddForm.get('gioiTinh').touched}"
+              matSuffix>people
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('gioiTinh').valid && cuDanAddForm.get('gioiTinh').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Số điện thoại</mat-label>
+            <input matInput placeholder="Vui lòng nhập số điện thoại" [formControlName]="'soDienThoai'" required>
+            <mat-icon
+              [ngClass]="{'red-icon': !cuDanAddForm.get('soDienThoai').valid && cuDanAddForm.get('soDienThoai').touched}"
+              matSuffix>phone
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('soDienThoai').valid && cuDanAddForm.get('soDienThoai').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="pat@example.com" [formControlName]="'email'" required>
+            <mat-icon [ngClass]="{'red-icon': !cuDanAddForm.get('email').valid && cuDanAddForm.get('email').touched}"
+              matSuffix>email
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('email').valid && cuDanAddForm.get('email').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Ngày sinh</mat-label>
+            <input type="date" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'ngaySinh'" required>
+            <mat-icon
+              [ngClass]="{'red-icon': !cuDanAddForm.get('ngaySinh').valid && cuDanAddForm.get('ngaySinh').touched}"
+              matSuffix>date_range
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('ngaySinh').valid && cuDanAddForm.get('ngaySinh').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Số CCCD</mat-label>
+            <input type="text" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'soCCCD'" required>
+            <mat-icon [ngClass]="{'red-icon': !cuDanAddForm.get('soCCCD').valid && cuDanAddForm.get('soCCCD').touched}"
+              matSuffix>people
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('soCCCD').valid && cuDanAddForm.get('soCCCD').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Địa chỉ</mat-label>
+            <textarea rows="10" matInput placeholder="Vui lòng nhập địa chỉ" [formControlName]="'diaChi'"
+              required></textarea>
+            <mat-icon [ngClass]="{'red-icon': !cuDanAddForm.get('diaChi').valid && cuDanAddForm.get('diaChi').touched}"
+              matSuffix>map
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('diaChi').valid && cuDanAddForm.get('diaChi').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <!-- <p>
+          <ngx-uploader type="Kéo thả ảnh mới" height="190px" width="205px " hiddenImage="true" hiddenForm="false"
+            (linkFile)="getImage($event)"></ngx-uploader>
+        </p>
+        <p>
+          <img [src]="this.cuDanAddForm.get('image').value"
+            style="padding-top: 8px; border-radius: 8%; height: 197px; width: 205px">
+        </p> -->
+      </div>
+      <mat-dialog-actions align="end">
+        <button mat-flat-button mat-dialog-close>Thoát</button>
+        <button [disabled]="(!cuDanAddForm.valid)" mat-flat-button color="primary">Thêm</button>
+      </mat-dialog-actions>
+    </form>
+  </mat-expansion-panel>
+  <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Bảo mật
+      </mat-panel-title>
+      <mat-panel-description>
+        {{panelOpenState ? 'Đổi mật khẩu' : 'Hãy nhập vào mật khẩu muốn đổi'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="passwordEditForm">
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Mật khẩu cũ</mat-label>
+            <input [type]="hide ? 'password' : 'text'" matInput placeholder="Vui lòng nhập lại mật khẩu cũ"
+              [formControlName]="'password'" required>
+            <button
+              [ngClass]="{'red-icon': !passwordEditForm.get('password').valid && passwordEditForm.get('password').touched}"
+              mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-hint *ngIf="!passwordEditForm.get('password').valid && passwordEditForm.get('password').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Mật khẩu mới</mat-label>
+            <input [type]="hide2 ? 'password' : 'text'" matInput placeholder="Nhập mật khẩu mới"
+              [formControlName]="'passwordEdit'" required>
+            <button
+              [ngClass]="{'red-icon': !passwordEditForm.get('passwordEdit').valid && passwordEditForm.get('passwordEdit').touched}"
+              mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide2">
+              <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}} </mat-icon>
+            </button>
+            <mat-hint
+              *ngIf="!passwordEditForm.get('passwordEdit').valid && passwordEditForm.get('passwordEdit').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Nhập lại mật khẩu mới</mat-label>
+            <input type="password" matInput placeholder="Vui lòng nhập lại nhập lại mật khẩu"
+              [formControlName]="'confirmPassword'" required>
+            <mat-icon
+              [ngClass]="{'red-icon': !passwordEditForm.get('confirmPassword').valid && passwordEditForm.get('confirmPassword').touched}"
+              matSuffix>password
+            </mat-icon>
+            <mat-hint *ngIf="passwordEditForm.hasError('mismatch')" style="color: rgb(211, 102, 102);">Mật khẩu không
+              trùng nhau
+            </mat-hint>
+          </mat-form-field>
+        </p>
+      </div>
+      <mat-dialog-actions align="end">
+        <button mat-flat-button mat-dialog-close>Thoát</button>
+        <button (click)="editPassword()" [disabled]="(!passwordEditForm.valid)" mat-flat-button color="primary">Đổi mật
+          khẩu
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </mat-expansion-panel> -->
+</mat-accordion>
+<mat-accordion *ngIf="this.typeAction == 'edit'">
+  <mat-expansion-panel expanded="true" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Thông tin cư dân
+      </mat-panel-title>
+      <mat-panel-description>
+        Thay đổi thông tin cá nhân
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form (ngSubmit)="updateCuDan()" [formGroup]="cuDanEditForm">
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Họ tên</mat-label>
+            <input matInput placeholder="Vui lòng nhập họ tên" [formControlName]="'hoTen'" required>
+            <mat-icon [ngClass]="{'red-icon': !cuDanEditForm.get('hoTen').valid && cuDanEditForm.get('hoTen').touched}"
+              matSuffix>account_circle
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanEditForm.get('hoTen').valid && cuDanEditForm.get('hoTen').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Giới tính</mat-label>
+            <mat-select [formControlName]="'gioiTinh'">
+              <mat-option [value]="true">Nam</mat-option>
+              <mat-option [value]="false">Nữ</mat-option>
+            </mat-select>
+            <mat-icon
+              [ngClass]="{'red-icon': !cuDanEditForm.get('gioiTinh').valid && cuDanEditForm.get('gioiTinh').touched}"
+              matSuffix>people
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanEditForm.get('gioiTinh').valid && cuDanEditForm.get('gioiTinh').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Số điện thoại</mat-label>
+            <input matInput placeholder="Vui lòng nhập số điện thoại" [formControlName]="'soDienThoai'" required>
+            <mat-icon
+              [ngClass]="{'red-icon': !cuDanEditForm.get('soDienThoai').valid && cuDanEditForm.get('soDienThoai').touched}"
+              matSuffix>phone
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanEditForm.get('soDienThoai').valid && cuDanEditForm.get('soDienThoai').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="pat@example.com" [formControlName]="'email'" required>
+            <mat-icon [ngClass]="{'red-icon': !cuDanEditForm.get('email').valid && cuDanEditForm.get('email').touched}"
+              matSuffix>email
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanEditForm.get('email').valid && cuDanEditForm.get('email').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Ngày sinh</mat-label>
+            <input type="date" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'ngaySinh'" required>
+            <mat-icon
+              [ngClass]="{'red-icon': !cuDanEditForm.get('ngaySinh').valid && cuDanEditForm.get('ngaySinh').touched}"
+              matSuffix>date_range
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanEditForm.get('ngaySinh').valid && cuDanEditForm.get('ngaySinh').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Số CCCD</mat-label>
+            <input type="text" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'soCCCD'" required>
+            <mat-icon
+              [ngClass]="{'red-icon': !cuDanEditForm.get('soCCCD').valid && cuDanEditForm.get('soCCCD').touched}"
+              matSuffix>people
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanEditForm.get('soCCCD').valid && cuDanEditForm.get('soCCCD').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Địa chỉ</mat-label>
+            <textarea rows="10" matInput placeholder="Vui lòng nhập địa chỉ" [formControlName]="'diaChi'"
+              required></textarea>
+            <mat-icon
+              [ngClass]="{'red-icon': !cuDanEditForm.get('diaChi').valid && cuDanEditForm.get('diaChi').touched}"
+              matSuffix>map
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanEditForm.get('diaChi').valid && cuDanEditForm.get('diaChi').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <!-- <p>
+          <ngx-uploader type="Kéo thả ảnh mới" height="190px" width="205px " hiddenImage="true" hiddenForm="false"
+            (linkFile)="getImage($event)"></ngx-uploader>
+        </p>
+        <p>
+          <img [src]="this.cuDanAddForm.get('image').value"
+            style="padding-top: 8px; border-radius: 8%; height: 197px; width: 205px">
+        </p> -->
+      </div>
+      <mat-dialog-actions align="end">
+        <button mat-flat-button mat-dialog-close>Thoát</button>
+        <button [disabled]="(!cuDanEditForm.valid)" mat-flat-button color="primary">Sửa</button>
+      </mat-dialog-actions>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-accordion *ngIf="this.typeAction == 'addCSH'">
+  <mat-expansion-panel expanded="true" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Thông tin chủ sở hữu
+      </mat-panel-title>
+
+      <mat-panel-description>
+        Thay đổi thông tin cá nhân
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form (ngSubmit)="createChuSoHuu()" [formGroup]="cuDanAddForm">
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Họ tên</mat-label>
+            <input matInput placeholder="Vui lòng nhập họ tên" [formControlName]="'hoTen'" required>
+            <mat-icon [ngClass]="{'red-icon': !cuDanAddForm.get('hoTen').valid && cuDanAddForm.get('hoTen').touched}"
+              matSuffix>account_circle
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('hoTen').valid && cuDanAddForm.get('hoTen').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Giới tính</mat-label>
+            <mat-select [formControlName]="'gioiTinh'">
+              <mat-option [value]="1">Nam</mat-option>
+              <mat-option [value]="0">Nữ</mat-option>
+            </mat-select>
+            <mat-icon
+              [ngClass]="{'red-icon': !cuDanAddForm.get('gioiTinh').valid && cuDanAddForm.get('gioiTinh').touched}"
+              matSuffix>people
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('gioiTinh').valid && cuDanAddForm.get('gioiTinh').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Số điện thoại</mat-label>
+            <input matInput placeholder="Vui lòng nhập số điện thoại" [formControlName]="'soDienThoai'" required>
+            <mat-icon
+              [ngClass]="{'red-icon': !cuDanAddForm.get('soDienThoai').valid && cuDanAddForm.get('soDienThoai').touched}"
+              matSuffix>phone
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('soDienThoai').valid && cuDanAddForm.get('soDienThoai').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="pat@example.com" [formControlName]="'email'" required>
+            <mat-icon [ngClass]="{'red-icon': !cuDanAddForm.get('email').valid && cuDanAddForm.get('email').touched}"
+              matSuffix>email
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('email').valid && cuDanAddForm.get('email').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Ngày sinh</mat-label>
+            <input type="date" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'ngaySinh'" required>
+            <mat-icon
+              [ngClass]="{'red-icon': !cuDanAddForm.get('ngaySinh').valid && cuDanAddForm.get('ngaySinh').touched}"
+              matSuffix>date_range
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('ngaySinh').valid && cuDanAddForm.get('ngaySinh').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Số CCCD</mat-label>
+            <input type="text" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'soCCCD'" required>
+            <mat-icon [ngClass]="{'red-icon': !cuDanAddForm.get('soCCCD').valid && cuDanAddForm.get('soCCCD').touched}"
+              matSuffix>people
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('soCCCD').valid && cuDanAddForm.get('soCCCD').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Địa chỉ</mat-label>
+            <textarea rows="10" matInput placeholder="Vui lòng nhập địa chỉ" [formControlName]="'diaChi'"
+              required></textarea>
+            <mat-icon [ngClass]="{'red-icon': !cuDanAddForm.get('diaChi').valid && cuDanAddForm.get('diaChi').touched}"
+              matSuffix>map
+            </mat-icon>
+            <mat-hint *ngIf="!cuDanAddForm.get('diaChi').valid && cuDanAddForm.get('diaChi').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <!-- <p>
+          <ngx-uploader type="Kéo thả ảnh mới" height="190px" width="205px " hiddenImage="true" hiddenForm="false"
+            (linkFile)="getImage($event)"></ngx-uploader>
+        </p>
+        <p>
+          <img [src]="this.cuDanAddForm.get('image').value"
+            style="padding-top: 8px; border-radius: 8%; height: 197px; width: 205px">
+        </p> -->
+      </div>
+      <mat-dialog-actions align="end">
+        <button mat-flat-button mat-dialog-close>Thoát</button>
+        <button [disabled]="(!cuDanAddForm.valid)" mat-flat-button color="primary">Thêm</button>
+      </mat-dialog-actions>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>

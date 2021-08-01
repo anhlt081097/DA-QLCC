@@ -1,0 +1,164 @@
+<h4 *ngIf="!idHomeStay" mat-dialog-title>THÊM DỊCH VỤ</h4>
+<h4 *ngIf="idHomeStay" mat-dialog-title>SỬA DỊCH VỤ</h4>
+<mat-accordion>
+  <mat-expansion-panel expanded="true" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Thông tin dịch vụ
+      </mat-panel-title>
+      <mat-panel-description>
+        Thông tin cơ bản
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="homeStayForm">
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Tên dịch vụ</mat-label>
+            <input matInput placeholder="Vui lòng nhập tên cơ sở" [formControlName]="'homeStayName'">
+            <mat-icon
+              [ngClass]="{'red-icon': !homeStayForm.get('homeStayName').valid && homeStayForm.get('homeStayName').touched}"
+              matSuffix>house
+            </mat-icon>
+            <mat-hint *ngIf="!homeStayForm.get('homeStayName').valid && homeStayForm.get('homeStayName').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Số điện thoại</mat-label>
+            <input matInput placeholder="Vui lòng nhập số điện tho" [formControlName]="'phone'">
+            <mat-icon [ngClass]="{'red-icon': !homeStayForm.get('phone').valid && homeStayForm.get('phone').touched}"
+              matSuffix>phone
+            </mat-icon>
+            <mat-hint *ngIf="!homeStayForm.get('phone').valid && homeStayForm.get('phone').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="full-name-inputs">
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Thành phố</mat-label>
+            <input type="text" matInput [formControlName]="'cityName'" [matAutocomplete]="autoCity">
+            <mat-icon
+              [ngClass]="{'red-icon': !homeStayForm.get('cityName').valid && homeStayForm.get('cityName').touched}"
+              matSuffix>location_city
+            </mat-icon>
+            <mat-hint *ngIf="!homeStayForm.get('cityName').valid && homeStayForm.get('cityName').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+            <mat-autocomplete #autoCity="matAutocomplete" [displayWith]="displayFnCity.bind(this)">
+              <mat-option *ngFor="let node of filteredOptionsCity | async | slice : 0 : 30" [value]="node.cityName">
+                {{node.cityName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Quận</mat-label>
+            <input type="text" matInput [formControlName]="'districtName'" [matAutocomplete]="autoDistrict">
+            <mat-icon
+              [ngClass]="{'red-icon': !homeStayForm.get('districtName').valid && homeStayForm.get('districtName').touched}"
+              matSuffix>location_city
+            </mat-icon>
+            <mat-hint *ngIf="!homeStayForm.get('districtName').valid && homeStayForm.get('districtName').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+            <mat-autocomplete #autoDistrict="matAutocomplete" [displayWith]="displayFnDistrict.bind(this)">
+              <mat-option *ngFor="let node of filteredOptionsDistrict | async | slice : 0 : 60"
+                [value]="node.districtName">
+                {{node.districtName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Phường</mat-label>
+            <input type="text" matInput [formControlName]="'villageName'" [matAutocomplete]="autoVillage">
+            <mat-icon
+              [ngClass]="{'red-icon': !homeStayForm.get('villageName').valid && homeStayForm.get('villageName').touched}"
+              matSuffix>location_city
+            </mat-icon>
+            <mat-hint *ngIf="!homeStayForm.get('villageName').valid && homeStayForm.get('villageName').touched"
+              style="color: rgb(211, 102, 102);">Error is blank
+            </mat-hint>
+            <mat-autocomplete #autoVillage="matAutocomplete" [displayWith]="displayFnVillage.bind(this)">
+              <mat-option *ngFor="let node of filteredOptionsVillage | async | slice : 0 : 120"
+                [value]="node.villageName">
+                {{node.villageName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </p>
+      </div>
+      <br>
+      <div style="font-size: 16px; padding-bottom: 5px; ">Mô tả:</div>
+      <ckeditor [config]="{ extraPlugins: 'divarea', height: '80' }" [formControlName]="'description'"></ckeditor>
+    </form>
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Hình ảnh
+      </mat-panel-title>
+      <mat-panel-description>
+        {{panelOpenState ? 'Sửa ảnh mô tả (Nhấp vào ảnh để xóa)' : 'Ảnh mô tả'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="full-name-inputs" style="padding-left: 5px ">
+      <p>
+        <ngx-uploader type="Kéo thả ảnh mới" height="205px" width="205px" hiddenImage="true" hiddenForm="false"
+          (linkFile)="getImage($event)"></ngx-uploader>
+      </p>
+      <div style="width: 424px; height: 250px; text-align:center;margin:0; padding-top:10px;">
+        <ng-image-slider *ngIf="image?.length !== 0" [images]="image" [imageSize]="{width: '418', height: '205'}"
+          [imagePopup]="false" (imageClick)="deleteImage($event)" #nav></ng-image-slider>
+      </div>
+    </div>
+    <mat-dialog-actions align="end">
+      <button [disabled]="(!homeStayForm.valid)" (click)="createHomeStay()" *ngIf="!idHomeStay" mat-flat-button
+        color="primary">Tiếp tục</button>
+      <button [disabled]="(!homeStayForm.valid)" (click)="updateHomeStay()" *ngIf="idHomeStay" mat-flat-button
+        color="primary">Sửa</button>
+    </mat-dialog-actions>
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+    [disabled]="idHomeStay ? 'false': 'true'">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Địa điểm
+      </mat-panel-title>
+      <mat-panel-description>
+        {{panelOpenState ? 'Nhấp vào để chọn địa điểm' : 'Địa điểm đặc trưng'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>
+      <mat-form-field class="example-chip-list" style="width: 650px">
+        <mat-chip-list #chipListPlace>
+          <mat-chip color="primary" selected *ngFor="let detailPlace of detailPlaces;" [selectable]="selectable"
+            [removable]="removable" (removed)="removePlace(detailPlace.id)">
+            {{detailPlace.placeName}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Địa điểm..." #InputPlace [formControl]="inputPlaceName" [matAutocomplete]="auto1"
+            [matChipInputFor]="chipListPlace" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur">
+        </mat-chip-list>
+        <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selectedPlace($event)">
+          <mat-option *ngFor="let place of filteredPlace | async" [value]="place.id">
+            <img class="example-option-img" aria-hidden [src]="place.image" height="25">
+            {{place.placeName}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </p>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-dialog-actions align="end">
+  <button mat-flat-button (click)="clone()">Thoát</button>
+</mat-dialog-actions>

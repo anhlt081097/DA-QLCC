@@ -1,0 +1,38 @@
+<h4 mat-dialog-title *ngIf="this.typeAction == 'add'">THÊM THẺ CƯ DÂN</h4>
+<form *ngIf="this.typeAction == 'add'" (ngSubmit)="createTheCuDan()" [formGroup]="theCuDanForm">
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Thẻ cư dân</mat-label>
+        <input matInput placeholder="Vui lòng nhập mã thẻ" [formControlName]="'maThe'" required>
+        <mat-icon [ngClass]="{'red-icon': !theCuDanForm.get('maThe').valid && theCuDanForm.get('maThe').touched}"
+          matSuffix>card_membership</mat-icon>
+        <mat-hint *ngIf="!theCuDanForm.get('maThe').valid && theCuDanForm.get('maThe').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button [disabled]="(!theCuDanForm.valid)" mat-flat-button color="primary">Thêm</button>
+  </mat-dialog-actions>
+</form>
+<h4 mat-dialog-title *ngIf="this.typeAction == 'edit'">SỬA THẺ CƯ DÂN</h4>
+<form *ngIf="this.typeAction == 'edit'" (ngSubmit)="createTheCuDan()" [formGroup]="theCuDanForm">
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Thẻ cư dân</mat-label>
+        <input matInput placeholder="Vui lòng nhập mã thẻ" [formControlName]="'maThe'" required>
+        <mat-icon [ngClass]="{'red-icon': !theCuDanForm.get('maThe').valid && theCuDanForm.get('maThe').touched}"
+          matSuffix>card_membership</mat-icon>
+        <mat-hint *ngIf="!theCuDanForm.get('maThe').valid && theCuDanForm.get('maThe').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button [disabled]="(!theCuDanForm.valid)" mat-flat-button color="primary">Thêm</button>
+  </mat-dialog-actions>
+</form>

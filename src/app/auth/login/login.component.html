@@ -1,0 +1,38 @@
+<section class="w3l-form-36">
+  <div class="form-36-mian section-gap">
+    <div class="wrapper">
+      <div class="form-inner-cont">
+        <h3>Đăng Nhập</h3>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="form-input">
+            <span class="fa fa-user" aria-hidden="true"></span> <input type="text" [formControlName]="'username'"
+              name="text" placeholder="Tài Khoản" required autofocus />
+          </div>
+          <span *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched"
+            style="color: rgb(211, 102, 102);">
+            Bạn không được bỏ trống tài khoản
+          </span>
+          <div class="form-input">
+            <span class="fa fa-key" aria-hidden="true"></span> <input type="password" [formControlName]="'password'"
+              name="password" placeholder="Mật Khẩu" required />
+          </div>
+          <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched"
+            style="color: rgb(211, 102, 102);">
+            Bạn không được bỏ trống mật khẩu
+          </span>
+          <p class="login-failed-text" *ngIf='this.isError' style="color: rgb(211, 102, 102);">Đăng nhập không thành
+            công</p>
+          <div class="login-failedd" style="color: rgb(11, 145, 40);">
+            <p class="register-success-text">{{loginSuccessMessage}}</p>
+          </div>
+          <div class="forgot">
+            <button [disabled]="(!loginForm.valid)" class="btn theme-button"
+              style="margin-top: 5%; margin-left: 68%;">Đăng nhập</button>
+            <a routerLink="/forgot-password" class="">Quên mật khẩu?</a>
+          </div>
+        </form>
+        <p class="dangky">Bạn chưa có tài khoản? <a routerLink="/register" class="">Đăng Ký</a></p>
+      </div>
+    </div>
+  </div>
+</section>

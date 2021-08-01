@@ -1,0 +1,42 @@
+<h4 *ngIf="!idType" mat-dialog-title>SỬA TIỆN ÍCH</h4>
+<h4 *ngIf="idType" mat-dialog-title>THÊM TIỆN ÍCH</h4>
+<form (ngSubmit)="submitAction()" [formGroup]="utilityForm">
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Tên tiện ích</mat-label>
+      <input matInput placeholder="Vui lòng nhập tên tiện ích" [formControlName]="'utilityName'" required>
+      <mat-icon [ngClass]="{'red-icon': !utilityForm.get('utilityName').valid && utilityForm.get('utilityName').touched}"
+        matSuffix>assignment</mat-icon>
+      <mat-hint *ngIf="!utilityForm.get('utilityName').valid && utilityForm.get('utilityName').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <p *ngIf="!idType">
+    <mat-form-field appearance="standard">
+      <mat-label>Loại tiện ích</mat-label>
+      <mat-select [formControlName]="'id_typeUtility'" required>
+        <mat-option *ngFor="let typeUtility of typeUtilitys" [value]="typeUtility.id">
+          {{typeUtility.typeName}}
+        </mat-option>
+      </mat-select>
+      <mat-icon [ngClass]="{'red-icon': !utilityForm.get('id_typeUtility').valid && utilityForm.get('id_typeUtility').touched}"
+      matSuffix>assignment</mat-icon>
+      <mat-hint *ngIf="!utilityForm.get('id_typeUtility').valid && utilityForm.get('id_typeUtility').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <div class="full-name-inputs">
+    <p>
+      <ngx-uploader type="Kéo thả ảnh mới" height="190px" width="200px" hiddenImage="true" hiddenForm="false"
+                    (linkFile)="getImage($event)"></ngx-uploader>
+    </p>
+    <p *ngIf="this.utilityForm.get('image').value !=null">
+      <img  [src]="this.utilityForm.get('image').value" style="padding-top: 8px; border-radius: 8%;  height: 197px; width: 205px">
+    </p>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+  <button *ngIf="!idType" [disabled]="(!utilityForm.valid)" mat-flat-button color="primary">Sửa</button>
+  <button *ngIf="idType" [disabled]="(!utilityForm.valid)" mat-flat-button color="primary">Thêm</button>
+</mat-dialog-actions>
+</form>

@@ -1,0 +1,91 @@
+<h4 mat-dialog-title>THAY ĐỔI THÔNG TIN</h4>
+<form (ngSubmit)="updateMembers()" [formGroup]="memberEditForm">
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Họ</mat-label>
+        <input matInput placeholder="Vui lòng nhập họ" [formControlName]="'lastName'">
+        <mat-icon
+          [ngClass]="{'red-icon': !memberEditForm.get('lastName').valid && memberEditForm.get('lastName').touched}"
+          matSuffix>account_circle</mat-icon>
+        <mat-hint *ngIf="!memberEditForm.get('lastName').valid && memberEditForm.get('lastName').touched"
+                  style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Tên</mat-label>
+        <input matInput placeholder="Vui lòng nhập tên" [formControlName]="'firstName'">
+        <mat-icon
+          [ngClass]="{'red-icon': !memberEditForm.get('firstName').valid && memberEditForm.get('firstName').touched}"
+          matSuffix>account_circle</mat-icon>
+        <mat-hint *ngIf="!memberEditForm.get('firstName').valid && memberEditForm.get('firstName').touched"
+                  style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Số điện thoại</mat-label>
+        <input matInput placeholder="Vui lòng nhập số điện thoại" [formControlName]="'phone'">
+        <mat-icon [ngClass]="{'red-icon': !memberEditForm.get('phone').valid && memberEditForm.get('phone').touched}"
+                  matSuffix>phone</mat-icon>
+        <mat-hint *ngIf="!memberEditForm.get('phone').valid && memberEditForm.get('phone').touched"
+                  style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="pat@example.com" [formControlName]="'email'">
+        <mat-icon [ngClass]="{'red-icon': !memberEditForm.get('email').valid && memberEditForm.get('email').touched}"
+          matSuffix>email</mat-icon>
+        <mat-hint *ngIf="!memberEditForm.get('email').valid && memberEditForm.get('email').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Ngày sinh</mat-label>
+        <input type="date" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'dateOfBirth'">
+        <mat-icon
+          [ngClass]="{'red-icon': !memberEditForm.get('dateOfBirth').valid && memberEditForm.get('dateOfBirth').touched}"
+          matSuffix>date_range</mat-icon>
+        <mat-hint *ngIf="!memberEditForm.get('dateOfBirth').valid && memberEditForm.get('dateOfBirth').touched"
+                  style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Giới tính</mat-label>
+        <mat-select [formControlName]="'sex'">
+          <mat-option [value]="'Nam'">Nam</mat-option>
+          <mat-option [value]="'Nữ'">Nữ</mat-option>
+          <mat-option [value]="'Khác'">Khác</mat-option>
+        </mat-select>
+        <mat-icon [ngClass]="{'red-icon': !memberEditForm.get('sex').valid && memberEditForm.get('sex').touched}"
+        matSuffix>people</mat-icon>
+        <mat-hint *ngIf="!memberEditForm.get('sex').valid && memberEditForm.get('sex').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Địa chỉ</mat-label>
+      <textarea rows="1" matInput placeholder="Vui lòng nhập địa chỉ" [formControlName]="'address'"></textarea>
+      <mat-icon
+        [ngClass]="{'red-icon': !memberEditForm.get('address').valid && memberEditForm.get('address').touched}"
+        matSuffix>map</mat-icon>
+      <mat-hint *ngIf="!memberEditForm.get('address').valid && memberEditForm.get('address').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <mat-dialog-actions align="end">
+  <button mat-flat-button mat-dialog-close>Thoát</button>
+  <button [disabled]="(!memberEditForm.valid)" mat-flat-button color="primary" >Sửa</button>
+</mat-dialog-actions>
+</form>

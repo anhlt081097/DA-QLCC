@@ -1,0 +1,29 @@
+<h4 *ngIf="idCity" mat-dialog-title>Sửa thành phố</h4>
+<h4 *ngIf="!idCity" mat-dialog-title>Thêm thành phố</h4>
+<form (ngSubmit)="submitAction()" [formGroup]="cityForm">
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Tên thành phố</mat-label>
+      <input matInput placeholder="Vui lòng nhập tên thành phố" [formControlName]="'cityName'" required>
+      <mat-icon [ngClass]="{'red-icon': !cityForm.get('cityName').valid && cityForm.get('cityName').touched}"
+        matSuffix>location_city</mat-icon>
+      <mat-hint *ngIf="!cityForm.get('cityName').valid && cityForm.get('cityName').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Loại</mat-label>
+      <input matInput placeholder="Vui lòng nhập loại" [formControlName]="'type'" >
+      <mat-icon [ngClass]="{'red-icon': !cityForm.get('type').valid && cityForm.get('type').touched}" matSuffix>
+        filter_none</mat-icon>
+      <mat-hint *ngIf="!cityForm.get('type').valid && cityForm.get('type').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+  <button *ngIf="idCity" [disabled]="(!cityForm.valid)" mat-flat-button color="primary">Sửa</button>
+  <button *ngIf="!idCity" [disabled]="(!cityForm.valid)" mat-flat-button color="primary">Thêm</button>
+</mat-dialog-actions>
+</form>

@@ -1,0 +1,168 @@
+<section class="breadcrumb_area">
+  <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+  <div class="container">
+    <div class="page-cover text-center">
+      <h2 style="color:white;" class="page-cover-tittle">Danh sách Cơ sở</h2>
+      <ol class="breadcrumb">
+        <li><a style="color: white" routerLink="/user">Trang chủ</a></li>
+        <li class="active">Cơ sở</li>
+      </ol>
+    </div>
+  </div>
+</section>
+<section class="accomodation_area section_gap">
+  <div class="container" style="padding-bottom: 40px">
+    <div class="section_title text-center">
+      <h2 class="title_color">Danh sách các cơ sở</h2>
+      <p>Tất cả chúng ta đang sống trong một thời đại thuộc về tuổi trẻ. Cuộc sống đang trở nên cực kỳ nhanh chóng.</p>
+    </div>
+    <form [formGroup]="homeStayForm">
+      <section class="hotel_booking_area">
+        <div class="container">
+          <div class="row hotel_booking_table" >
+            <div  class="col-md-3">
+              <h2>Tìm<br> Cơ sở</h2>
+            </div>
+            <div class="col-md-9">
+              <div class="boking_table">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="book_tabel_item">
+                      <div class="form-group">
+                        <div class='input-group date' id='datetimepicker11'>
+                          <p >
+                            <mat-form-field appearance="fill" style="width: 350px; color: white; border: 2px solid #ffffff;">
+                              <mat-label style=" color: white">Thành phố</mat-label>
+                              <input style=" color: white; " type="text" matInput [formControlName]="'cityName'" [matAutocomplete]="autoCity">
+                              <mat-icon
+                                [ngClass]="{'red-icon': !homeStayForm.get('cityName').valid && homeStayForm.get('cityName').touched}"
+                                matSuffix>location_city
+                              </mat-icon>
+                              <mat-autocomplete #autoCity="matAutocomplete" [displayWith]="displayFnCity.bind(this)">
+                                <mat-option *ngFor="let node of filteredOptionsCity | async | slice : 0 : 30"
+                                            [value]="node.cityName">
+                                  {{node.cityName}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class='input-group date' id='datetimepicker11'>
+                          <p>
+                            <mat-form-field appearance="fill" style="width: 350px; color: white; border: 2px solid #ffffff;">
+                              <mat-label  style=" color: white">Quận</mat-label>
+                              <input  style=" color: white" type="text" matInput [formControlName]="'districtName'"
+                                     [matAutocomplete]="autoDistrict">
+                              <mat-icon
+                                [ngClass]="{'red-icon': !homeStayForm.get('districtName').valid && homeStayForm.get('districtName').touched}"
+                                matSuffix>location_city
+                              </mat-icon>
+                              <mat-autocomplete #autoDistrict="matAutocomplete"
+                                                [displayWith]="displayFnDistrict.bind(this)">
+                                <mat-option *ngFor="let node of filteredOptionsDistrict | async | slice : 0 : 60"
+                                            [value]="node.districtName">
+                                  {{node.districtName}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="book_tabel_item">
+                      <div class="form-group">
+                        <div class='input-group date' id='datetimepicker11'>
+                          <p>
+                            <mat-form-field appearance="fill" style="width: 350px; color: white; border: 2px solid #ffffff;">
+                              <mat-label  style=" color: white">Phường</mat-label>
+                              <input  style=" color: white" type="text" matInput [formControlName]="'villageName'"
+                                     [matAutocomplete]="autoVillage">
+                              <mat-icon
+                                [ngClass]="{'red-icon': !homeStayForm.get('villageName').valid && homeStayForm.get('villageName').touched}"
+                                matSuffix>location_city
+                              </mat-icon>
+                              <mat-autocomplete #autoVillage="matAutocomplete"
+                                                [displayWith]="displayFnVillage.bind(this)">
+                                <mat-option *ngFor="let node of filteredOptionsVillage | async | slice : 0 : 120"
+                                            [value]="node.villageName">
+                                  {{node.villageName}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                          </p>
+
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class='input-group date' id='datetimepicker11'>
+                          <p >
+                            <mat-form-field appearance="fill" style="width: 350px; color: white; border: 2px solid #ffffff;">
+                              <mat-label  style=" color: white">Các địa điểm</mat-label>
+                              <mat-select class="helo"  [formControlName]="'placeName'" >
+                                <mat-option  [value]="">
+                                 ---Không chọn---
+                                </mat-option>
+                                <mat-option   *ngFor="let place of places" [value]="place.placeName">
+                                {{place.placeName}}
+                                </mat-option>
+                              </mat-select>
+                              <mat-icon matSuffix>place</mat-icon>
+                            </mat-form-field>
+                          </p>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
+  </div>
+  <h6 style="text-align: center; padding: 10px 0px 10px 0px" >Có {{listHomeStay?.length}} cơ sở</h6>
+    <div class="container">
+      <div class="row accomodation_two">
+        <div class="col-lg-3 col-sm-6" *ngFor="let homestay of listHomeStay">
+          <div class="accomodation_item text-center">
+            <div class="hotel_img">
+              <img style="width:263px; height: 270px " [src]="getImage(homestay.id)"  alt="">
+              <a [routerLink]="'/user/house/'+homestay.id" class="btn theme_btn button_hover">Xem cơ sở</a>
+            </div>
+            <a ><h4 class="sec_h4">{{homestay.homeStayName}}</h4></a>
+            <h5><small style="color: #3e3d3d">{{homestay.villageName}}, {{homestay.districtName}}, {{homestay.cityName}}</small></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  <nav *ngIf="listHomeStay?.length !== 0 " style="margin-top: 100px " class="blog-pagination justify-content-center d-flex">
+    <ul class="pagination">
+      <li class="page-item">
+        <a  class="page-link" aria-label="Previous">
+		                                    <span aria-hidden="true">
+		                                        <span class="lnr lnr-chevron-left"></span>
+		                                    </span>
+        </a>
+      </li>
+      <li class="page-item active"><a  class="page-link">01</a></li>
+      <li class="page-item"><a  class="page-link">02</a></li>
+      <li class="page-item"><a  class="page-link">03</a></li>
+      <li class="page-item"><a  class="page-link">04</a></li>
+      <li class="page-item"><a  class="page-link">05</a></li>
+      <li class="page-item">
+        <a  class="page-link" aria-label="Next">
+		                                    <span aria-hidden="true">
+		                                        <span class="lnr lnr-chevron-right"></span>
+		                                    </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</section>
+
+

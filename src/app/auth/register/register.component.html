@@ -1,0 +1,66 @@
+<section class="w3l-form-36">
+  <div class="form-36-mian section-gap">
+    <div class="wrapper">
+      <div class="form-inner-cont">
+        <h3>Đăng Ký</h3>
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+          <div class="form-input">
+            <span class="fa fa-user" aria-hidden="true"></span> <input type="text" [formControlName]="'username'"
+              name="text" placeholder="Tài Khoản" required autofocus />
+          </div>
+          <span *ngIf="!registerForm.get('username').valid && registerForm.get('username').touched" style="color: rgb(211, 102, 102);">
+            Bạn không được để trống tên tài khoản
+          </span>
+          <div class="form-input">
+            <span class="fa fa-key" aria-hidden="true"></span> <input type="password" [formControlName]="'password'"
+              name="password" placeholder="Mật Khẩu" required />
+          </div>
+          <span *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched" style="color: rgb(211, 102, 102);">
+            Bạn không được để trống mật khẩu
+          </span>
+          <div class="form-input">
+            <span class="fa fa-key" aria-hidden="true"></span> <input type="password" [formControlName]="'confirmPassword'"
+              name="confirmPassword" placeholder="Nhập lại mật Khẩu" required />
+          </div>
+          <span *ngIf="registerForm.hasError('mismatch')" style="color: rgb(211, 102, 102);">
+            Mật khẩu nhập lại không trùng
+          </span>
+          <div class="form-input" style="float: left; width: 47%; margin-right: 5%;">
+            <span class="fa fa-font" aria-hidden="true"></span> <input type="text" [formControlName]="'lastname'"
+                                                                       name="text" placeholder="Họ" required />
+          </div>
+          <div class="form-input"style="width: 47%;">
+            <span class="fa fa-font" aria-hidden="true"></span> <input type="text" [formControlName]="'firstname'"
+                                                                       name="text" placeholder="Tên gọi" required />
+          </div>
+          <span *ngIf="!registerForm.get('lastname').valid && registerForm.get('lastname').touched || !registerForm.get('firstname').valid && registerForm.get('firstname').touched" style="color: rgb(211, 102, 102);">
+            Bạn không được để trống tên
+          </span>
+          <div class="form-input">
+            <span class="fa fa-phone" aria-hidden="true"></span> <input type="text" [formControlName]="'phone'"
+              name="phone" placeholder="Số điện thoại" required />
+          </div>
+          <span *ngIf="registerForm.get('phone').hasError('required') && registerForm.get('phone').touched" style="color: rgb(211, 102, 102);">
+            Bạn không được để trống số điện thoại
+          </span>
+          <span *ngIf="registerForm.get('phone').hasError('pattern') && registerForm.get('phone').touched" style="color: rgb(211, 102, 102);">
+            Bạn nhập sai định dạng số điện thoại
+          </span>
+          <div class="form-input">
+            <span class="fa fa-envelope" aria-hidden="true"></span> <input type="email" [formControlName]="'email'"
+              name="email" placeholder="Email" required />
+          </div>
+          <span *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched" style="color: rgb(211, 102, 102);">
+            Bạn nhập sai định dạng email
+          </span>
+
+          <p class="login-failed-text" *ngIf='this.isError' style="color: rgb(211, 102, 102);">Đăng ký không thành công</p>
+          <div class="forgot">
+            <button [disabled]="(!registerForm.valid)" class="btn theme-button" style="margin-top: 5%; margin-left: 68%;"><a  style="display: block; padding: 0; margin: -2px;"></a>Đăng Ký</button>
+          </div>
+        </form>
+        <p class="dangky">Bạn đã có tài khoản? <a routerLink="/login" class="">Đăng Nhập</a></p>
+      </div>
+    </div>
+  </div>
+</section>

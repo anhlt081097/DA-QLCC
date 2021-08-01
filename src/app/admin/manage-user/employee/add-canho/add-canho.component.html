@@ -1,0 +1,86 @@
+<h4 mat-dialog-title *ngIf="this.typeAction == 'add'">THÊM CĂN HỘ</h4>
+<form *ngIf="this.typeAction == 'add'" (ngSubmit)="createCanHo()" [formGroup]="canHoForm">
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Tên căn hộ</mat-label>
+        <input matInput placeholder="Vui lòng nhập tên căn hộ" [formControlName]="'tenCanHo'" required>
+        <mat-icon [ngClass]="{'red-icon': !canHoForm.get('tenCanHo').valid && canHoForm.get('tenCanHo').touched}"
+          matSuffix>home</mat-icon>
+        <mat-hint *ngIf="!canHoForm.get('tenCanHo').valid && canHoForm.get('tenCanHo').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Diện tích</mat-label>
+        <input matInput type="number" placeholder="Vui lòng nhập diện tích" [formControlName]="'dienTich'" required>
+        <mat-icon [ngClass]="{'red-icon': !canHoForm.get('dienTich').valid && canHoForm.get('dienTich').touched}"
+          matSuffix>crop</mat-icon>
+        <mat-hint *ngIf="!canHoForm.get('dienTich').valid && canHoForm.get('dienTich').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Mô tả</mat-label>
+        <textarea matInput placeholder="Vui lòng nhập mô tả" [formControlName]="'moTa'" required></textarea>
+        <mat-icon [ngClass]="{'red-icon': !canHoForm.get('moTa').valid && canHoForm.get('moTa').touched}" matSuffix>
+          description</mat-icon>
+        <mat-hint *ngIf="!canHoForm.get('moTa').valid && canHoForm.get('moTa').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button [disabled]="(!canHoForm.valid)" mat-flat-button color="primary">Thêm</button>
+  </mat-dialog-actions>
+</form>
+
+<h4 mat-dialog-title *ngIf="this.typeAction == 'edit'">SỬA CĂN HỘ</h4>
+<form *ngIf="this.typeAction == 'edit'" (ngSubmit)="updateCanHo()" [formGroup]="canHoEditForm">
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Tên căn hộ</mat-label>
+        <input matInput placeholder="Vui lòng nhập tên căn hộ" [formControlName]="'tenCanHo'" required>
+        <mat-icon
+          [ngClass]="{'red-icon': !canHoEditForm.get('tenCanHo').valid && canHoEditForm.get('tenCanHo').touched}"
+          matSuffix>home</mat-icon>
+        <mat-hint *ngIf="!canHoEditForm.get('tenCanHo').valid && canHoEditForm.get('tenCanHo').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Diện tích</mat-label>
+        <input matInput type="number" placeholder="Vui lòng nhập diện tích" [formControlName]="'dienTich'" required>
+        <mat-icon
+          [ngClass]="{'red-icon': !canHoEditForm.get('dienTich').valid && canHoEditForm.get('dienTich').touched}"
+          matSuffix>crop</mat-icon>
+        <mat-hint *ngIf="!canHoEditForm.get('dienTich').valid && canHoEditForm.get('dienTich').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Mô tả</mat-label>
+        <textarea matInput placeholder="Vui lòng nhập mô tả" [formControlName]="'moTa'" required></textarea>
+        <mat-icon [ngClass]="{'red-icon': !canHoEditForm.get('moTa').valid && canHoEditForm.get('moTa').touched}"
+          matSuffix>
+          description</mat-icon>
+        <mat-hint *ngIf="!canHoEditForm.get('moTa').valid && canHoEditForm.get('moTa').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button [disabled]="(!canHoEditForm.valid)" mat-flat-button color="primary">Lưu</button>
+  </mat-dialog-actions>
+</form>

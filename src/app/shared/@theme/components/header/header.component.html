@@ -1,0 +1,41 @@
+<div class="header-container">
+  <a *ngIf="this.role === 'ROLE_ADMIN' || this.role === 'ROLE_USER'" (click)="toggleSidebar()" href="#"
+    class="sidebar-toggle">
+    <nb-icon icon="menu-2-outline"></nb-icon>
+  </a>
+  <a class="logo"
+    (click)="navigateHome()"><span>{{role === 'ROLE_USER' ? 'Khách hàng  ' : role === 'ROLE_ADMIN' ? 'Quản trị viên' : role === 'Member' ? 'Thành viên' : ''}}</span></a>
+</div>
+<nb-select [hidden]="true" [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
+  <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
+</nb-select>
+<div *ngIf="this.role !== 'ROLE_ADMIN' && this.role !== 'ROLE_USER'" class="header-container">
+  <button [routerLink]="'home'" style="width: 100px; height: 76px" mat-button>{{ 'HEADER.HOME' | translate }}</button>
+  <button [routerLink]="'homestay'" style="width: 100px; height: 76px" mat-button>Cơ sở</button>
+  <button [routerLink]="'house'" style="width: 100px; height: 76px" mat-button>Nhà</button>
+  <button [routerLink]="'post'" style="width: 100px; height: 76px" mat-button>Bài viết</button>
+  <button [routerLink]="'about'" style="width: 110px; height: 76px" mat-button>{{ 'HEADER.ABOUT' | translate }}</button>
+  <button [routerLink]="'contact'" style="width: 100px; height: 76px"
+    mat-button>{{ 'HEADER.CONTACT' | translate }}</button>
+</div>
+<div class="header-container">
+  <nb-actions size="small">
+    <nb-action *ngIf="this.role === 'ROLE_ADMIN' || this.role === 'ROLE_USER'" class="control-item">
+      <nb-search type="rotate-layout" placeholder="Tìm kiếm"></nb-search>
+    </nb-action>
+    <nb-action *ngIf="this.role === 'ROLE_ADMIN' || this.role === 'ROLE_USER'" class="control-item"
+      icon="email-outline">
+    </nb-action>
+    <nb-action *ngIf="this.role === 'ROLE_ADMIN' || this.role === 'ROLE_USER'" class="control-item" icon="bell-outline">
+    </nb-action>
+    <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+      <nb-user [nbContextMenu]="this.role ? userMenu : userMenu2" nbContextMenuTag="my-context-menu" [onlyPicture]=""
+        [name]="userName" [picture]="this.role && this.image ? image : 'assets/images/menu.png'">
+      </nb-user>
+    </nb-action>
+  </nb-actions>
+</div>
+
+<!--<select #langSelect (change)="translateService.use(langSelect.value)">-->
+<!--  <option *ngFor="let lang of translateService.getLangs()" [value]="lang"-->
+<!--          [selected]="lang === translateService.currentLang">{{lang}}</option></select>-->

@@ -1,0 +1,13 @@
+<div id="pdfTable" #pdf>
+  <h4>Hóa đơn số: {{name}}</h4>
+  <p>{{transactionResponse.creatorName}}</p>
+  <p>{{transactionResponse.dateRelease}}</p>
+  <p>{{transactionResponse.totalPrice}}</p>
+  <p>{{transactionResponse.bookingResponse.userName}}</p>
+
+</div>
+
+<div>
+  <button mat-raised-button (click)="downloadAsPDF()">Xuất hóa đơn</button>
+</div>
+

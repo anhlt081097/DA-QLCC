@@ -1,0 +1,32 @@
+<h4 *ngIf="!idPlace" mat-dialog-title>THÊM ĐỊA ĐIỂM</h4>
+<h4 *ngIf="idPlace" mat-dialog-title>SỬA ĐỊA ĐIỂM</h4>
+  <form (ngSubmit)="SubmitForm()" [formGroup]="placeForm">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Tên địa điểm</mat-label>
+        <input matInput placeholder="Vui lòng nhập tên địa điểm" [formControlName]="'placeName'">
+        <mat-icon
+          [ngClass]="{'red-icon': !placeForm.get('placeName').valid && placeForm.get('placeName').touched}"
+          matSuffix>place
+        </mat-icon>
+        <mat-hint *ngIf="!placeForm.get('placeName').valid && placeForm.get('placeName').touched"
+                  style="color: rgb(211, 102, 102);">Error is blank
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <div class="full-name-inputs">
+    <p>
+      <ngx-uploader type="Kéo thả ảnh mới" height="190px" width="205px" hiddenImage="true" hiddenForm="false"
+                    (linkFile)="getImage($event)"></ngx-uploader>
+    </p>
+    <p *ngIf="this.placeForm.get('image').value !=null">
+      <img  [src]="this.placeForm.get('image').value" style=" padding-top: 8px; border-radius: 8%; height: 197px; width: 205px">
+    </p>
+    </div>
+    <mat-dialog-actions align="end">
+      <button mat-flat-button mat-dialog-close>Thoát</button>
+      <button *ngIf="!idPlace" [disabled]="(!placeForm.valid)" mat-flat-button color="primary">Thêm</button>
+      <button *ngIf="idPlace" [disabled]="(!placeForm.valid)" mat-flat-button color="primary">Sửa</button>
+    </mat-dialog-actions>
+  </form>
+

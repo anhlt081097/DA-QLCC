@@ -1,0 +1,61 @@
+<h4 *ngIf="idVillage" mat-dialog-title>SỬA PHƯỜNG</h4>
+<h4 *ngIf="!idVillage" mat-dialog-title>THÊM PHƯỜNG</h4>
+<form (ngSubmit)="submitAction()" [formGroup]="villageForm">
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Tên phường</mat-label>
+      <input matInput placeholder="Vui lòng nhập tên phường" [formControlName]="'villageName'" required>
+      <mat-icon [ngClass]="{'red-icon': !villageForm.get('villageName').valid && villageForm.get('villageName').touched}"
+        matSuffix>location_city</mat-icon>
+      <mat-hint *ngIf="!villageForm.get('villageName').valid && villageForm.get('villageName').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Loại</mat-label>
+      <input matInput placeholder="Vui lòng nhập loại" [formControlName]="'type'" >
+      <mat-icon [ngClass]="{'red-icon': !villageForm.get('type').valid && villageForm.get('type').touched}" matSuffix>
+        filter_none</mat-icon>
+      <mat-hint *ngIf="!villageForm.get('type').valid && villageForm.get('type').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Thành phố</mat-label>
+      <input type="text" matInput [formControlName]="'cityName'" [matAutocomplete]="autoCity" required>
+      <mat-icon
+        [ngClass]="{'red-icon': !villageForm.get('cityName').valid && villageForm.get('cityName').touched}"
+        matSuffix>location_city</mat-icon>
+      <mat-hint *ngIf="!villageForm.get('cityName').valid && villageForm.get('cityName').touched"
+                style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      <mat-autocomplete #autoCity="matAutocomplete" [displayWith]="displayFnCity.bind(this)" >
+        <mat-option  *ngFor="let node of filteredOptionsEditCity | async | slice : 0 : 30" [value]="node.cityName">
+          {{node.cityName}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Quận</mat-label>
+      <input type="text" matInput [formControlName]="'districtName'" [matAutocomplete]="autoDistrict" required>
+      <mat-icon
+        [ngClass]="{'red-icon': !villageForm.get('districtName').valid && villageForm.get('districtName').touched}"
+        matSuffix>location_city</mat-icon>
+      <mat-hint *ngIf="!villageForm.get('districtName').valid && villageForm.get('districtName').touched"
+                style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      <mat-autocomplete #autoDistrict="matAutocomplete" [displayWith]="displayFnDistrict.bind(this)">
+        <mat-option *ngFor="let node of filteredOptionsEditDistrict | async | slice : 0 : 60" [value]="node.districtName">
+          {{node.districtName}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </p>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+  <button *ngIf="idVillage" [disabled]="(!villageForm.valid)" mat-flat-button color="primary">Sửa</button>
+  <button *ngIf="!idVillage" [disabled]="(!villageForm.valid)" mat-flat-button color="primary">Thêm</button>
+</mat-dialog-actions>
+</form>

@@ -1,0 +1,77 @@
+
+        <!--================Banner Area =================-->
+        <section class="banner_area">
+            <div class="booking_table d_flex align-items-center">
+            	<div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
+				<div class="container">
+					<div class="banner_content text-center">
+						<h6 style="color: white">Tránh xa cuộc sống đơn điệu</h6>
+						<h2 style="color: white">Thư giãn tâm trí của bạn</h2>
+						<p style="color: white">Nếu bạn đang xem các nhà trống trên website, bạn có thể rất bối rối với mức giá<br> sự khác biệt về giá cả. Bạn có thể thấy một số với mức thấp nhất là 500.000 mỗi cái.</p>
+						<a style="color: black" routerLink="/house"  class="btn theme_btn button_hover">Xem ngay</a>
+					</div>
+				</div>
+            </div>
+        </section>
+        <!--================Banner Area =================-->
+
+        <!--================ Accomodation Area  =================-->
+        <section style="height: 900px" class="accomodation_area section_gap">
+            <div class="container">
+                <div class="section_title text-center">
+                    <h2 class="title_color">Danh sách nhà</h2>
+                    <p>>Tất cả chúng ta đang sống trong một thời đại thuộc về tuổi trẻ. Cuộc sống đang trở nên cực kỳ nhanh chóng. </p>
+                </div>
+           <ngx-house-user [home]="true" ></ngx-house-user>
+            </div>
+        </section>
+
+        <section class="testimonial_area section_gap">
+            <div class="container">
+                <div class="section_title text-center">
+                    <h2 class="title_color">Phản hồi của khách hàng</h2>
+                    <p>Những ý kiến phải hồi tích cực khi đã trải nghiệm dịch vụ của chúng tôi.</p>
+                </div>
+                <div class="testimonial_slider owl-carousel">
+                    <div class="media testimonial_item" *ngFor="let feedback of feedBacks">
+                        <img style="width: 60px; height: 60px" class="rounded-circle" src="{{feedback.image}}" alt="">
+                        <div class="media-body">
+                            <p>{{feedback.content}} </p>
+                            <a ><h4 class="sec_h4">{{feedback.userName}}</h4></a>
+                            <div class="star">
+                              <ngx-star-rating  [ngModel]="feedback.rate"
+                                                [disabled]="true"></ngx-star-rating>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================ Testimonial Area  =================-->
+
+        <!--================ Latest Blog Area  =================-->
+        <section class="latest_blog_area section_gap">
+            <div class="container">
+                <div class="section_title text-center">
+                    <h2 class="title_color">Cơ sở của chúng tôi</h2>
+                    <p>Cơ sở của chúng tôi trên khắp mọi miền của đắt nước </p>
+                </div>
+                <div class="row mb_30">
+                  <div class="col-lg-4 col-md-6" *ngFor="let homeStay of listHomeStay">
+                        <div class="single-recent-blog-post">
+                            <div class="thumb">
+                                <img class="img-fluid" [src]="getImage(homeStay.id)" alt="post">
+                            </div>
+                            <div class="details">
+                                <div class="tags">
+                                  <a  class="button_hover tag_btn">Địa chỉ: {{homeStay.villageName}}, {{homeStay.districtName}}, {{homeStay.cityName}}</a>
+                                  <a  class="button_hover tag_btn">Số điện thoại: {{homeStay.phone}}</a>
+                                </div>
+                                <a [routerLink]="'/user/house/' + homeStay.id"  ><h4 class="sec_h4">{{homeStay.homeStayName}}</h4></a>
+                                <p [innerHTML]="homeStay.description | slice:0:80" > </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>

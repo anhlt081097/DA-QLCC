@@ -1,0 +1,88 @@
+<nav aria-label="breadcrumb" *ngIf="homeStayResponse!=null">
+  <ol class="breadcrumb">
+    <mat-icon type="button" aria-hidden="false" routerLink="/admin/" aria-label="Example home icon">home</mat-icon>
+    <li class="breadcrumb-item"><a routerLink="/admin/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a routerLink="/admin/manage-homestay/homestay">Cơ sở</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Chi tiết cơ sở</li>
+  </ol>
+</nav>
+<nb-card>
+  <nb-card-header>
+    Cơ sở: {{homeStayResponse?.homeStayName}}
+    <button mat-mini-fab color="primary" style="margin-left: 20px" (click)="openEdit(homeStayResponse.id)">
+    <mat-icon>edit</mat-icon>
+  </button>
+  </nb-card-header>
+  <nb-card-body>
+    <h1 style="text-align: center; background-color: #eeebeb">THÔNG TIN CƠ SỞ</h1>
+      <ng-image-slider [images]="image" [imageSize]="{width: '100%', height: '600'}" [imagePopup]="false"   #nav></ng-image-slider>
+    <br><br>
+    <div *ngIf="homeStayResponse!=null">
+      <div class="row">
+      <div class="col-md-6">
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="row">
+              <div class="col-md-3">
+                <label>Tên cơ sở</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{homeStayResponse.homeStayName}}</p>
+              </div>
+            </div>
+            <br><br>
+            <div class="row">
+              <div class="col-md-3">
+                <label>Địa chỉ</label>
+              </div>
+              <div class="col-md-7">
+                <p>{{homeStayResponse.villageName}}, {{homeStayResponse.districtName}}, {{homeStayResponse.cityName}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="col-md-6">
+          <div class="tab-content profile-tab" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <div class="row">
+                <div class="col-md-3">
+                  <label>Số điện thoại</label>
+                </div>
+                <div class="col-md-6">
+                  <p>{{homeStayResponse.phone}}</p>
+                </div>
+              </div>
+              <br><br>
+              <div class="row">
+                <div class="col-md-3">
+                  <label>Địa điểm</label>
+                </div>
+                <div class="col-md-6">
+                  <a *ngFor="let detailPlace of detailPlaces"><b style="color: #6666d6">{{detailPlace.placeName}}</b>, </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+      <br><br>
+      <mat-accordion>
+        <mat-expansion-panel >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Mô tả
+            </mat-panel-title>
+            <mat-panel-description>
+              Mô tả cơ sở
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p [innerHTML]="homeStayResponse.description"></p>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <br>
+      <br>
+      </div>
+  </nb-card-body>
+</nb-card>
+

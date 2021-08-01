@@ -1,0 +1,148 @@
+<section class="banner_area blog_banner d_flex align-items-center">
+  <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
+  <div class="container">
+    <div class="banner_content text-center">
+      <h4>Bạn đang nhận được <br/>Kính viễn vọng</h4>
+      <p style="color:white;">Có một khoảnh khắc trong cuộc đời của bất kỳ nhà thiên văn học nào tham vọng rằng đã đến
+        lúc mua nó trước</p>
+      <a style="color: black" class="btn white_btn button_hover">Xem chi tiết</a>
+    </div>
+    <ol style="margin-top: 100px" class="breadcrumb">
+      <li><a style="color:white;" [routerLink]="'/user'">Trang chủ</a></li>
+      <li><a style="color:white;">Bài viết</a></li>
+    </ol>
+  </div>
+</section>
+<!--================Banner Area =================-->
+
+<!--================Blog Categorie Area =================-->
+<section class="blog_categorie_area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="categories_post">
+          <img src="../../../assets/user/image/blog/cat-post/cat-post-3.jpg" alt="post">
+          <div class="categories_details">
+            <div class="categories_text">
+              <a href="blog-details.html"><h5>Sự kiện</h5></a>
+              <div class="border_line"></div>
+              <p>Những sự kiện nổi bật</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="categories_post">
+          <img src="../../../assets/user/image/blog/cat-post/cat-post-2.jpg" alt="post">
+          <div class="categories_details">
+            <div class="categories_text">
+              <a><h5>Khuyến mại</h5></a>
+              <div class="border_line"></div>
+              <p>Thông tin những khuyến mại</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="categories_post">
+          <img src="../../../assets/user/image/blog/cat-post/cat-post-1.jpg" alt="post">
+          <div class="categories_details">
+            <div class="categories_text">
+              <a><h5>Đồ ăn</h5></a>
+              <div class="border_line"></div>
+              <p>Giới thiệu về ẩm thực</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--================Blog Categorie Area =================-->
+
+<!--================Blog Area =================-->
+<section class="blog_area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="blog_left_sidebar">
+          <article class="row blog_item" *ngFor="let post of posts">
+            <div *ngIf="posts.length>0" class="col-md-3">
+              <div class="blog_info text-right">
+                <div class="post_tag">
+                  <a>Đề tài: {{post.typePostName}}</a>
+                </div>
+                <ul class="blog_meta list_style">
+                  <li><a>{{post.userName}}<i class="lnr lnr-user"></i></a></li>
+                  <li><a>{{post.createDate | date :'dd-MM-yyyy'}}<i class="lnr lnr-calendar-full"></i></a></li>
+                  <li><a>1.2M Views<i class="lnr lnr-eye"></i></a></li>
+                </ul>
+              </div>
+            </div>
+            <div *ngIf="posts.length>0" class="col-md-9">
+              <div class="blog_post">
+                <div class="blog_details">
+                  <a><h4>{{post.title}}</h4></a>
+                  <div  [innerHTML]="post.description| slice:0:500"></div>
+                  <a routerLink="{{post.id}}" style="color: black" class="view_btn button_hover">Đọc bài</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <div style="margin-left: 230px" *ngIf="posts?.length === 0 " class="col-md-9">
+            <div class="blog_post">
+              <div class="blog_details">
+                <a><h4>Không có bài viết nào</h4></a>
+              </div>
+            </div>
+          </div>
+          <nav class="blog-pagination justify-content-center d-flex">
+            <ul class="pagination">
+              <li class="page-item">
+                <a href="#" class="page-link" aria-label="Previous">
+		                                    <span aria-hidden="true">
+		                                        <span class="lnr lnr-chevron-left"></span>
+		                                    </span>
+                </a>
+              </li>
+              <li class="page-item active"><a class="page-link">01</a></li>
+              <li class="page-item"><a class="page-link">02</a></li>
+              <li class="page-item"><a class="page-link">03</a></li>
+              <li class="page-item"><a class="page-link">04</a></li>
+              <li class="page-item"><a class="page-link">05</a></li>
+              <li class="page-item">
+                <a href="#" class="page-link" aria-label="Next">
+		                                    <span aria-hidden="true">
+		                                        <span class="lnr lnr-chevron-right"></span>
+		                                    </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="blog_right_sidebar">
+          <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Loại bài viết</h4>
+            <ul class="list_style cat-list">
+              <li (click)="getAllPost()">
+                <a type="button" class="d-flex justify-content-between">
+                  <p>Tất cả bài biết</p>
+                  <p>{{postsLength}}</p>
+                </a>
+              </li>
+              <li *ngFor="let type of typePosts">
+                <a type="button" (click)="getAllPostByType(type.id)" class="d-flex justify-content-between">
+                  <p>{{type.typeName}}</p>
+                  <p>{{type.countPost}}</p>
+                </a>
+              </li>
+            </ul>
+            <div class="br"></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

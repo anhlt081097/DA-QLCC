@@ -1,0 +1,228 @@
+<section class="breadcrumb_area blog_banner_two">
+  <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+  <div class="container">
+    <div class="page-cover text-center">
+      <h2 style="color: white" class="page-cover-tittle f_48">Chi tiết nhà: {{houses?.houseName}}</h2>
+      <ol class="breadcrumb">
+        <li><a style="color: white" [routerLink]="'/user'">Trang chủ</a></li>
+        <li><a style="color: white" [routerLink]="'/user/house'">Nhà</a></li>
+        <li class="active">Chi tiết nhà</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+
+<section class="blog_area single-post-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 posts-list">
+        <div class="single-post row">
+          <div class="col-lg-12">
+            <div class="feature-img">
+              <ng-image-slider [images]="image" [imageSize]="{width: '725', height: '350'}" [imagePopup]="false"
+                               #nav></ng-image-slider>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <h5 class="mb-30 title_color" style="text-align: center">Liên hệ</h5>
+            <blockquote class="generic-blockquote">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="single-defination">
+                  <h6 class="mb-20">Cơ sở</h6>
+                  <p>{{homeStay?.homeStayName}}</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="single-defination">
+                  <h6 class="mb-20">Số điện thoại</h6>
+                  <p>{{homeStay?.phone}}</p>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="single-defination">
+                  <h6 class="mb-20">Địa chỉ</h6>
+                  <p>{{homeStay?.villageName}}, {{homeStay?.districtName}}, {{homeStay?.cityName}}</p>
+                </div>
+              </div>
+            </div>
+            </blockquote>
+          </div>
+          <div class="col-lg-12">
+            <p [innerHTML]="houses?.description"></p>
+          </div>
+        </div>
+        <div class="comments-area">
+          <h4>{{houses?.feedbackResponses.length}} Đánh giá</h4>
+          <div class="comment-list" *ngFor="let feedback of houses?.feedbackResponses">
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex">
+                <div class="thumb">
+                  <img style="width: 60px; height: 60px" [src]="feedback.image">
+                </div>
+                <div class="desc">
+                  <h5><a>Tài khoản: {{feedback.userName}}</a></h5>
+                  <p class="date">Thời gian: {{feedback.createDate | date: 'HH:mm:ss dd/MM/yyyy'}} </p>
+                  <p class="comment">
+                    Nội dung: {{feedback.content}}
+                  </p>
+                </div>
+              </div>
+              <div class="reply-btn" style="width: 270px;">
+                <ngx-star-rating  [ngModel]="feedback.rate" [id]="feedback.id"
+                                 [disabled]="true"></ngx-star-rating>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="userName" class="comment-form">
+          <h4>Đánh giá</h4>
+          <form [formGroup]="feedBackForm" >
+            <div class="media post_item" style="margin-left: 210px  ;padding-bottom: 20px ">
+              <ngx-star-rating  [formControlName]="'rate'" ></ngx-star-rating>
+            </div>
+            <div class="form-group">
+              <p>
+                <mat-form-field appearance="fill" style="width: 500px;">
+                  <mat-label>Đánh giá</mat-label>
+                  <textarea rows="4" matInput placeholder="Vui lòng nhập đánh giá" [formControlName]="'content'"
+                            ></textarea>
+                  <mat-icon
+                    matSuffix>feedback
+                  </mat-icon>
+                </mat-form-field>
+              </p>
+            </div>
+            <button mat-raised-button color="accent" style="width: 200px" (click)="feedback()" [disabled]="(!feedBackForm.valid)" >Đăng nội dung</button>
+          </form>
+        </div>
+        <div *ngIf="!userName" class="comment-form">
+          <h4>Bạn phải đăng nhập mới được đánh giá</h4>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="blog_right_sidebar">
+          <aside class="single_sidebar_widget popular_post_widget">
+            <h3 class="widget_title">Thông tin nhà </h3>
+            <div class="media post_item">
+              <img class="author_img rounded-circle" style="width: 20px; height: 20px" src="../../../assets/images/list-icon.png" alt="">
+              <div class="media-body" style="display: flex; ">
+                <p style="margin-right: 5px">Tên nhà:</p>
+                <a><h3>{{houses?.houseName}}</h3></a>
+              </div>
+            </div>
+            <div class="media post_item">
+              <img class="author_img rounded-circle" style="width: 20px; height: 20px" src="../../../assets/images/list-icon.png" alt="">
+              <div class="media-body" style="display: flex;">
+                <p style="margin-right: 5px">Số lượng phòng ngủ:</p>
+                <a><h3>{{houses?.amountRoom}}</h3></a>
+              </div>
+            </div>
+            <div class="media post_item">
+              <img class="author_img rounded-circle" style="width: 20px; height: 20px" src="../../../assets/images/list-icon.png" alt="">
+              <div class="media-body" style="display: flex; ">
+                <p style="margin-right: 5px">Kích cỡ nhà:</p>
+                <a><h3>{{houses?.size}} m²</h3></a>
+              </div>
+            </div>
+            <div class="media post_item">
+              <img class="author_img rounded-circle" style="width: 20px; height: 20px" src="../../../assets/images/list-icon.png" alt="">
+              <div class="media-body" style="display: flex">
+                <p style="margin-right: 5px">Số người tối đa:</p>
+                <a><h3>{{houses?.capacity}} người</h3></a>
+              </div>
+            </div>
+            <div class="media post_item">
+              <img class="author_img rounded-circle" style="width: 20px; height: 20px" src="../../../assets/images/list-icon.png" alt="">
+              <div class="media-body" style="display: flex; ">
+                <p style="margin-right: 5px">Giá nhà:</p>
+                <a><h3>{{houses?.price}} VNĐ</h3></a>
+              </div>
+            </div>
+            <div class="br"></div>
+            <aside class="single-sidebar-widget tag_cloud_widget">
+              <h6 style="text-align: center;">Cảnh quan</h6>
+              <ul class="list_style">
+                <li style="padding: 2px 2px 2px 2px" *ngFor="let view of detailViews"><a>
+                  <img [src]="view.image" style="width: 40px; height: 40px" >
+                  {{view.viewName}}</a></li>
+              </ul>
+            </aside>
+            <div class="br"></div>
+          </aside>
+          <aside class="single-sidebar-widget newsletter_widget">
+            <h4 class="widget_title">Đặt nhà</h4>
+            <p>
+              Hãy cho chúng tôi biết, bạn muốn đặt ngày nào ?
+            </p>
+            <div class="form-group d-flex flex-row">
+              <div class="input-group">
+
+              </div>
+            </div>
+            <form [formGroup]="dateFrom" (ngSubmit)="booking()">
+              <p >
+                <mat-form-field appearance="fill"  style="width: 300px">
+                  <mat-label>Chọn ngày đặt nhà</mat-label>
+                  <mat-date-range-input [dateFilter]="filterDate" [min]="today" [rangePicker]="picker">
+                    <input [formControlName]="'dateIn'" matStartDate placeholder="Ngày nhận nhà">
+                    <input [formControlName]="'dateOut'" matEndDate placeholder="Ngày trả nhà"
+                           (dateChange)="endChange($event)">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker  disabled="false" #picker></mat-date-range-picker>
+                  <mat-error *ngIf="dateFrom.controls.dateIn.hasError('matStartDateInvalid')">Invalid start date
+                  </mat-error>
+                  <mat-error *ngIf="dateFrom.controls.dateOut.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                </mat-form-field>
+              </p>
+              <button mat-raised-button style="width: 100px;" color="primary" [disabled]="(this.dateFrom.get('dateIn').value === null || this.dateFrom.get('dateOut').value === null)"  >Đặt</button>
+            </form>
+            <p class="text-bottom">Bạn hãy đặt những ngày còn trống</p>
+            <div class="br"></div>
+          </aside>
+          <aside class="single_sidebar_widget author_widget">
+            <p>Đánh giá chất lượng</p>
+        <br>
+            <div class="media post_item" style="margin-left: 20px  ;padding-bottom: 20px ">
+            <ngx-star-rating  [ngModel]="houses?.star"
+                              [disabled]="true"></ngx-star-rating>
+            </div>
+            <h4>{{houses?.scores === 0.0? 'Chưa có sao' : houses?.scores + ' /5 sao'}} </h4>
+            <div class="social_icon">
+              <a ><i class="fa fa-facebook"></i></a>
+              <a ><i class="fa fa-twitter"></i></a>
+              <a ><i class="fa fa-github"></i></a>
+              <a ><i class="fa fa-behance"></i></a>
+            </div>
+            <p>Cách duy nhất để viết đánh giá là đầu tiên bạn phải thực hiện đặt phòng.
+              Đó là cách chúng tôi biết đánh giá đến từ khách thực đã từng ở tại chỗ nghỉ.</p>
+            <div class="br"></div>
+          </aside>
+          <aside class="single_sidebar_widget ads_widget">
+            <a href="#"><img class="img-fluid" src="../../../assets/user/image/blog/add.jpg" alt=""></a>
+            <div class="br"></div>
+          </aside>
+          <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Tiện ích</h4>
+            <ul class="list_style cat-list">
+              <li type="button" (click)="getDetailUtility(typeUtility.utility)"  [nbPopover]="card" *ngFor="let typeUtility of typeUtilitys">
+                <a class="d-flex justify-content-between">
+                  <p >{{typeUtility.typeName}}</p>
+                  <p>{{getCountUtility(typeUtility.utility)}}</p>
+                </a>
+              </li>
+            </ul>
+            <div class="br"></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #card>
+  <nb-card-body *ngFor="let detailUtility of detailUtilitysSearch">
+    <img style="width: 60px; height: 60px; padding: 5px 5px 5px 5px" src="{{detailUtility.image}}"><a style=" font-weight: bold; padding: 5px 5px 5px 5px">Tiện ích: </a>{{detailUtility.utilityName}} x {{detailUtility.quantity}} <br>
+  </nb-card-body>
+</ng-template>
