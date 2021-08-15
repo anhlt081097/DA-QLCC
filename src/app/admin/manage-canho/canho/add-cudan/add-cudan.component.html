@@ -106,14 +106,14 @@
             </mat-hint>
           </mat-form-field>
         </p>
-        <!-- <p>
+        <p>
           <ngx-uploader type="Kéo thả ảnh mới" height="190px" width="205px " hiddenImage="true" hiddenForm="false"
             (linkFile)="getImage($event)"></ngx-uploader>
         </p>
         <p>
-          <img [src]="this.cuDanAddForm.get('image').value"
+          <img [src]="this.cuDanAddForm.get('hinhAnh').value"
             style="padding-top: 8px; border-radius: 8%; height: 197px; width: 205px">
-        </p> -->
+        </p>
       </div>
       <mat-dialog-actions align="end">
         <button mat-flat-button mat-dialog-close>Thoát</button>
@@ -204,7 +204,7 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Họ tên</mat-label>
-            <input matInput placeholder="Vui lòng nhập họ tên" [formControlName]="'hoTen'" required>
+            <input matInput placeholder="Vui lòng nhập họ tên" [formControlName]="'hoTen'" readonly required>
             <mat-icon [ngClass]="{'red-icon': !cuDanEditForm.get('hoTen').valid && cuDanEditForm.get('hoTen').touched}"
               matSuffix>account_circle
             </mat-icon>
@@ -216,7 +216,7 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Giới tính</mat-label>
-            <mat-select [formControlName]="'gioiTinh'">
+            <mat-select [formControlName]="'gioiTinh'" disabled>
               <mat-option [value]="true">Nam</mat-option>
               <mat-option [value]="false">Nữ</mat-option>
             </mat-select>
@@ -232,7 +232,8 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Số điện thoại</mat-label>
-            <input matInput placeholder="Vui lòng nhập số điện thoại" [formControlName]="'soDienThoai'" required>
+            <input matInput type="number" placeholder="Vui lòng nhập số điện thoại" [formControlName]="'soDienThoai'"
+              required>
             <mat-icon
               [ngClass]="{'red-icon': !cuDanEditForm.get('soDienThoai').valid && cuDanEditForm.get('soDienThoai').touched}"
               matSuffix>phone
@@ -259,7 +260,8 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Ngày sinh</mat-label>
-            <input type="date" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'ngaySinh'" required>
+            <input type="date" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'ngaySinh'" readonly
+              required>
             <mat-icon
               [ngClass]="{'red-icon': !cuDanEditForm.get('ngaySinh').valid && cuDanEditForm.get('ngaySinh').touched}"
               matSuffix>date_range
@@ -272,7 +274,8 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Số CCCD</mat-label>
-            <input type="text" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'soCCCD'" required>
+            <input type="text" matInput placeholder="Vui lòng nhập ngày sinh" readonly [formControlName]="'soCCCD'"
+              required>
             <mat-icon
               [ngClass]="{'red-icon': !cuDanEditForm.get('soCCCD').valid && cuDanEditForm.get('soCCCD').touched}"
               matSuffix>people
@@ -287,7 +290,7 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Địa chỉ</mat-label>
-            <textarea rows="10" matInput placeholder="Vui lòng nhập địa chỉ" [formControlName]="'diaChi'"
+            <textarea rows="10" matInput placeholder="Vui lòng nhập địa chỉ" readonly [formControlName]="'diaChi'"
               required></textarea>
             <mat-icon
               [ngClass]="{'red-icon': !cuDanEditForm.get('diaChi').valid && cuDanEditForm.get('diaChi').touched}"
@@ -298,14 +301,14 @@
             </mat-hint>
           </mat-form-field>
         </p>
-        <!-- <p>
+        <p>
           <ngx-uploader type="Kéo thả ảnh mới" height="190px" width="205px " hiddenImage="true" hiddenForm="false"
-            (linkFile)="getImage($event)"></ngx-uploader>
+            (linkFile)="getImageEdit($event)"></ngx-uploader>
         </p>
         <p>
-          <img [src]="this.cuDanAddForm.get('image').value"
+          <img [src]="this.cuDanEditForm.get('hinhAnh').value"
             style="padding-top: 8px; border-radius: 8%; height: 197px; width: 205px">
-        </p> -->
+        </p>
       </div>
       <mat-dialog-actions align="end">
         <button mat-flat-button mat-dialog-close>Thoát</button>
@@ -422,14 +425,14 @@
             </mat-hint>
           </mat-form-field>
         </p>
-        <!-- <p>
+        <p>
           <ngx-uploader type="Kéo thả ảnh mới" height="190px" width="205px " hiddenImage="true" hiddenForm="false"
             (linkFile)="getImage($event)"></ngx-uploader>
         </p>
         <p>
-          <img [src]="this.cuDanAddForm.get('image').value"
+          <img [src]="this.cuDanAddForm.get('hinhAnh').value"
             style="padding-top: 8px; border-radius: 8%; height: 197px; width: 205px">
-        </p> -->
+        </p>
       </div>
       <mat-dialog-actions align="end">
         <button mat-flat-button mat-dialog-close>Thoát</button>

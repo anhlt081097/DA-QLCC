@@ -10,7 +10,7 @@ import { TransactionResponse } from "../../../shared/model/transaction/transacti
 import { ToastService } from "../../../shared/service/toast.service";
 import { TransactionService } from "../../../shared/service/transaction.service";
 import { Images } from "../../manage-home-stay/home-stay/add-edit-home-stay/add-edit-home-stay.component";
-import { AddEmployeeComponent } from "../../manage-user/employee/add-canho/add-canho.component";
+import { AddCanHoComponent } from "../../manage-canho/canho/add-canho/add-canho.component";
 
 @Component({
   selector: "ngx-nhan-vien",
@@ -60,7 +60,7 @@ export class NhanVienComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
   openAdd() {
-    const dialogRef = this.dialog.open(AddEmployeeComponent);
+    const dialogRef = this.dialog.open(AddCanHoComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
         // this.getAllEmployee();

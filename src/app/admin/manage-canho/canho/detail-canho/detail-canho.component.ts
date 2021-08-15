@@ -20,11 +20,12 @@ import { CudanService } from "../../../../shared/service/cuDan/cudan.service";
 import { ThecudanService } from "../../../../shared/service/theCuDan/thecudan.service";
 import { ToastService } from "../../../../shared/service/toast.service";
 import { XecoService } from "../../../../shared/service/xeCo/xeco.service";
-import { AddEmployeeComponent } from "../add-canho/add-canho.component";
+import { AddCanHoComponent } from "../add-canho/add-canho.component";
 import { AddCudanComponent } from "../add-cudan/add-cudan.component";
 import { AddDichvuComponent } from "./add-dichvu/add-dichvu.component";
 import { AddThecudanComponent } from "./add-thecudan/add-thecudan.component";
 import { AddXecoComponent } from "./add-xeco/add-xeco.component";
+import { DetailDichvuComponent } from "./detail-dichvu/detail-dichvu.component";
 
 export interface PeriodicElement {
   name: string;
@@ -48,8 +49,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 @Component({
   selector: "ngx-detail-employee",
-  templateUrl: "./detail-employee.component.html",
-  styleUrls: ["./detail-employee.component.scss"],
+  templateUrl: "./detail-canho.component.html",
+  styleUrls: ["./detail-canho.component.scss"],
   animations: [
     trigger("detailExpand", [
       state("collapsed", style({ height: "0px", minHeight: "0" })),
@@ -182,11 +183,22 @@ export class DetailEmployeeComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
+        this.getAllCuDanByCanHo();
+      }
+    });
+  }
+  openDetailDichVu() {
+    const type = "edit";
+    const id = this.idCanHo;
+    const dialogRef = this.dialog.open(DetailDichvuComponent, {
+      data: { type, id },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
         this.getAllTheCuDanByCanHo();
       }
     });
   }
-
   openEditCuDan(cuDan: CuDan) {
     const type = "edit";
     const id = this.idCanHo;
@@ -196,7 +208,7 @@ export class DetailEmployeeComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.getAllTheCuDanByCanHo();
+        this.getAllCuDanByCanHo();
       }
     });
   }

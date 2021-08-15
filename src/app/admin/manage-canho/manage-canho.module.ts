@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ListEmployeeComponent } from "./employee/employer.component";
-import { ManageUserRoutingModule } from "./manage-user-routing.module";
-import { ManageUserComponent } from "./manage-user.component";
+import { CanHoComponent } from "./canho/canho.component";
+import { ManageCanHoRoutingModule } from "./manage-canho-routing.module";
+import { ManageCanHoComponent } from "./manage-canho.component";
 import {
   NbActionsModule,
   NbButtonModule,
@@ -28,8 +28,8 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { AddEmployeeComponent } from "./employee/add-canho/add-canho.component";
-import { EditEmployeeComponent } from "./employee/edit-employee/edit-employee.component";
+import { AddCanHoComponent } from "./canho/add-canho/add-canho.component";
+import { EditEmployeeComponent } from "./canho/edit-employee/edit-employee.component";
 import { AddMemberComponent } from "./member/add-member/add-member.component";
 import { EditMemberComponent } from "./member/edit-member/edit-member.component";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -44,18 +44,21 @@ import { MatListModule } from "@angular/material/list";
 import { EditProfileComponent } from "./profile/edit-profile/edit-profile.component";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { ComponentModule } from "../../shared/component/component.module";
-import { DetailEmployeeComponent } from "./employee/detail-employee/detail-employee.component";
+import { DetailEmployeeComponent } from "./canho/detail-canho/detail-canho.component";
 import { NbListModule } from "@nebular/theme";
-import { AddDichvuComponent } from './employee/detail-employee/add-dichvu/add-dichvu.component';
-import { AddThecudanComponent } from './employee/detail-employee/add-thecudan/add-thecudan.component';
-import { AddCudanComponent } from './employee/add-cudan/add-cudan.component';
-import { AddXecoComponent } from './employee/detail-employee/add-xeco/add-xeco.component';
+import { AddDichvuComponent } from "./canho/detail-canho/add-dichvu/add-dichvu.component";
+import { AddThecudanComponent } from "./canho/detail-canho/add-thecudan/add-thecudan.component";
+import { AddCudanComponent } from "./canho/add-cudan/add-cudan.component";
+import { AddXecoComponent } from "./canho/detail-canho/add-xeco/add-xeco.component";
+import { AddTaikhoanCanhoComponent } from "./canho/add-taikhoan-canho/add-taikhoan-canho.component";
+import { DetailDichvuComponent } from "./canho/detail-canho/detail-dichvu/detail-dichvu.component";
+import { PrintHoadonComponent } from "./canho/detail-canho/print-hoadon/print-hoadon.component";
 @NgModule({
   declarations: [
-    ListEmployeeComponent,
-    ManageUserComponent,
+    CanHoComponent,
+    ManageCanHoComponent,
     MemberComponent,
-    AddEmployeeComponent,
+    AddCanHoComponent,
     EditEmployeeComponent,
     AddMemberComponent,
     EditMemberComponent,
@@ -66,12 +69,15 @@ import { AddXecoComponent } from './employee/detail-employee/add-xeco/add-xeco.c
     AddThecudanComponent,
     AddCudanComponent,
     AddXecoComponent,
+    AddTaikhoanCanhoComponent,
+    DetailDichvuComponent,
+    PrintHoadonComponent,
   ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    ManageUserRoutingModule,
+    ManageCanHoRoutingModule,
     NbCardModule,
     NbTreeGridModule,
     NbIconModule,
@@ -106,4 +112,4 @@ import { AddXecoComponent } from './employee/detail-employee/add-xeco/add-xeco.c
     MatListModule,
   ],
 })
-export class ManageUserModule {}
+export class ManageCanHoModule {}

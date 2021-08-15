@@ -17,7 +17,7 @@ import { type } from "os";
   templateUrl: "./add-canho.component.html",
   styleUrls: ["./add-canho.component.scss"],
 })
-export class AddEmployeeComponent implements OnInit {
+export class AddCanHoComponent implements OnInit {
   // employeeForm: FormGroup;
   // employeeRequest: EmployeeRequest;
   // homeStays: HomeStayResponse[];
@@ -27,7 +27,7 @@ export class AddEmployeeComponent implements OnInit {
   typeAction: string;
   constructor(
     private toastrService: ToastService,
-    private dialogRef: MatDialogRef<AddEmployeeComponent>,
+    private dialogRef: MatDialogRef<AddCanHoComponent>,
     private canHoService: CanhoService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}

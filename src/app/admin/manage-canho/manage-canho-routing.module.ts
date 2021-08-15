@@ -1,21 +1,21 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { NotFoundComponent } from "../../shared/component/not-found/not-found.component";
-import { ListEmployeeComponent } from "./employee/employer.component";
-import { ManageUserComponent } from "./manage-user.component";
+import { CanHoComponent } from "./canho/canho.component";
+import { ManageCanHoComponent } from "./manage-canho.component";
 import { MemberComponent } from "./member/member.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { AdminGuard } from "../../shared/guard/admin.guard";
-import { DetailEmployeeComponent } from "./employee/detail-employee/detail-employee.component";
+import { DetailEmployeeComponent } from "./canho/detail-canho/detail-canho.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: ManageUserComponent,
+    component: ManageCanHoComponent,
     children: [
       {
-        path: "employee",
-        component: ListEmployeeComponent,
+        path: "canho",
+        component: CanHoComponent,
         // canActivate: [AdminGuard],
       },
       {
@@ -47,4 +47,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ManageUserRoutingModule {}
+export class ManageCanHoRoutingModule {}

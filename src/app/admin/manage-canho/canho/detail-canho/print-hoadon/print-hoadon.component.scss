@@ -1,0 +1,157 @@
+.body-page{
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.header-content{
+  height: 100px;
+  width: 500px;
+  float: left;
+  margin-bottom: 10px;
+}
+.header-logo{
+  margin-top: 15px;
+  height: 100%;
+  width: 20%;
+  float: left;
+}
+.hedaer-text{
+  margin-top: 15px;
+  height: 100%;
+  width: 80%;
+  float: left;
+}
+.hedaer-text p {
+  font-size: small;
+  line-height: 80%;
+  font-size: 12px;
+}
+
+.body-content{
+  width: 100%;
+  height: 60px;
+  float: left;
+}
+.titleBody{
+  height: 50px;
+  width: 70%;
+  float: left;
+  text-align: center;
+}
+.body-content p {
+  margin-top: 0.2px;
+  font-size: 30px;
+  font-weight: bold;
+}
+.numberTB{
+  height: 50px;
+  width: 30%;
+  float: left;
+}
+.numberTB p {
+  font-size: 14px;
+  line-height: 80%;
+  text-align:end;
+  margin-top: 20px;
+}
+.body-content2{
+  width: 100%;
+  float: left;
+}
+.nameLeft{
+  float: left;
+  width: 70%;
+  height: 100px;
+}
+.nameLeft p{
+  line-height: 0.001;
+  font-size: 14px;
+  text-align: start;
+  margin-top: 40px;
+}
+.nameRight{
+  float: left;
+  width: 30%;
+  margin: left;
+  height: 100px;
+}
+.nameRight p{
+  text-align:end;
+  line-height: 80%;
+  font-size: 14px;
+}
+.nameRight h5{
+  text-align:end;
+  line-height: 0.001;
+  font-size: 14px;
+}
+.content1{
+  height: 100px;
+  width: 100%;
+  float: left;
+}
+.title-content1 {
+  float: left;
+  width: 50%;
+  height: 20px;
+}
+.title-content2 {
+  float: left;
+  width: 50%;
+  height: 20px;
+}
+.title-content3{
+  margin-top: 10px;
+  float: left;
+  width: 100%;
+}
+.content2{
+  margin-top: 20px;
+  height: 300px;
+  width: 100%;
+  float: left;
+}
+.title-content5{
+  margin-top: 10px;
+  float: left;
+  width: 100%;
+}
+.content3{
+  margin-top: 100px;
+  height: 200px;
+  width: 100%;
+  float: left;
+}
+.content4{
+  margin-top: 100px;
+  height:350px;
+  width: 100%;
+  float: left;
+}
+.content5{
+  margin-top: 100px;
+  height: 200px;
+  width: 100%;
+  float: left;
+}
+.content5 h4{
+  text-align: center;
+}
+
+@media print {
+  body * {
+    display: none;
+  }
+  .hidePrint{
+      display: none;
+  }
+  .seanet-content-general {
+      background-color: white;
+      height: 100%;
+      width: 100%;
+      position: static;
+      top: 0;
+      left: 0;
+      margin: 0;
+  }
+}

@@ -52,7 +52,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatListModule } from "@angular/material/list";
 import { MatSortModule } from "@angular/material/sort";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { ManageUserRoutingModule } from "../manage-user/manage-user-routing.module";
+import { ManageCanHoRoutingModule } from "../manage-canho/manage-canho-routing.module";
 
 @NgModule({
   declarations: [
@@ -105,7 +105,7 @@ import { ManageUserRoutingModule } from "../manage-user/manage-user-routing.modu
     MatTableModule,
     MatMenuModule,
     MatPaginatorModule,
-    ManageUserRoutingModule,
+    ManageCanHoRoutingModule,
     MatDatepickerModule,
     MatSortModule,
     NbListModule,

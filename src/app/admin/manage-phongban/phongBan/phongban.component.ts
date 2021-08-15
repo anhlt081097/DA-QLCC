@@ -11,7 +11,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { TransactionResponse } from "../../../shared/model/transaction/transaction.response";
 import { PdfComponent } from "../../../shared/component/pdf/pdf.component";
 import { EmployeeResponse } from "../../../shared/model/employee/employee-response";
-import { AddEmployeeComponent } from "../../manage-user/employee/add-canho/add-canho.component";
+import { AddCanHoComponent } from "../../manage-canho/canho/add-canho/add-canho.component";
 
 @Component({
   selector: "ngx-transaction",
@@ -59,7 +59,7 @@ export class PhongBanComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
   openAdd() {
-    const dialogRef = this.dialog.open(AddEmployeeComponent);
+    const dialogRef = this.dialog.open(AddCanHoComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
         // this.getAllEmployee();

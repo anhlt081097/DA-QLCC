@@ -17,7 +17,7 @@ export const Admin_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: "Danh sách căn hộ",
-        link: "/admin/manage-user/employee",
+        link: "/admin/manage-canho/canho",
       },
       {
         title: "Thông tin thẻ",

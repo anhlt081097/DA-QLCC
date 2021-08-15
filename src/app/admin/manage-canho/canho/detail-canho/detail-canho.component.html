@@ -168,11 +168,107 @@
         </div>
       </div>
     </div>
+    <nb-tabset>
+
+    </nb-tabset>
     <div class="card-row">
       <div class="card-col">
-        <nb-card size="medium">
-          <nb-card-header>
+        <nb-flip-card>
+          <nb-card-front>
+            <nb-card>
+              <nb-card-header>
+                Dịch vụ cố định
+                <button mat-icon-button color="primary" (click)="openAddDichVu()"
+                  style="float:right;margin-top: -10px;">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </nb-card-header>
+              <nb-card-body>
+                <mat-form-field>
+                  <mat-label>Tìm kiếm</mat-label>
+                  <input matInput (keyup)="applyFilterDichVu($event)" placeholder="Nhập dịch vụ cần tìm..." #input>
+                </mat-form-field>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Thời gian</th>
+                      <th>Trạng thái</th>
 
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">1</td>
+                      <td>08/2021</td>
+                      <td>Chưa thanh toán</td>
+
+                      <td>
+                        <button mat-button (click)="openDetailDichVu()">Chi tiết</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td scope="row">2</td>
+                      <td>07/2021</td>
+                      <td>Đã thanh toán</td>
+
+                      <td><button mat-button>Chi tiết</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </nb-card-body>
+              <nb-card-footer>
+                Dịnh vụ sửa chữa
+              </nb-card-footer>
+            </nb-card>
+          </nb-card-front>
+          <nb-card-back>
+            <nb-card>
+              <nb-card-header>
+                Dịnh vụ sửa chữa
+              </nb-card-header>
+              <nb-card-body>
+                <mat-form-field>
+                  <mat-label>Tìm kiếm</mat-label>
+                  <input matInput (keyup)="applyFilterDichVu($event)" placeholder="Nhập dịch vụ cần tìm..." #input>
+                </mat-form-field>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Trạng thái</th>
+                      <th>Thời gian</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">2</td>
+                      <td>Chưa thanh toán</td>
+                      <td>08/2021</td>
+                      <td><button mat-button>Chi tiết</button></td>
+                    </tr>
+                    <tr>
+                      <td scope="row">1</td>
+                      <td>Đã thanh toán</td>
+                      <td>07/2021</td>
+                      <td><button mat-button color="primary">Chi tiết</button>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </nb-card-body>
+              <nb-card-footer>
+                Dịch vụ cố định
+              </nb-card-footer>
+            </nb-card>
+          </nb-card-back>
+        </nb-flip-card>
+        <!-- <nb-card size="medium">
+          <nb-card-header>
             Dịch vụ căn hộ đang sử dụng
             <button mat-icon-button color="primary" (click)="openAddDichVu()" style="float:right;margin-top: -10px;">
               <mat-icon>add</mat-icon>
@@ -184,46 +280,46 @@
               <input matInput (keyup)="applyFilterDichVu($event)" placeholder="Nhập dịch vụ cần tìm..." #input>
             </mat-form-field>
             <!-- <table mat-table class="mat-elevation-z8"> -->
-            <!-- [dataSource]="dataSource" -->
-            <!--- Note that these columns can be defined in any order.
+        <!-- [dataSource]="dataSource" -->
+        <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
 
-            <!-- Position Column -->
-            <!-- <ng-container matColumnDef="position">
+        <!-- Position Column -->
+        <!-- <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef> No. </th>
                 <td mat-cell *matCellDef="let element"> {{element.position}} </td>
               </ng-container> -->
 
-            <!-- Name Column -->
-            <!-- <ng-container matColumnDef="name">
+        <!-- Name Column -->
+        <!-- <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Name </th>
                 <td mat-cell *matCellDef="let element"> {{element.name}} </td>
               </ng-container> -->
 
-            <!-- Weight Column -->
-            <!-- <ng-container matColumnDef="weight">
+        <!-- Weight Column -->
+        <!-- <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef> Weight </th>
                 <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
               </ng-container> -->
 
-            <!-- Symbol Column -->
-            <!-- <ng-container matColumnDef="symbol">
+        <!-- Symbol Column -->
+        <!-- <ng-container matColumnDef="symbol">
                 <th mat-header-cell *matHeaderCellDef> Symbol </th>
                 <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
               </ng-container> -->
 
-            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell" colspan="4">Không có dữ liệu: {{input.value}}</td>
               </tr> -->
 
-            <!-- </table> -->
-          </nb-card-body>
-          <nb-card-footer>
-            <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
-          </nb-card-footer>
-        </nb-card>
+        <!-- </table> -->
+        <!-- </nb-card-body> -->
+        <!-- <nb-card-footer> -->
+        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+        <!-- </nb-card-footer> -->
+        <!-- </nb-card>  -->
       </div>
     </div>
   </div>

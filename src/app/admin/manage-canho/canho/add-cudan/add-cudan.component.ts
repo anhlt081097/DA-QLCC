@@ -63,6 +63,7 @@ export class AddCudanComponent implements OnInit {
       ngaySinh: new FormControl(null, Validators.required),
       soCCCD: new FormControl(null, Validators.required),
       diaChi: new FormControl(null, Validators.required),
+      hinhAnh: new FormControl(null),
       soDienThoai: new FormControl(null, [
         Validators.required,
         Validators.pattern(/((09|03|07|08|05)+([0-9]{8})\b)/),
@@ -76,6 +77,7 @@ export class AddCudanComponent implements OnInit {
       ngaySinh: new FormControl(null, Validators.required),
       soCCCD: new FormControl(null, Validators.required),
       diaChi: new FormControl(null, Validators.required),
+      hinhAnh: new FormControl(null),
       soDienThoai: new FormControl(null, [
         Validators.required,
         Validators.pattern(/((09|03|07|08|05)+([0-9]{8})\b)/),
@@ -123,8 +125,7 @@ export class AddCudanComponent implements OnInit {
     this.cuDan.ngaySinh = this.cuDanAddForm.get("ngaySinh").value;
     this.cuDan.soCCCD = this.cuDanAddForm.get("soCCCD").value;
     this.cuDan.diaChi = this.cuDanAddForm.get("diaChi").value;
-    this.cuDan.hinhAnh =
-      "https://i.pinimg.com/originals/eb/b0/2a/ebb02aedec9bc74f65e38311c7e14d34.png";
+    this.cuDan.hinhAnh = this.cuDanAddForm.get("hinhAnh").value;
     this.cuDan.soDienThoai = this.cuDanAddForm.get("soDienThoai").value;
     this.cuDan.email = this.cuDanAddForm.get("email").value;
     this.cuDan.chuCanHo = false;
@@ -151,8 +152,7 @@ export class AddCudanComponent implements OnInit {
     this.cuDan.ngaySinh = this.cuDanEditForm.get("ngaySinh").value;
     this.cuDan.soCCCD = this.cuDanEditForm.get("soCCCD").value;
     this.cuDan.diaChi = this.cuDanEditForm.get("diaChi").value;
-    this.cuDan.hinhAnh =
-      "https://i.pinimg.com/originals/eb/b0/2a/ebb02aedec9bc74f65e38311c7e14d34.png";
+    this.cuDan.hinhAnh = this.cuDanEditForm.get("hinhAnh").value;
     this.cuDan.soDienThoai = this.cuDanEditForm.get("soDienThoai").value;
     this.cuDan.email = this.cuDanEditForm.get("email").value;
     this.cuDan.chuCanHo = false;
@@ -174,8 +174,9 @@ export class AddCudanComponent implements OnInit {
     this.cuDan.ngaySinh = this.cuDanAddForm.get("ngaySinh").value;
     this.cuDan.soCCCD = this.cuDanAddForm.get("soCCCD").value;
     this.cuDan.diaChi = this.cuDanAddForm.get("diaChi").value;
-    this.cuDan.hinhAnh =
-      "https://i.pinimg.com/originals/eb/b0/2a/ebb02aedec9bc74f65e38311c7e14d34.png";
+    this.cuDan.hinhAnh = this.cuDanAddForm.get("hinhAnh").value;
+
+    // "https://i.pinimg.com/originals/eb/b0/2a/ebb02aedec9bc74f65e38311c7e14d34.png";
     this.cuDan.soDienThoai = this.cuDanAddForm.get("soDienThoai").value;
     this.cuDan.email = this.cuDanAddForm.get("email").value;
     this.cuDan.chuCanHo = true;
@@ -195,30 +196,35 @@ export class AddCudanComponent implements OnInit {
       }
     );
   }
-  updateProfile() {
-    this.profileRequest.id = this.profileEditForm.get("id").value;
-    this.profileRequest.firstName = this.profileEditForm.get("firstName").value;
-    this.profileRequest.lastName = this.profileEditForm.get("lastName").value;
-    this.profileRequest.address = this.profileEditForm.get("address").value;
-    this.profileRequest.dateOfBirth =
-      this.profileEditForm.get("dateOfBirth").value;
-    this.profileRequest.sex = this.profileEditForm.get("sex").value;
-    this.profileRequest.image = this.profileEditForm.get("image").value;
-    this.profileRequest.phone = this.profileEditForm.get("phone").value;
-    this.profileRequest.email = this.profileEditForm.get("email").value;
+  // updateProfile() {
+  //   this.profileRequest.id = this.profileEditForm.get("id").value;
+  //   this.profileRequest.firstName = this.profileEditForm.get("firstName").value;
+  //   this.profileRequest.lastName = this.profileEditForm.get("lastName").value;
+  //   this.profileRequest.address = this.profileEditForm.get("address").value;
+  //   this.profileRequest.dateOfBirth =
+  //     this.profileEditForm.get("dateOfBirth").value;
+  //   this.profileRequest.sex = this.profileEditForm.get("sex").value;
+  //   this.profileRequest.image = this.profileEditForm.get("image").value;
+  //   this.profileRequest.phone = this.profileEditForm.get("phone").value;
+  //   this.profileRequest.email = this.profileEditForm.get("email").value;
 
-    this.profileService.editProfile(this.profileRequest).subscribe(
-      (data) => {
-        this.toastrService.showToast("success", "Thành công", "Sửa thành công");
-        this.dialogRef.close(true);
-      },
-      (error) => {
-        throwError(error);
-        this.toastrService.showToast("danger", "Thất bại", "Sửa thất bại");
-      }
-    );
+  //   this.profileService.editProfile(this.profileRequest).subscribe(
+  //     (data) => {
+  //       this.toastrService.showToast("success", "Thành công", "Sửa thành công");
+  //       this.dialogRef.close(true);
+  //     },
+  //     (error) => {
+  //       throwError(error);
+  //       this.toastrService.showToast("danger", "Thất bại", "Sửa thất bại");
+  //     }
+  //   );
+  // }
+  getImage(url: string) {
+    this.cuDanAddForm.get("hinhAnh").setValue(url);
   }
-
+  getImageEdit(url: string) {
+    this.cuDanEditForm.get("hinhAnh").setValue(url);
+  }
   // editPassword() {
   //   this.profileRequest.id = this.passwordEditForm.get("id").value;
   //   this.profileRequest.password = this.passwordEditForm.get("password").value;
@@ -253,9 +259,5 @@ export class AddCudanComponent implements OnInit {
   //       );
   //     }
   //   );
-  // }
-
-  // getImage(url: string) {
-  //   this.profileEditForm.get("image").setValue(url);
   // }
 }

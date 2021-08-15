@@ -19,7 +19,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { throwError } from "rxjs";
 import { EmployeeResponse } from "../../../shared/model/employee/employee-response";
 import { EmployeeService } from "../../../shared/service/employee-service.service";
-import { AddEmployeeComponent } from "./add-canho/add-canho.component";
+import { AddCanHoComponent } from "./add-canho/add-canho.component";
 import { EditEmployeeComponent } from "./edit-employee/edit-employee.component";
 import { DialogSubmitLockComponent } from "../../../shared/component/dialog-submit-lock/dialog-submit-lock.component";
 import { DialogSubmitUnlockComponent } from "../../../shared/component/dialog-submit-unlock/dialog-submit-unlock.component";
@@ -27,11 +27,12 @@ import { ToastService } from "../../../shared/service/toast.service";
 import { CanhoService } from "../../../shared/service/canHo/canho.service";
 import { AddCudanComponent } from "./add-cudan/add-cudan.component";
 import { CanHo } from "../../../shared/model/canHo/canho";
+import { AddTaikhoanCanhoComponent } from "./add-taikhoan-canho/add-taikhoan-canho.component";
 
 @Component({
   selector: "ngx-list-employee",
-  templateUrl: "./employee.component.html",
-  styleUrls: ["./employee.component.scss"],
+  templateUrl: "./canho.component.html",
+  styleUrls: ["./canho.component.scss"],
   animations: [
     trigger("detailExpand", [
       state("collapsed", style({ height: "0px", minHeight: "0" })),
@@ -43,14 +44,21 @@ import { CanHo } from "../../../shared/model/canHo/canho";
     ]),
   ],
 })
-export class ListEmployeeComponent implements OnInit, AfterViewInit {
+export class CanHoComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   employee = new MatTableDataSource();
   employeeLock = new MatTableDataSource();
   canHo = new MatTableDataSource();
   canHoKhongHoatDong = new MatTableDataSource();
-  columnsToDisplay = ["userName", "fullName", "email", "phone", "id"];
+  columnsToDisplay = [
+    "userName",
+    "fullName",
+    "email",
+    "phone",
+    "account",
+    "id",
+  ];
   columnsToDisplayKhongHoatDong = [
     "userName",
     "fullName",
@@ -142,7 +150,7 @@ export class ListEmployeeComponent implements OnInit, AfterViewInit {
 
   openAdd() {
     const type = "add";
-    const dialogRef = this.dialog.open(AddEmployeeComponent, {
+    const dialogRef = this.dialog.open(AddCanHoComponent, {
       data: { type },
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -154,7 +162,7 @@ export class ListEmployeeComponent implements OnInit, AfterViewInit {
 
   openEdit(id: number) {
     const type = "edit";
-    const dialogRef = this.dialog.open(AddEmployeeComponent, {
+    const dialogRef = this.dialog.open(AddCanHoComponent, {
       data: { type, id },
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -163,7 +171,16 @@ export class ListEmployeeComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
+  openAddTaiKhoan(id: number) {
+    const dialogRef = this.dialog.open(AddTaikhoanCanhoComponent, {
+      data: id,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.getAllCanHo();
+      }
+    });
+  }
   openAddChuSoHuu(canHo: CanHo) {
     const type = "addCSH";
     const id = canHo.id;

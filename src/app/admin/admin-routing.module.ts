@@ -12,10 +12,10 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       {
-        path: "manage-user",
+        path: "manage-canho",
         loadChildren: () =>
-          import("./manage-user/manage-user.module").then(
-            (m) => m.ManageUserModule
+          import("./manage-canho/manage-canho.module").then(
+            (m) => m.ManageCanHoModule
           ),
         // canActivate: [AdminGuard],
       },

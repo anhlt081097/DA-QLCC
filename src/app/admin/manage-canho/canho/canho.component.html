@@ -24,7 +24,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button routerLink="/admin/manage-user/detail/{{row.id}}" mat-menu-item>
+                <button routerLink="/admin/manage-canho/detail/{{row.id}}" mat-menu-item>
                   <mat-icon>details</mat-icon>
                   <span>Chi tiết</span>
                 </button>
@@ -54,6 +54,12 @@
           <ng-container matColumnDef="phone">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Số điện thoại </th>
             <td mat-cell *matCellDef="let element"> 0904225762 </td>
+          </ng-container>
+          <ng-container matColumnDef="account">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tài khoản </th>
+            <td mat-cell *matCellDef="let element"> True/false <button mat-button (click)="openAddTaiKhoan(element.id)"
+                color="accent">Tạo tài khoản</button>
+            </td>
           </ng-container>
           <ng-container matColumnDef="expandedDetail">
             <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
