@@ -49,16 +49,18 @@
           </ng-container>
           <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên chủ sở hữu </th>
-            <td mat-cell *matCellDef="let element"> Anh </td>
+            <td mat-cell *matCellDef="let element"> {{element.chuCanHo.hoTen}} </td>
           </ng-container>
           <ng-container matColumnDef="phone">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Số điện thoại </th>
-            <td mat-cell *matCellDef="let element"> 0904225762 </td>
+            <td mat-cell *matCellDef="let element"> {{element.chuCanHo.soDienThoai}} </td>
           </ng-container>
           <ng-container matColumnDef="account">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Tài khoản </th>
-            <td mat-cell *matCellDef="let element"> True/false <button mat-button (click)="openAddTaiKhoan(element.id)"
-                color="accent">Tạo tài khoản</button>
+            <td mat-cell *matCellDef="let element"> <button mat-button *ngIf="element.idTaiKhoan == null"
+                (click)="openAddTaiKhoan(element.id)" color="accent">Tạo tài
+                khoản</button>
+              <p *ngIf="element.idTaiKhoan != null">Đã có</p>
             </td>
           </ng-container>
           <ng-container matColumnDef="expandedDetail">
@@ -70,11 +72,11 @@
                   </span>{{element.moTa}}
                   <span *ngIf="element.dienTich != null" class="example-element-description-attribution">Diện tích:
                   </span>{{element.dienTich}}
-                  <span *ngIf="element.soNguoi != null" class="example-element-description-attribution">Số người
+                  <span *ngIf="element.soLuongCuDan != null" class="example-element-description-attribution">Số người
                     hiện đang ở:
-                  </span>{{element.soNguoi}}
-                  <span *ngIf="element.homeStayName != null" class="example-element-description-attribution">Làm tại cơ
-                    sở: </span>{{element.homeStayName}}
+                  </span>{{element.soLuongCuDan}}
+                  <!-- <span *ngIf="element.homeStayName != null" class="example-element-description-attribution">Làm tại cơ
+                    sở: </span>{{element.homeStayName}} -->
                 </div>
               </div>
             </td>

@@ -7,6 +7,9 @@ import { AuthService } from "../../../../shared/service/auth.service";
 import { ProfileRequest } from "../../../../shared/model/profile/profile.request";
 import { ProfileService } from "../../../../shared/service/profile.service";
 import { ToastService } from "../../../../shared/service/toast.service";
+import { LoginResponse } from "../../../../shared/model/login/login-response";
+import { Console } from "console";
+import { LocalStorageService } from "ngx-webstorage";
 
 @Component({
   selector: "ngx-edit-profile",
@@ -16,7 +19,8 @@ import { ToastService } from "../../../../shared/service/toast.service";
 export class EditProfileComponent implements OnInit {
   profileEditForm: FormGroup;
   passwordEditForm: FormGroup;
-  profileRequest: ProfileRequest;
+  profileRequest: any;
+  loginResponse: LoginResponse;
   panelOpenState = false;
   hide = true;
   hide2 = true;
@@ -27,7 +31,8 @@ export class EditProfileComponent implements OnInit {
     private profileService: ProfileService,
     private toastrService: ToastService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private localStorage: LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -36,26 +41,11 @@ export class EditProfileComponent implements OnInit {
       password: null,
       passwordEdit: null,
       email: null,
-      phone: null,
-      firstName: null,
-      lastName: null,
-      address: null,
-      dateOfBirth: null,
-      sex: null,
       image: null,
     };
     this.profileEditForm = new FormGroup({
       id: new FormControl(null),
-      firstName: new FormControl(null, Validators.required),
-      lastName: new FormControl(null, Validators.required),
-      address: new FormControl(null, Validators.required),
-      dateOfBirth: new FormControl(null, Validators.required),
-      sex: new FormControl(null, Validators.required),
       image: new FormControl(null),
-      phone: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(/((09|03|07|08|05)+([0-9]{8})\b)/),
-      ]),
       email: new FormControl(null, [Validators.required, Validators.email]),
     });
     this.passwordEditForm = new FormGroup(
@@ -84,17 +74,14 @@ export class EditProfileComponent implements OnInit {
 
   updateProfile() {
     this.profileRequest.id = this.profileEditForm.get("id").value;
-    this.profileRequest.firstName = this.profileEditForm.get("firstName").value;
-    this.profileRequest.lastName = this.profileEditForm.get("lastName").value;
-    this.profileRequest.address = this.profileEditForm.get("address").value;
-    this.profileRequest.dateOfBirth =
-      this.profileEditForm.get("dateOfBirth").value;
-    this.profileRequest.sex = this.profileEditForm.get("sex").value;
     this.profileRequest.image = this.profileEditForm.get("image").value;
-    this.profileRequest.phone = this.profileEditForm.get("phone").value;
     this.profileRequest.email = this.profileEditForm.get("email").value;
-
-    this.profileService.editProfile(this.profileRequest).subscribe(
+    this.localStorage.clear("email");
+    this.localStorage.store("email", this.profileRequest.email);
+    this.localStorage.clear("image");
+    this.localStorage.store("image", this.profileRequest.image);
+    console.log(this.profileRequest);
+    this.profileService.editAccount(this.profileRequest).subscribe(
       (data) => {
         this.toastrService.showToast("success", "Thành công", "Sửa thành công");
         this.dialogRef.close(true);
@@ -111,8 +98,8 @@ export class EditProfileComponent implements OnInit {
     this.profileRequest.password = this.passwordEditForm.get("password").value;
     this.profileRequest.passwordEdit =
       this.passwordEditForm.get("passwordEdit").value;
-
-    this.profileService.editPassword(this.profileRequest).subscribe(
+    console.log(this.profileRequest);
+    this.profileService.editAccountPass(this.profileRequest).subscribe(
       (data) => {
         this.toastrService.showToast(
           "success",

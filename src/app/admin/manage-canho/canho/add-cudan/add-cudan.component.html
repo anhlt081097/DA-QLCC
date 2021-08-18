@@ -204,7 +204,7 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Họ tên</mat-label>
-            <input matInput placeholder="Vui lòng nhập họ tên" [formControlName]="'hoTen'" readonly required>
+            <input matInput placeholder="Vui lòng nhập họ tên" [formControlName]="'hoTen'" required>
             <mat-icon [ngClass]="{'red-icon': !cuDanEditForm.get('hoTen').valid && cuDanEditForm.get('hoTen').touched}"
               matSuffix>account_circle
             </mat-icon>
@@ -216,7 +216,7 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Giới tính</mat-label>
-            <mat-select [formControlName]="'gioiTinh'" disabled>
+            <mat-select [formControlName]="'gioiTinh'">
               <mat-option [value]="true">Nam</mat-option>
               <mat-option [value]="false">Nữ</mat-option>
             </mat-select>
@@ -260,8 +260,7 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Ngày sinh</mat-label>
-            <input type="date" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'ngaySinh'" readonly
-              required>
+            <input type="text" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'ngaySinh'" required>
             <mat-icon
               [ngClass]="{'red-icon': !cuDanEditForm.get('ngaySinh').valid && cuDanEditForm.get('ngaySinh').touched}"
               matSuffix>date_range
@@ -274,8 +273,7 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Số CCCD</mat-label>
-            <input type="text" matInput placeholder="Vui lòng nhập ngày sinh" readonly [formControlName]="'soCCCD'"
-              required>
+            <input type="text" matInput placeholder="Vui lòng nhập ngày sinh" [formControlName]="'soCCCD'" required>
             <mat-icon
               [ngClass]="{'red-icon': !cuDanEditForm.get('soCCCD').valid && cuDanEditForm.get('soCCCD').touched}"
               matSuffix>people
@@ -290,7 +288,7 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Địa chỉ</mat-label>
-            <textarea rows="10" matInput placeholder="Vui lòng nhập địa chỉ" readonly [formControlName]="'diaChi'"
+            <textarea rows="10" matInput placeholder="Vui lòng nhập địa chỉ" [formControlName]="'diaChi'"
               required></textarea>
             <mat-icon
               [ngClass]="{'red-icon': !cuDanEditForm.get('diaChi').valid && cuDanEditForm.get('diaChi').touched}"

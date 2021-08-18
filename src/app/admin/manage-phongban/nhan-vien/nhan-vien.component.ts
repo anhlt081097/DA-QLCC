@@ -9,7 +9,7 @@ import { EmployeeResponse } from "../../../shared/model/employee/employee-respon
 import { TransactionResponse } from "../../../shared/model/transaction/transaction.response";
 import { ToastService } from "../../../shared/service/toast.service";
 import { TransactionService } from "../../../shared/service/transaction.service";
-import { Images } from "../../manage-home-stay/home-stay/add-edit-home-stay/add-edit-home-stay.component";
+import { Images } from "../../manage-dichvu/home-stay/add-edit-home-stay/add-edit-home-stay.component";
 import { AddCanHoComponent } from "../../manage-canho/canho/add-canho/add-canho.component";
 
 @Component({

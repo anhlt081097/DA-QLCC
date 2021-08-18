@@ -1,0 +1,125 @@
+<h4 mat-dialog-title *ngIf="this.typeAction == 'addDvCoDinh'">THÊM DỊCH VỤ</h4>
+<form *ngIf="this.typeAction == 'addDvCoDinh'" (ngSubmit)="createDichVu()" [formGroup]="dichVuForm">
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Tên dịch vụ</mat-label>
+        <input matInput placeholder="Vui lòng nhập tên dịch vụ" [formControlName]="'tenDichVu'" required>
+        <mat-icon [ngClass]="{'red-icon': !dichVuForm.get('tenDichVu').valid && dichVuForm.get('tenDichVu').touched}"
+          matSuffix>home</mat-icon>
+        <mat-hint *ngIf="!dichVuForm.get('tenDichVu').valid && dichVuForm.get('tenDichVu').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Đơn giá</mat-label>
+        <input matInput type="number" placeholder="Vui lòng nhập đơn giá" [formControlName]="'donGia'" required>
+        <mat-icon [ngClass]="{'red-icon': !dichVuForm.get('donGia').valid && dichVuForm.get('donGia').touched}"
+          matSuffix>crop</mat-icon>
+        <mat-hint *ngIf="!dichVuForm.get('donGia').valid && dichVuForm.get('donGia').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button [disabled]="(!dichVuForm.valid)" mat-flat-button color="primary">Thêm</button>
+  </mat-dialog-actions>
+</form>
+
+<h4 mat-dialog-title *ngIf="this.typeAction == 'editDvCoDinh'">SỬA DỊCH VỤ</h4>
+<form *ngIf="this.typeAction == 'editDvCoDinh'" (ngSubmit)="updateDichVu()" [formGroup]="editDichVuForm">
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Tên dịch vụ</mat-label>
+        <input matInput placeholder="Vui lòng nhập tên dịch vụ" [formControlName]="'ten'" readonly required>
+        <mat-icon [ngClass]="{'red-icon': !editDichVuForm.get('ten').valid && editDichVuForm.get('ten').touched}"
+          matSuffix>home</mat-icon>
+        <mat-hint *ngIf="!editDichVuForm.get('ten').valid && editDichVuForm.get('ten').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Đơn giá</mat-label>
+        <input matInput type="number" placeholder="Vui lòng đơn giá" [formControlName]="'donGia'" required>
+        <mat-icon [ngClass]="{'red-icon': !editDichVuForm.get('donGia').valid && editDichVuForm.get('donGia').touched}"
+          matSuffix>crop</mat-icon>
+        <mat-hint *ngIf="!editDichVuForm.get('donGia').valid && editDichVuForm.get('donGia').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button [disabled]="(!editDichVuForm.valid)" mat-flat-button color="primary">Lưu</button>
+  </mat-dialog-actions>
+</form>
+<h4 mat-dialog-title *ngIf="this.typeAction == 'addDvKhac'">THÊM DỊCH VỤ KHÁC</h4>
+<form *ngIf="this.typeAction == 'addDvKhac'" (ngSubmit)="createDichVuKhac()" [formGroup]="dichVuForm">
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Tên dịch vụ</mat-label>
+        <input matInput placeholder="Vui lòng nhập tên dịch vụ" [formControlName]="'tenDichVu'" required>
+        <mat-icon [ngClass]="{'red-icon': !dichVuForm.get('tenDichVu').valid && dichVuForm.get('tenDichVu').touched}"
+          matSuffix>home</mat-icon>
+        <mat-hint *ngIf="!dichVuForm.get('tenDichVu').valid && dichVuForm.get('tenDichVu').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Đơn giá</mat-label>
+        <input matInput type="number" placeholder="Vui lòng nhập đơn giá" [formControlName]="'donGia'" required>
+        <mat-icon [ngClass]="{'red-icon': !dichVuForm.get('donGia').valid && dichVuForm.get('donGia').touched}"
+          matSuffix>crop</mat-icon>
+        <mat-hint *ngIf="!dichVuForm.get('donGia').valid && dichVuForm.get('donGia').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button [disabled]="(!dichVuForm.valid)" mat-flat-button color="primary">Thêm</button>
+  </mat-dialog-actions>
+</form>
+<h4 mat-dialog-title *ngIf="this.typeAction == 'editDvKhac'">SỬA DỊCH VỤ</h4>
+<form *ngIf="this.typeAction == 'editDvKhac'" (ngSubmit)="updateDichVuKhac()" [formGroup]="editDichVuForm">
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Tên dịch vụ</mat-label>
+        <input matInput placeholder="Vui lòng nhập tên dịch vụ" [formControlName]="'ten'" readonly required>
+        <mat-icon [ngClass]="{'red-icon': !editDichVuForm.get('ten').valid && editDichVuForm.get('ten').touched}"
+          matSuffix>home</mat-icon>
+        <mat-hint *ngIf="!editDichVuForm.get('ten').valid && editDichVuForm.get('ten').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <div class="full-name-inputs">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Đơn giá</mat-label>
+        <input matInput type="number" placeholder="Vui lòng đơn giá" [formControlName]="'donGia'" required>
+        <mat-icon [ngClass]="{'red-icon': !editDichVuForm.get('donGia').valid && editDichVuForm.get('donGia').touched}"
+          matSuffix>crop</mat-icon>
+        <mat-hint *ngIf="!editDichVuForm.get('donGia').valid && editDichVuForm.get('donGia').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button [disabled]="(!editDichVuForm.valid)" mat-flat-button color="primary">Lưu</button>
+  </mat-dialog-actions>
+</form>

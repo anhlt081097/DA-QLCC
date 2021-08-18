@@ -5,6 +5,7 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
+import { DatePipe, formatDate } from "@angular/common";
 import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
@@ -16,7 +17,9 @@ import { DialogSubmitLockComponent } from "../../../../shared/component/dialog-s
 import { CuDan } from "../../../../shared/model/cuDan/cudan";
 import { TheCuDan } from "../../../../shared/model/theCuDan/theCuDan";
 import { XeCo } from "../../../../shared/model/xeCo/xeco";
+import { AuthService } from "../../../../shared/service/auth.service";
 import { CudanService } from "../../../../shared/service/cuDan/cudan.service";
+import { DichvuService } from "../../../../shared/service/dichVu/dichvu.service";
 import { ThecudanService } from "../../../../shared/service/theCuDan/thecudan.service";
 import { ToastService } from "../../../../shared/service/toast.service";
 import { XecoService } from "../../../../shared/service/xeCo/xeco.service";
@@ -67,27 +70,51 @@ export class DetailEmployeeComponent implements OnInit {
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   displayedColumns: string[] = ["position", "name", "weight", "symbol"];
   columnsToDisplay = ["image", "userName", "fullName", "email", "phone", "id"];
+  columnsToDisplayDichVu = ["stt", "ngayTao", "trangThai", "id"];
   // dataSource = new MatTableDataSource();
   expandedElement: CuDan | null;
   theCuDanList: TheCuDan[] = [];
   xeCoList: XeCo[] = [];
   cuDanList = new MatTableDataSource();
+  dichVuList = new MatTableDataSource();
   idCanHo: number;
+  role: string;
   constructor(
     private dialog: MatDialog,
     private theCuDanService: ThecudanService,
     private activateRoute: ActivatedRoute,
     private xeCoService: XecoService,
     private cuDanService: CudanService,
-    private toastrService: ToastService
+    private toastrService: ToastService,
+    private dichVuService: DichvuService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.idCanHo = this.activateRoute.snapshot.params.id;
+    this.role = this.authService.getRole();
+    if (this.role == "Admin") {
+      this.idCanHo = this.activateRoute.snapshot.params.id;
+    } else if (this.role == "User") {
+      this.idCanHo = this.authService.getIdCanHo();
+    }
+
     // this.dataSource.data = ELEMENT_DATA;
     this.getAllTheCuDanByCanHo();
     this.getAllXeCoByCanHo();
     this.getAllCuDanByCanHo();
+    this.getAllDichVuByCanHo();
+  }
+  setDateTime(dateTime) {
+    let pipe = new DatePipe("en-US");
+
+    const time = pipe.transform(dateTime, "mediumTime", "UTC");
+
+    const date = pipe.transform(dateTime, "MM/dd/yyyy", "UTC");
+
+    return date + " " + time;
+  }
+  convertDateToTimeStamp(date: any) {
+    return new Date(date[0], date[1] - 1, date[2]);
   }
   openAddTheCuDan() {
     const type = "add";
@@ -155,11 +182,14 @@ export class DetailEmployeeComponent implements OnInit {
       }
     });
   }
-  openAddDichVu() {
-    const dialogRef = this.dialog.open(AddDichvuComponent);
+  openAddDichVu(idHoaDon) {
+    const id = idHoaDon;
+    const dialogRef = this.dialog.open(AddDichvuComponent, {
+      data: id,
+    });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        // this.dataSource;
+        this.getAllDichVuByCanHo();
       }
     });
   }
@@ -187,11 +217,13 @@ export class DetailEmployeeComponent implements OnInit {
       }
     });
   }
-  openDetailDichVu() {
+  openDetailDichVu(hoaDon: any) {
     const type = "edit";
-    const id = this.idCanHo;
+    const idCanHo = this.idCanHo;
+    const idHoaDon = hoaDon.id;
+    const month = hoaDon.ngayTao[1];
     const dialogRef = this.dialog.open(DetailDichvuComponent, {
-      data: { type, id },
+      data: { type, idHoaDon, idCanHo, month },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
@@ -217,13 +249,15 @@ export class DetailEmployeeComponent implements OnInit {
     // this.dataSource.sort = this.sort.toArray()[0];
     this.cuDanList.paginator = this.paginator.toArray()[0];
     this.cuDanList.sort = this.sort.toArray()[0];
+    this.dichVuList.paginator = this.paginator.toArray()[0];
+    this.dichVuList.sort = this.sort.toArray()[0];
   }
   applyFilterDichVu(event: Event) {
-    // const filterValue = (event.target as HTMLInputElement).value;
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dichVuList.filter = filterValue.trim().toLowerCase();
+    if (this.dichVuList.paginator) {
+      this.dichVuList.paginator.firstPage();
+    }
   }
   applyFilterCuDan(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -234,42 +268,47 @@ export class DetailEmployeeComponent implements OnInit {
     }
   }
   getAllTheCuDanByCanHo() {
-    this.theCuDanService
-      .getAllTheCuDanByCanHo(this.activateRoute.snapshot.params.id)
-      .subscribe(
-        (data) => {
-          this.theCuDanList = data;
-          console.log(this.theCuDanList);
-        },
-        (error) => {
-          throwError(error);
-        }
-      );
+    this.theCuDanService.getAllTheCuDanByCanHo(this.idCanHo).subscribe(
+      (data) => {
+        this.theCuDanList = data;
+        console.log(this.theCuDanList);
+      },
+      (error) => {
+        throwError(error);
+      }
+    );
+  }
+  getAllDichVuByCanHo() {
+    this.dichVuService.getAllDichVuByIdCanHo(this.idCanHo).subscribe(
+      (data) => {
+        this.dichVuList.data = data;
+        console.log(this.dichVuList.data);
+      },
+      (error) => {
+        throwError(error);
+      }
+    );
   }
   getAllXeCoByCanHo() {
-    this.xeCoService
-      .getAllPhuongTienByCanHo(this.activateRoute.snapshot.params.id)
-      .subscribe(
-        (data) => {
-          this.xeCoList = data;
-          console.log(this.xeCoList);
-        },
-        (error) => {
-          throwError(error);
-        }
-      );
+    this.xeCoService.getAllPhuongTienByCanHo(this.idCanHo).subscribe(
+      (data) => {
+        this.xeCoList = data;
+        console.log(this.xeCoList);
+      },
+      (error) => {
+        throwError(error);
+      }
+    );
   }
   getAllCuDanByCanHo() {
-    this.cuDanService
-      .getAllCuDanCanHo(this.activateRoute.snapshot.params.id)
-      .subscribe(
-        (data) => {
-          this.cuDanList.data = data;
-          console.log(this.cuDanList.data);
-        },
-        (error) => {
-          throwError(error);
-        }
-      );
+    this.cuDanService.getAllCuDanCanHo(this.idCanHo).subscribe(
+      (data) => {
+        this.cuDanList.data = data;
+        console.log(this.cuDanList.data);
+      },
+      (error) => {
+        throwError(error);
+      }
+    );
   }
 }

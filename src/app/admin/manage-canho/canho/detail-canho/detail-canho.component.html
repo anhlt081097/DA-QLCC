@@ -12,7 +12,8 @@
         <nb-card size="medium">
           <nb-card-header>
             Cư dân thuộc căn hộ
-            <button mat-icon-button color="primary" (click)="openAddCuDan()" style="float:right;margin-top: -10px;">
+            <button mat-icon-button color="primary" *ngIf="role == 'Admin'" (click)="openAddCuDan()"
+              style="float:right;margin-top: -10px;">
               <mat-icon>add</mat-icon>
             </button>
           </nb-card-header>
@@ -34,7 +35,7 @@
                       <mat-icon>edit</mat-icon>
                       <span>Chỉnh sửa</span>
                     </button>
-                    <button mat-menu-item>
+                    <button *ngIf="role == 'Admin'" mat-menu-item>
                       <mat-icon>lock</mat-icon>
                       <span>Xoá</span>
                     </button>
@@ -70,7 +71,7 @@
                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                     <div class="example-element-description">
                       <span *ngIf="element.ngaySinh != null" class="example-element-description-attribution">Ngày sinh:
-                      </span>{{element.ngaySinh}}
+                      </span>{{element.ngaySinh | date}}
                       <span *ngIf="element.soCCCD != null" class="example-element-description-attribution">CCCD:
                       </span>{{element.soCCCD}}
                       <span *ngIf="element.diaChi != null" class="example-element-description-attribution">Địa chỉ:
@@ -89,6 +90,7 @@
               </tr>
               <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
             </table>
+
           </nb-card-body>
           <nb-card-footer>
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
@@ -112,7 +114,7 @@
                     Thông tin thẻ
                   </div>
                   <div class="col-4">
-                    <button mat-icon-button color="primary" (click)="openAddTheCuDan()"
+                    <button mat-icon-button color="primary" *ngIf="role == 'Admin'" (click)="openAddTheCuDan()"
                       style="float:right;margin-top: -10px;">
                       <mat-icon>add</mat-icon>
                     </button>
@@ -123,8 +125,8 @@
                 <mat-list>
                   <mat-list-item *ngFor="let theCuDan of theCuDanList">
                     <h4 mat-line>{{theCuDan.maThe}} - {{theCuDan.ngayTao | date}} - {{theCuDan.kichHoat}}</h4>
-                    \<mat-icon (click)="openEditTheCuDan(theCuDan.maThe)">edit</mat-icon>
-                    <mat-icon (click)="onDeleteTheCuDan(theCuDan.id)">clear</mat-icon>
+                    <mat-icon *ngIf="role == 'Admin'" (click)="openEditTheCuDan(theCuDan.maThe)">edit</mat-icon>
+                    <mat-icon *ngIf="role == 'Admin'" (click)="onDeleteTheCuDan(theCuDan.id)">clear</mat-icon>
                   </mat-list-item>
                   <span *ngIf="theCuDanList.length == 0">Không có dữ liệu</span>
                 </mat-list>
@@ -139,7 +141,8 @@
             <nb-card size="tiny">
               <nb-card-header>
                 Thông tin xe cộ
-                <button mat-icon-button color="primary" (click)="openAddXeCo()" style="float:right;margin-top: -10px;">
+                <button mat-icon-button color="primary" *ngIf="role == 'Admin'" (click)="openAddXeCo()"
+                  style="float:right;margin-top: -10px;">
                   <mat-icon>add</mat-icon>
                 </button>
               </nb-card-header>
@@ -148,7 +151,7 @@
                   <!-- <h6><strong>Ô tô</strong></h6> -->
                   <mat-list-item *ngFor="let xeCo of xeCoList">
                     <h6 mat-line>{{xeCo.tenXe}} - {{xeCo.bienKiemSoat}} </h6>
-                    <mat-icon (click)="onDeletePhuongTien(xeCo.id)">clear</mat-icon>
+                    <mat-icon *ngIf="role == 'Admin'" (click)="onDeletePhuongTien(xeCo.id)">clear</mat-icon>
                   </mat-list-item>
                   <!-- <h6><strong>Xe máy</strong></h6>
                   <mat-list-item *ngFor="let xeCo of xeCoList">
@@ -178,46 +181,88 @@
             <nb-card>
               <nb-card-header>
                 Dịch vụ cố định
-                <button mat-icon-button color="primary" (click)="openAddDichVu()"
-                  style="float:right;margin-top: -10px;">
-                  <mat-icon>add</mat-icon>
-                </button>
+
               </nb-card-header>
               <nb-card-body>
                 <mat-form-field>
                   <mat-label>Tìm kiếm</mat-label>
                   <input matInput (keyup)="applyFilterDichVu($event)" placeholder="Nhập dịch vụ cần tìm..." #input>
                 </mat-form-field>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>STT</th>
-                      <th>Thời gian</th>
-                      <th>Trạng thái</th>
+                <table mat-table [dataSource]="dichVuList" multiTemplateDataRows class="mat-elevation-z8" matSort>
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let row">
+                      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button (click)="openDetailDichVu(row)" mat-menu-item>
+                          <mat-icon>edit</mat-icon>
+                          <span>Chi tiết</span>
+                        </button>
 
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td scope="row">1</td>
-                      <td>08/2021</td>
-                      <td>Chưa thanh toán</td>
+                      </mat-menu>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="stt">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="ngayTao">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ngày tạo </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{this.convertDateToTimeStamp(element.ngayTao) | date:"longDate"}}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="trangThai">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng Thái </th>
+                    <td mat-cell *matCellDef="let element">
+                      <button *ngIf="element.trangThai == false && role == 'Admin'" mat-icon-button color="primary"
+                        (click)="openAddDichVu(element.id)">
+                        Thanh toán
+                      </button>
 
-                      <td>
-                        <button mat-button (click)="openDetailDichVu()">Chi tiết</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">2</td>
-                      <td>07/2021</td>
-                      <td>Đã thanh toán</td>
-
-                      <td><button mat-button>Chi tiết</button></td>
-                    </tr>
-                  </tbody>
+                      {{element.trangThai ? "Đã thanh toán" : role == 'User' ? "Chưa thanh toán": ""}}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayDichVu.length">
+                      <div class="example-element-detail"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+                        *ngIf="element.trangThai == true">
+                        <div class="example-element-description">
+                          <span *ngIf="element.tenNguoiThanhToan != null"
+                            class="example-element-description-attribution">Người
+                            thanh toán:
+                          </span>{{element.tenNguoiThanhToan}}
+                          <span *ngIf="element.soDienThoai != null" class="example-element-description-attribution">Số
+                            điện
+                            thoại:
+                          </span>{{element.soDienThoai}}
+                          <span *ngIf="element.loaiHinhThanhToan != null"
+                            class="example-element-description-attribution">Loại
+                            hình thanh toán
+                          </span>{{element.loaiHinhThanhToan}}
+                          <span *ngIf="element.ngayThanhToan[0] != null"
+                            class="example-element-description-attribution">Ngày
+                            thanh
+                            toán: </span>{{convertDateToTimeStamp(element.ngayThanhToan) | date}}
+                        </div>
+                      </div>
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="columnsToDisplayDichVu"></tr>
+                  <tr mat-row *matRowDef="let element; columns: columnsToDisplayDichVu;" class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === element"
+                    (click)="expandedElement = expandedElement === element ? null : element">
+                  </tr>
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Không có dữ liệu: "{{input.value}}"</td>
+                  </tr>
+                  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                 </table>
-
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]">
+                </mat-paginator>
               </nb-card-body>
               <nb-card-footer>
                 Dịnh vụ sửa chữa

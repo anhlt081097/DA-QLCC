@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ManageHomeStayComponent } from "./manage-home-stay.component";
-import { ManageHomeStayRoutingModule } from "./manage-home-stay-routing.module";
+import { ManageDichVuComponent } from "./manage-dichvu.component";
+import { ManageHomeStayRoutingModule } from "./manage-dichvu-routing.module";
 import { HomestayComponent } from "./home-stay/homestay.component";
 import {
   NbAccordionModule,
@@ -53,10 +53,12 @@ import { MatListModule } from "@angular/material/list";
 import { MatSortModule } from "@angular/material/sort";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { ManageCanHoRoutingModule } from "../manage-canho/manage-canho-routing.module";
+import { DichVuComponent } from "./dich-vu/dich-vu.component";
+import { AddDichVuCoDinhComponent } from "./dich-vu/add-dich-vu-co-dinh/add-dich-vu-co-dinh.component";
 
 @NgModule({
   declarations: [
-    ManageHomeStayComponent,
+    ManageDichVuComponent,
     HomestayComponent,
     AddressComponent,
     DetailHomestayComponent,
@@ -66,6 +68,8 @@ import { ManageCanHoRoutingModule } from "../manage-canho/manage-canho-routing.m
     AddEditCityComponent,
     AddEditDistrictComponent,
     AddEditVillageComponent,
+    DichVuComponent,
+    AddDichVuCoDinhComponent,
   ],
   imports: [
     FormsModule,

@@ -1,27 +1,61 @@
 <button mat-button style="float: right" (click)="openPrintHoaDonDichVu()">
   <mat-icon class="mat-18">print</mat-icon>
 </button>
-<table class="table">
-  <thead>
-    <tr>
-      <th>STT</th>
-      <th>Tên dịch vụ</th>
-      <th>Số lượng</th>
-      <th>Đơn giá</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td scope="row">1</td>
-      <td>DV1</td>
-      <td>1</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <td scope="row">2</td>
-      <td>DV2</td>
-      <td>2</td>
-      <td>10</td>
-    </tr>
-  </tbody>
+<mat-form-field>
+  <mat-label>Tìm kiếm</mat-label>
+  <input matInput (keyup)="applyFilterDichVu($event)" placeholder="Nhập dịch vụ cần tìm..." #input>
+</mat-form-field>
+<table mat-table [dataSource]="chiTietDichVu" multiTemplateDataRows class="mat-elevation-z8" matSort>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let row">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Chỉnh sửa</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>lock</mat-icon>
+          <span>Xoá</span>
+        </button>
+      </mat-menu>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="stt">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+  <ng-container matColumnDef="ten">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên dịch vụ</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.dichVuCoDinh.ten}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="soLuong">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Số lượng </th>
+    <td mat-cell *matCellDef="let element">
+
+      {{element.soLuong}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="donGia">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Đơn giá </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.donGia}}
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+    [class.example-expanded-row]="expandedElement === element"
+    (click)="expandedElement = expandedElement === element ? null : element">
+  </tr>
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">Không có dữ liệu: "{{input.value}}"</td>
+  </tr>
+  <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
 </table>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

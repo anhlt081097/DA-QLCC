@@ -20,17 +20,17 @@ const routes: Routes = [
         // canActivate: [AdminGuard],
       },
       {
-        path: "manage-homestay",
+        path: "manage-dichvu",
         loadChildren: () =>
-          import("./manage-home-stay/manage-home-stay.module").then(
+          import("./manage-dichvu/manage-dichvu.module").then(
             (m) => m.ManageHomeStayModule
           ),
         // canActivate: [AdminGuard],
       },
       {
-        path: "manage-untility",
+        path: "manage-hoadon",
         loadChildren: () =>
-          import("./manage-utility/manage-utility.module").then(
+          import("./manage-hoadon/manage-hoadon.module").then(
             (m) => m.ManageUtilityModule
           ),
         // canActivate: [AdminGuard],

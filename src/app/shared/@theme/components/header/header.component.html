@@ -1,15 +1,14 @@
 <div class="header-container">
-  <a *ngIf="this.role === 'ROLE_ADMIN' || this.role === 'ROLE_USER'" (click)="toggleSidebar()" href="#"
-    class="sidebar-toggle">
+  <a *ngIf="this.role === 'Admin' || this.role === 'User'" (click)="toggleSidebar()" href="#" class="sidebar-toggle">
     <nb-icon icon="menu-2-outline"></nb-icon>
   </a>
   <a class="logo"
-    (click)="navigateHome()"><span>{{role === 'ROLE_USER' ? 'Khách hàng  ' : role === 'ROLE_ADMIN' ? 'Quản trị viên' : role === 'Member' ? 'Thành viên' : ''}}</span></a>
+    (click)="navigateHome()"><span>{{role === 'User' ? 'Khách hàng  ' : role === 'Admin' ? 'Quản trị viên' : role === 'Member' ? 'Thành viên' : ''}}</span></a>
 </div>
 <nb-select [hidden]="true" [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
   <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
 </nb-select>
-<div *ngIf="this.role !== 'ROLE_ADMIN' && this.role !== 'ROLE_USER'" class="header-container">
+<div *ngIf="this.role !== 'Admin' && this.role !== 'User'" class="header-container">
   <button [routerLink]="'home'" style="width: 100px; height: 76px" mat-button>{{ 'HEADER.HOME' | translate }}</button>
   <button [routerLink]="'homestay'" style="width: 100px; height: 76px" mat-button>Cơ sở</button>
   <button [routerLink]="'house'" style="width: 100px; height: 76px" mat-button>Nhà</button>
@@ -20,13 +19,12 @@
 </div>
 <div class="header-container">
   <nb-actions size="small">
-    <nb-action *ngIf="this.role === 'ROLE_ADMIN' || this.role === 'ROLE_USER'" class="control-item">
+    <nb-action *ngIf="this.role === 'Admin' || this.role === 'User'" class="control-item">
       <nb-search type="rotate-layout" placeholder="Tìm kiếm"></nb-search>
     </nb-action>
-    <nb-action *ngIf="this.role === 'ROLE_ADMIN' || this.role === 'ROLE_USER'" class="control-item"
-      icon="email-outline">
+    <nb-action *ngIf="this.role === 'Admin' || this.role === 'User'" class="control-item" icon="email-outline">
     </nb-action>
-    <nb-action *ngIf="this.role === 'ROLE_ADMIN' || this.role === 'ROLE_USER'" class="control-item" icon="bell-outline">
+    <nb-action *ngIf="this.role === 'Admin' || this.role === 'User'" class="control-item" icon="bell-outline">
     </nb-action>
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">
       <nb-user [nbContextMenu]="this.role ? userMenu : userMenu2" nbContextMenuTag="my-context-menu" [onlyPicture]=""

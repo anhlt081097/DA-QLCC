@@ -1,7 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { throwError } from "rxjs";
+import { CanHo } from "../../../shared/model/canHo/canho";
+import { LoginResponse } from "../../../shared/model/login/login-response";
 import { ProfileResponse } from "../../../shared/model/profile/profile.response";
+import { AuthService } from "../../../shared/service/auth.service";
+import { CanhoService } from "../../../shared/service/canHo/canho.service";
 import { ProfileService } from "../../../shared/service/profile.service";
 import { EditProfileComponent } from "./edit-profile/edit-profile.component";
 
@@ -12,41 +16,43 @@ import { EditProfileComponent } from "./edit-profile/edit-profile.component";
 })
 export class ProfileComponent implements OnInit {
   profileResponse: ProfileResponse;
-
+  canHo: any;
+  loginResponse: LoginResponse;
+  role: any;
   constructor(
     private profileService: ProfileService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private canHoService: CanhoService
   ) {}
 
   ngOnInit(): void {
     // this.getUserById();
-    this.profileResponse = {
-      id: 1,
-      userName: "toppdogg42",
-      password: "string",
-      email: "anhlt@gmail.com",
-      firstName: "Lê",
-      lastName: "Tuấn Anh",
-      phone: "0967789822",
-      address: "Ngọc Hoà - Chương Mỹ - Hà Nội",
-      image:
-        "https://scontent-hkg4-2.xx.fbcdn.net/v/t1.6435-9/167934949_1615809051961387_3833935916652416449_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=IohtC3jJCR8AX87NFDE&_nc_ht=scontent-hkg4-2.xx&oh=c8eb7d3875ec7c5a24a1fff423b45dcb&oe=60FB19E2",
-      role: "admin",
-      createdDate: "20/07/2021",
-      sex: "Nam",
-      enabled: false,
-      status: false,
-      dateOfBirth: "08/10/1992",
-      id_creator: 1,
-      id_homeStay: 1,
-      homeStayName: "Mock",
+    this.loginResponse = {
+      id: undefined,
+      idCanHo: null,
+      email: null,
+      image: null,
+      username: null,
+      authenticationToken: null,
+      expiresAt: null,
+      refreshToken: null,
+      role: null,
     };
+    this.loginResponse.id = this.authService.getId();
+    this.loginResponse.idCanHo = this.authService.getIdCanHo();
+    this.loginResponse.email = this.authService.getEmail();
+    this.loginResponse.image = this.authService.getImage();
+    this.loginResponse.username = this.authService.getUserName();
+    this.role = this.authService.getRole();
+    if (this.role == "User") {
+      this.getCanHoById();
+    }
   }
-
-  getUserById() {
-    this.profileService.getProfile().subscribe(
-      (data) => {
-        this.profileResponse = data;
+  getCanHoById() {
+    this.canHoService.getCanHoById(this.loginResponse.idCanHo).subscribe(
+      (canHo) => {
+        this.canHo = canHo;
       },
       (error) => {
         throwError(error);
@@ -56,12 +62,12 @@ export class ProfileComponent implements OnInit {
 
   openEdit() {
     const dialogRef = this.dialog.open(EditProfileComponent, {
-      data: this.profileResponse,
+      data: this.loginResponse,
       width: "750px",
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.getUserById();
+        this.ngOnInit();
       }
     });
   }

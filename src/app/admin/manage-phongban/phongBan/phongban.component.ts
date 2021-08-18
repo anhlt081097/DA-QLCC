@@ -3,7 +3,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { BookingResponse } from "../../../shared/model/booking/booking-response";
-import { Images } from "../../manage-home-stay/home-stay/add-edit-home-stay/add-edit-home-stay.component";
+import { Images } from "../../manage-dichvu/home-stay/add-edit-home-stay/add-edit-home-stay.component";
 import { ToastService } from "../../../shared/service/toast.service";
 import { TransactionService } from "../../../shared/service/transaction.service";
 import { throwError } from "rxjs";

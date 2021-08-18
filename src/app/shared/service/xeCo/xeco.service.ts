@@ -15,6 +15,9 @@ export class XecoService {
   createPhuongTien(xeCo: XeCo): Observable<any> {
     return this.http.post(baseUrl, xeCo);
   }
+  getAllPhuongTien(): Observable<Array<any>> {
+    return this.http.get<Array<any>>(baseUrl);
+  }
   // updateCanHo(canHo: CanHo): Observable<any> {
   //   return this.http.put(baseUrl + `${canHo.id}`, canHo);
   // }

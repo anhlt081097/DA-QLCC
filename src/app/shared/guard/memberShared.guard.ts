@@ -26,9 +26,9 @@ export class MemberSharedGuard implements CanActivate {
     const isAuthenticated = this.authService.isLoggedIn();
     const getRole = this.authService.getRole();
 
-    if (isAuthenticated && getRole === "ROLE_ADMIN") {
+    if (isAuthenticated && getRole === "Admin") {
       this.router.navigateByUrl("/admin");
-    } else if (isAuthenticated && getRole === "Employee") {
+    } else if (isAuthenticated && getRole === "User") {
       this.router.navigateByUrl("/admin");
     } else {
       return true;

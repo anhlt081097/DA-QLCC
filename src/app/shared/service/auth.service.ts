@@ -23,20 +23,22 @@ export class AuthService {
   ) {}
 
   login(loginRequest: LoginRequest): Observable<boolean> {
-    return this.http.post<LoginResponse>("/api/auth/signin", loginRequest).pipe(
+    return this.http.post<LoginResponse>("/api/auth/login", loginRequest).pipe(
       map((data) => {
-        this.localStorage.store("id", data.id);
-        this.localStorage.store("userName", data.userName);
-        this.localStorage.store("email", data.email);
-        this.localStorage.store("tokenType", data.tokenType);
-        this.localStorage.store("authenticationToken", data.accessToken);
-        this.localStorage.store("role", data.roles[0]);
+        this.localStorage.store("image", data.image);
+        this.localStorage.store("userName", data.username);
+        this.localStorage.store("refreshToken", data.refreshToken);
+        this.localStorage.store("expiresAt", data.expiresAt);
         this.localStorage.store(
-          "image",
-          "https://i.pinimg.com/originals/eb/b0/2a/ebb02aedec9bc74f65e38311c7e14d34.png"
+          "authenticationToken",
+          data.authenticationToken
         );
-        this.username.emit(data.userName);
-        this.role.emit(data.roles);
+        this.localStorage.store("role", data.role);
+        this.localStorage.store("idCanHo", data.idCanHo);
+        this.localStorage.store("id", data.id);
+        this.localStorage.store("email", data.email);
+        this.username.emit(data.username);
+        this.role.emit(data.role);
         this.image.emit(
           "https://i.pinimg.com/originals/eb/b0/2a/ebb02aedec9bc74f65e38311c7e14d34.png"
         );
@@ -116,9 +118,12 @@ export class AuthService {
     this.localStorage.clear("authenticationToken");
     this.localStorage.clear("username");
     this.localStorage.clear("tokenType");
-    this.localStorage.clear("email");
+    this.localStorage.clear("refreshToken");
     this.localStorage.clear("role");
+    this.localStorage.clear("image");
+    this.localStorage.clear("idCanHo");
     this.localStorage.clear("id");
+    this.localStorage.clear("email");
   }
 
   refreshTokenPayload = {
@@ -145,7 +150,15 @@ export class AuthService {
   getImage() {
     return this.localStorage.retrieve("image");
   }
-
+  getIdCanHo() {
+    return this.localStorage.retrieve("idCanHo");
+  }
+  getId() {
+    return this.localStorage.retrieve("id");
+  }
+  getEmail() {
+    return this.localStorage.retrieve("email");
+  }
   isLoggedIn(): boolean {
     return this.getJwtToken() != null;
   }

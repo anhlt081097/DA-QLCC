@@ -109,6 +109,7 @@ export class CanHoComponent implements OnInit, AfterViewInit {
     this.canHoService.getAllCanHo().subscribe(
       (data) => {
         this.canHo.data = data;
+        console.log(data);
       },
       (error) => {
         throwError(error);

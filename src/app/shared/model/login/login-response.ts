@@ -1,8 +1,11 @@
 export interface LoginResponse {
-  id: string;
-  email: string;
-  tokenType: string;
-  userName: string;
-  roles: any;
-  accessToken: string;
+  image: any;
+  refreshToken: any;
+  expiresAt: any;
+  username: string;
+  role: any;
+  authenticationToken: any;
+  idCanHo: any;
+  id: any;
+  email: any;
 }

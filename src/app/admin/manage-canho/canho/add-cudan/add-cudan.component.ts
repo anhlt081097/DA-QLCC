@@ -78,10 +78,7 @@ export class AddCudanComponent implements OnInit {
       soCCCD: new FormControl(null, Validators.required),
       diaChi: new FormControl(null, Validators.required),
       hinhAnh: new FormControl(null),
-      soDienThoai: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(/((09|03|07|08|05)+([0-9]{8})\b)/),
-      ]),
+      soDienThoai: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required, Validators.email]),
     });
     if (this.data.id) {
@@ -105,11 +102,17 @@ export class AddCudanComponent implements OnInit {
     // );
 
     if (this.data.dataCuDan) {
+      // this.data.dataCuDan.ngaySinh = this.convertDateToTimeStamp(
+      //   this.data.dataCuDan.ngaySinh
+      // );
       this.cuDanEditForm.patchValue(this.data.dataCuDan);
     }
     // this.passwordEditForm.get("id").setValue(this.data.id);
   }
-
+  // convertDateToTimeStamp(date: any) {
+  //   const ngaySinh = date[2] + "/" + date[1] + "/" + date[0];
+  //   return ngaySinh;
+  // }
   // private passwordsMatchValidator(form: FormGroup) {
   //   if (form.get("passwordEdit") && form.get("confirmPassword")) {
   //     return form.get("passwordEdit").value ===

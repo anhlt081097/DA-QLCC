@@ -89,25 +89,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.role = this.authService.getRole();
     this.userName = this.authService.getUserName();
 
-    if (this.userName) {
-      this.authService.checkAccount().subscribe(
-        (data) => {
-          if (data === "EmployeeNot") {
-            this.openWindowNotHomeStayForm();
-          } else if (data === "Employee") {
-            this.openWindowUpdateForm();
-          } else if (data === "Admin") {
-            this.openWindowUpdateForm();
-          } else if (data === "Member") {
-            this.openWindowUpdateForm();
-          } else {
-          }
-        },
-        (error) => {
-          throwError(error);
-        }
-      );
-    }
+    // if (this.userName) {
+    //   this.authService.checkAccount().subscribe(
+    //     (data) => {
+    //       if (data === "EmployeeNot") {
+    //         this.openWindowNotHomeStayForm();
+    //       } else if (data === "Employee") {
+    //         this.openWindowUpdateForm();
+    //       } else if (data === "Admin") {
+    //         this.openWindowUpdateForm();
+    //       } else if (data === "Member") {
+    //         this.openWindowUpdateForm();
+    //       } else {
+    //       }
+    //     },
+    //     (error) => {
+    //       throwError(error);
+    //     }
+    //   );
+    // }
 
     this.currentTheme = this.themeService.currentTheme;
 

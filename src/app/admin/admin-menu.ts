@@ -20,13 +20,13 @@ export const Admin_ITEMS: NbMenuItem[] = [
         link: "/admin/manage-canho/canho",
       },
       {
-        title: "Thông tin thẻ",
-        link: "/admin/manage-user/member",
+        title: "Thông tin thẻ/phương tiện",
+        link: "/admin/manage-canho/the-phuongtien",
       },
-      {
-        title: "Thông tin phương tiện",
-        link: "/admin/manage-user/member",
-      },
+      // {
+      //   title: "Thông tin phương tiện",
+      //   link: "/admin/manage-user/member",
+      // },
     ],
   },
   {
@@ -36,17 +36,17 @@ export const Admin_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: "Danh sách dịch vụ",
-        link: "/admin/manage-homestay/homestay",
+        link: "/admin/manage-dichvu/dich-vu",
       },
     ],
   },
   {
-    title: "Quản lý tài chính",
+    title: "Quản lý hoá đơn",
     icon: "person",
     children: [
       {
-        title: "Tính phí, phát hành thông báo",
-        link: "/admin/manage-untility/type-untility",
+        title: "Danh sách hoá đơn",
+        link: "/admin/manage-hoadon/hoadon-list",
       },
       {
         title: "Thu và thanh toán online",

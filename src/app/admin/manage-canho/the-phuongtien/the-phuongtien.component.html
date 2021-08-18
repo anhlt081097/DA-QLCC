@@ -1,0 +1,122 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <mat-icon type="button" aria-hidden="false" routerLink="/admin/" aria-label="Example home icon">home</mat-icon>
+    <li class="breadcrumb-item"><a routerLink="/admin/">Trang chủ</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Thẻ cư dân</li>
+  </ol>
+</nav>
+<nb-card>
+  <nb-card-header>
+    Quản lý thẻ cư dân
+  </nb-card-header>
+  <nb-card-body>
+    <mat-tab-group mat-align-tabs="center" animationDuration="800ms">
+      <mat-tab label="Danh sách thẻ cư dân"><br>
+        <mat-form-field>
+          <mat-label>Tìm kiếm</mat-label>
+          <input matInput (keyup)="applyFilterThe($event)" placeholder="Nhập mục cần tìm..." #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="theCuDanList" multiTemplateDataRows class="mat-elevation-z8" matSort>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button routerLink="/admin/manage-canho/detail/{{row.canHo.id}}" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Chi tiết</span>
+                </button>
+                <!-- <button (click)="onDelete(row.id)" mat-menu-item>
+                  <mat-icon>lock</mat-icon>
+                  <span>Khóa</span>
+                </button> -->
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="maThe">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã thẻ</th>
+            <td mat-cell *matCellDef="let element">{{element.maThe}} </td>
+          </ng-container>
+          <ng-container matColumnDef="ngayTao">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ngày tạo </th>
+            <td mat-cell *matCellDef="let element"> {{element.ngayTao | date}} </td>
+          </ng-container>
+          <ng-container matColumnDef="kichHoat">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Kích hoạt </th>
+            <td mat-cell *matCellDef="let element"> {{element.kichHoat}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+          </tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">Không có dữ liệu: "{{input.value}}"</td>
+          </tr>
+          <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </mat-tab>
+      <mat-tab label="Danh sách phương tiện"><br>
+        <mat-form-field>
+          <mat-label>Tìm kiếm</mat-label>
+          <input matInput (keyup)="applyFilterThe($event)" placeholder="Nhập mục cần tìm..." #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="phuongTienList" multiTemplateDataRows class="mat-elevation-z8" matSort>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button routerLink="/admin/manage-canho/detail/{{row.canHo.id}}" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Chi tiết</span>
+                </button>
+                <!-- <button (click)="onDelete(row.id)" mat-menu-item>
+                  <mat-icon>lock</mat-icon>
+                  <span>Khóa</span>
+                </button> -->
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="loaiXe">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Loại xe</th>
+            <td mat-cell *matCellDef="let element">{{element.loaiXe}} </td>
+          </ng-container>
+          <ng-container matColumnDef="tenXe">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên xe </th>
+            <td mat-cell *matCellDef="let element"> {{element.tenXe}} </td>
+          </ng-container>
+          <ng-container matColumnDef="bienKiemSoat">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Biển kiểm soát </th>
+            <td mat-cell *matCellDef="let element"> {{element.bienKiemSoat}} </td>
+          </ng-container>
+          <ng-container matColumnDef="daXoa">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Kích hoạt </th>
+            <td mat-cell *matCellDef="let element"> {{element.daXoa}} </td>
+          </ng-container>
+          <ng-container matColumnDef="maThe">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã thẻ </th>
+            <td mat-cell *matCellDef="let element"> {{element.theCuDan.maThe}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayPhuongTien"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplayPhuongTien;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+          </tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">Không có dữ liệu: "{{input.value}}"</td>
+          </tr>
+          <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </mat-tab>
+    </mat-tab-group>
+  </nb-card-body>
+</nb-card>

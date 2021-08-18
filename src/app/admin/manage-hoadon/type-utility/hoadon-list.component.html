@@ -1,0 +1,190 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <mat-icon type="button" aria-hidden="false" routerLink="/admin/" aria-label="Example home icon">home</mat-icon>
+    <li class="breadcrumb-item"><a routerLink="/admin/">Trang chủ</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Hoá đơn</li>
+  </ol>
+</nav>
+<nb-card>
+  <nb-card-header>
+    Danh sách hoá đơn
+  </nb-card-header>
+  <nb-card-body>
+    <mat-tab-group mat-align-tabs="center" animationDuration="800ms">
+      <mat-tab label="Hoá đơn dịch vụ cố định">
+        <br>
+        <div style="display: flex">
+          <!-- <button mat-flat-button color="primary">Thêm dịch vụ</button> -->
+          <!-- <nb-actions size="medium">
+            <nb-action nbPopoverTrigger="hover" [nbPopover]="card" icon="person-outline" [badgeText]="check.length"
+              badgePosition="top right" badgeStatus="warning">
+            </nb-action>
+          </nb-actions> -->
+        </div>
+        <mat-form-field>
+          <mat-label>Tìm kiếm</mat-label>
+          <input matInput placeholder="Nhập mục cần tìm..." #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="hoaDonDichVu" multiTemplateDataRows class="mat-elevation-z8" matSort>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button (click)="openDetailDichVu(row)" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Chi tiết</span>
+                </button>
+
+              </mat-menu>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="stt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element;let i = index"> {{element.id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="ngayTao">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ngày tạo </th>
+            <td mat-cell *matCellDef="let element">
+              {{this.convertDateToTimeStamp(element.ngayTao) | date:"longDate"}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="trangThai">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng Thái </th>
+            <td mat-cell *matCellDef="let element">
+              <button *ngIf="element.trangThai == false" mat-icon-button color="primary"
+                (click)="openAddDichVu(element.id)">
+                Thanh toán
+              </button>
+              {{element.trangThai ? "Đã thanh toán" : ""}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+              <div class="example-element-detail" *ngIf="element.trangThai == true"
+                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-description">
+                  <span *ngIf="element.tenNguoiThanhToan != null" class="example-element-description-attribution">Người
+                    thanh toán:
+                  </span>{{element.tenNguoiThanhToan}}
+                  <span *ngIf="element.soDienThoai != null" class="example-element-description-attribution">Số điện
+                    thoại:
+                  </span>{{element.soDienThoai}}
+                  <span *ngIf="element.loaiHinhThanhToan != null" class="example-element-description-attribution">Loại
+                    hình thanh toán
+                  </span>{{element.loaiHinhThanhToan}}
+                  <span *ngIf="element.ngayThanhToan[0] != null" class="example-element-description-attribution">Ngày
+                    thanh
+                    toán: </span>{{convertDateToTimeStamp(element.ngayThanhToan) | date}}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayDichVu"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplayDichVu;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+          </tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">Không có dữ liệu: "{{input.value}}"</td>
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+      </mat-tab>
+      <mat-tab label="Hoá đơn sửa chữa">
+        <br>
+        <div style="display: flex">
+          <!-- <button mat-flat-button color="primary">Thêm hoá đơn sửa chữa</button> -->
+          <!-- <nb-actions size="medium">
+            <nb-action nbPopoverTrigger="hover" [nbPopover]="card" icon="person-outline" [badgeText]="check.length"
+              badgePosition="top right" badgeStatus="warning">
+            </nb-action>
+          </nb-actions> -->
+        </div>
+        <mat-form-field>
+          <mat-label>Tìm kiếm</mat-label>
+          <input matInput placeholder="Nhập mục cần tìm..." #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="hoaDonSuaChua" multiTemplateDataRows class="mat-elevation-z8" matSort>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button (click)="openDetailDichVu(row)" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Chi tiết</span>
+                </button>
+
+              </mat-menu>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="stt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="ngayTao">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ngày tạo </th>
+            <td mat-cell *matCellDef="let element">
+              {{this.convertDateToTimeStamp(element.ngayTao) | date:"longDate"}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="trangThai">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng Thái </th>
+            <td mat-cell *matCellDef="let element">
+              <button *ngIf="element.trangThai == false" mat-icon-button color="primary"
+                (click)="openAddDichVu(element.id)">
+                Thanh toán
+              </button>
+              {{element.trangThai ? "Đã thanh toán" : ""}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="canHo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Căn hộ </th>
+            <td mat-cell *matCellDef="let element" routerLink="/admin/manage-canho/detail/{{element.canHo.id}}">
+              {{element.canHo.tenCanHo }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplaySuaChua.length">
+              <div class="example-element-detail" *ngIf="element.trangThai == true"
+                [@detailExpand]="element == expandedElementSuaChua ? 'expanded' : 'collapsed'">
+                <div class="example-element-description">
+                  <span *ngIf="element.tenNguoiThanhToan != null" class="example-element-description-attribution">Người
+                    thanh toán:
+                  </span>{{element.tenNguoiThanhToan}}
+                  <span *ngIf="element.soDienThoai != null" class="example-element-description-attribution">Số điện
+                    thoại:
+                  </span>{{element.soDienThoai}}
+                  <span *ngIf="element.loaiHinhThanhToan != null" class="example-element-description-attribution">Loại
+                    hình thanh toán
+                  </span>{{element.loaiHinhThanhToan}}
+                  <span *ngIf="element.ngayThanhToan[0] != null" class="example-element-description-attribution">Ngày
+                    thanh
+                    toán: </span>{{convertDateToTimeStamp(element.ngayThanhToan) | date}}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplaySuaChua"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplaySuaChua;" class="example-element-row"
+            [class.example-expanded-row]="expandedElementSuaChua === element"
+            (click)="expandedElementSuaChua = expandedElementSuaChua === element ? null : element">
+          </tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">Không có dữ liệu: "{{input.value}}"</td>
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+      </mat-tab>
+    </mat-tab-group>
+  </nb-card-body>
+</nb-card>

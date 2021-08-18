@@ -20,9 +20,9 @@ export class AdminComponent {
   constructor(private authService: AuthService) {
     const getRole = this.authService.getRole();
     this.ActionMenu = this.menu;
-    if (getRole === "ROLE_ADMIN") {
+    if (getRole === "Admin") {
       this.ActionMenu = this.menu;
-    } else if (getRole === "ROLE_USER") {
+    } else if (getRole === "User") {
       this.ActionMenu = this.menu2;
     } else {
       return;

@@ -22,6 +22,6 @@ export class CanhoService {
     return this.http.get<Array<any>>(baseUrl + "khong-hoat-dong");
   }
   getCanHoById(id): Observable<any> {
-    return this.http.get<any>(baseUrl + "/" + id);
+    return this.http.get<any>(baseUrl + id);
   }
 }

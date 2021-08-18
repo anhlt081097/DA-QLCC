@@ -19,7 +19,7 @@ import {
   NbTreeGridModule,
 } from "@nebular/theme";
 import { Ng2SmartTableModule } from "ng2-smart-table";
-import { MemberComponent } from "./member/member.component";
+import { ThePhuongTienComponent } from "./the-phuongtien/the-phuongtien.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -30,8 +30,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { AddCanHoComponent } from "./canho/add-canho/add-canho.component";
 import { EditEmployeeComponent } from "./canho/edit-employee/edit-employee.component";
-import { AddMemberComponent } from "./member/add-member/add-member.component";
-import { EditMemberComponent } from "./member/edit-member/edit-member.component";
+import { AddMemberComponent } from "./the-phuongtien/add-member/add-member.component";
+import { EditMemberComponent } from "./the-phuongtien/edit-member/edit-member.component";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatCardModule } from "@angular/material/card";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -57,7 +57,7 @@ import { PrintHoadonComponent } from "./canho/detail-canho/print-hoadon/print-ho
   declarations: [
     CanHoComponent,
     ManageCanHoComponent,
-    MemberComponent,
+    ThePhuongTienComponent,
     AddCanHoComponent,
     EditEmployeeComponent,
     AddMemberComponent,

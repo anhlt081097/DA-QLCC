@@ -22,7 +22,7 @@ export class TypePostComponent implements OnInit {
     private authService: AuthService,
     private dialog: MatDialog
   ) {
-    if (this.authService.getRole() === "ROLE_ADMIN") {
+    if (this.authService.getRole() === "Admin") {
       this.auth = true;
     }
   }
