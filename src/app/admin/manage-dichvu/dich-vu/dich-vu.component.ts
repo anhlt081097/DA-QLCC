@@ -155,7 +155,12 @@ export class DichVuComponent implements OnInit {
       },
     },
   };
-
+  @ViewChild("TableOnePaginator", { static: true })
+  tableOnePaginator: MatPaginator;
+  @ViewChild("TableOneSort", { static: true }) tableOneSort: MatSort;
+  @ViewChild("TableTwoPaginator", { static: true })
+  tableTwoPaginator: MatPaginator;
+  @ViewChild("TableTwoSort", { static: true }) tableTwoSort: MatSort;
   constructor(
     private dialog: MatDialog,
     private homeStayService: HomeStayService,
@@ -204,10 +209,10 @@ export class DichVuComponent implements OnInit {
     );
   }
   private getAllDichVuKhac() {
-    this.dichVuService.getAllDichVuKhac().subscribe(
+    this.dichVuService.getAllLoaiSuaChua().subscribe(
       (data) => {
         this.dichVuKhac.data = data;
-        console.log(this.dichVuKhac);
+        console.log(this.dichVuKhac.data);
       },
       (error) => {
         throwError(error);
@@ -224,10 +229,25 @@ export class DichVuComponent implements OnInit {
     // this.smartTable.create.subscribe((node: any) => {
     //   this.openAdd();
     // });
-    this.dichVuCoDinh.paginator = this.paginator.toArray()[0];
-    this.dichVuCoDinh.sort = this.sort.toArray()[0];
+    this.dichVuCoDinh.paginator = this.tableTwoPaginator;
+    this.dichVuCoDinh.sort = this.tableTwoSort;
+    this.dichVuKhac.paginator = this.tableOnePaginator;
+    this.dichVuKhac.sort = this.tableOneSort;
   }
-
+  applyFilterDichVu(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dichVuCoDinh.filter = filterValue.trim().toLowerCase();
+    if (this.dichVuCoDinh.paginator) {
+      this.dichVuCoDinh.paginator.firstPage();
+    }
+  }
+  applyFilterDichVuKhac(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dichVuKhac.filter = filterValue.trim().toLowerCase();
+    if (this.dichVuKhac.paginator) {
+      this.dichVuKhac.paginator.firstPage();
+    }
+  }
   onUnlock(event): void {
     const dialogRef = this.dialog.open(DialogSubmitUnlockComponent);
     dialogRef.afterClosed().subscribe((result) => {

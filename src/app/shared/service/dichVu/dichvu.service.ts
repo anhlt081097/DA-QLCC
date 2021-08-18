@@ -23,6 +23,11 @@ export class DichvuService {
   getAllDichVuByIdCanHo(idCanHo: any): Observable<DichVu[]> {
     return this.http.get<DichVu[]>(canHoUrl + `${idCanHo}` + "/hoa-don");
   }
+  getAllDichVuKhacByIdCanHo(idCanHo: any): Observable<DichVu[]> {
+    return this.http.get<DichVu[]>(
+      canHoUrl + `${idCanHo}` + "/hoa-don-sua-chua"
+    );
+  }
   getChiTietHoaDonDichVu(idHoaDon: any): Observable<DichVuChiTiet[]> {
     return this.http.get<DichVuChiTiet[]>(
       baseUrl + `${idHoaDon}` + "/chi-tiet-hoa-don-dich-vu"
@@ -33,6 +38,9 @@ export class DichvuService {
   }
   getAllDichVuKhac(): Observable<DichVu[]> {
     return this.http.get<DichVu[]>(hoaDonSuaChuaUrl);
+  }
+  getAllLoaiSuaChua(): Observable<DichVu[]> {
+    return this.http.get<DichVu[]>(dichVuKhacUrl);
   }
   updateDvCoDinh(dichVuCoDinh: DichVuCoDinh): Observable<any> {
     return this.http.put(dichVuUrl + `/${dichVuCoDinh.id}`, dichVuCoDinh);

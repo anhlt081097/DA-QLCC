@@ -29,6 +29,8 @@ export class AddCudanComponent implements OnInit {
   cuDanEditForm: FormGroup;
   canHo: CanHo;
   typeAction: string;
+  readonly: boolean = false;
+  role: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) private data,
     private dialogRef: MatDialogRef<AddCudanComponent>,
@@ -41,6 +43,10 @@ export class AddCudanComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.role = this.authService.getRole();
+    if (this.role == "User") {
+      this.readonly = true;
+    }
     this.typeAction = this.data.type;
     this.cuDan = {
       id: undefined,
@@ -158,7 +164,7 @@ export class AddCudanComponent implements OnInit {
     this.cuDan.hinhAnh = this.cuDanEditForm.get("hinhAnh").value;
     this.cuDan.soDienThoai = this.cuDanEditForm.get("soDienThoai").value;
     this.cuDan.email = this.cuDanEditForm.get("email").value;
-    this.cuDan.chuCanHo = false;
+    this.cuDan.chuCanHo = this.data.dataCuDan.chuCanHo;
     this.cuDan.canHo = this.canHo;
     this.cuDanService.updateCuDan(this.cuDan).subscribe(
       (data) => {

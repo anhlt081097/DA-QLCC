@@ -50,6 +50,14 @@ import {
 export class HoaDonListComponent implements OnInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
+
+  @ViewChild("TableOnePaginator", { static: true })
+  tableOnePaginator: MatPaginator;
+  @ViewChild("TableOneSort", { static: true }) tableOneSort: MatSort;
+  @ViewChild("TableTwoPaginator", { static: true })
+  tableTwoPaginator: MatPaginator;
+  @ViewChild("TableTwoSort", { static: true }) tableTwoSort: MatSort;
+
   employee = new MatTableDataSource();
   employeeLock = new MatTableDataSource();
   dichVuCoDinh = new MatTableDataSource();
@@ -143,9 +151,9 @@ export class HoaDonListComponent implements OnInit {
     // this.smartTable.create.subscribe((node: any) => {
     //   this.openAdd();
     // });
-    this.hoaDonDichVu.paginator = this.paginator.toArray()[0];
-    this.hoaDonDichVu.sort = this.sort.toArray()[0];
-    this.hoaDonSuaChua.paginator = this.paginator.toArray()[0];
-    this.hoaDonSuaChua.sort = this.sort.toArray()[0];
+    this.hoaDonDichVu.paginator = this.tableOnePaginator;
+    this.hoaDonDichVu.sort = this.tableOneSort;
+    this.hoaDonSuaChua.paginator = this.tableTwoPaginator;
+    this.hoaDonSuaChua.sort = this.tableTwoSort;
   }
 }

@@ -34,6 +34,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { ComponentModule } from "../../shared/component/component.module";
 import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatSortModule } from "@angular/material/sort";
 @NgModule({
   declarations: [
     ManageUntilityComponent,
@@ -73,6 +74,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
     ComponentModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
   ],
 })
 export class ManageUtilityModule {}

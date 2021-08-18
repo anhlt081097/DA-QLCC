@@ -6,7 +6,13 @@ import {
   trigger,
 } from "@angular/animations";
 import { DatePipe, formatDate } from "@angular/common";
-import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -68,6 +74,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DetailEmployeeComponent implements OnInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
+  @ViewChild("TablePaginator", { static: true })
+  tablePaginator: MatPaginator;
+  @ViewChild("TableSort", { static: true }) tableSort: MatSort;
+  @ViewChild("TableOnePaginator", { static: true })
+  tableOnePaginator: MatPaginator;
+  @ViewChild("TableOneSort", { static: true }) tableOneSort: MatSort;
+  @ViewChild("TableTwoPaginator", { static: true })
+  tableTwoPaginator: MatPaginator;
+  @ViewChild("TableTwoSort", { static: true }) tableTwoSort: MatSort;
   displayedColumns: string[] = ["position", "name", "weight", "symbol"];
   columnsToDisplay = ["image", "userName", "fullName", "email", "phone", "id"];
   columnsToDisplayDichVu = ["stt", "ngayTao", "trangThai", "id"];
@@ -77,6 +92,7 @@ export class DetailEmployeeComponent implements OnInit {
   xeCoList: XeCo[] = [];
   cuDanList = new MatTableDataSource();
   dichVuList = new MatTableDataSource();
+  dichVuKhacList = new MatTableDataSource();
   idCanHo: number;
   role: string;
   constructor(
@@ -103,6 +119,7 @@ export class DetailEmployeeComponent implements OnInit {
     this.getAllXeCoByCanHo();
     this.getAllCuDanByCanHo();
     this.getAllDichVuByCanHo();
+    this.getAllDichVuKhacByCanHo();
   }
   setDateTime(dateTime) {
     let pipe = new DatePipe("en-US");
@@ -247,16 +264,27 @@ export class DetailEmployeeComponent implements OnInit {
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator.toArray()[0];
     // this.dataSource.sort = this.sort.toArray()[0];
-    this.cuDanList.paginator = this.paginator.toArray()[0];
-    this.cuDanList.sort = this.sort.toArray()[0];
-    this.dichVuList.paginator = this.paginator.toArray()[0];
-    this.dichVuList.sort = this.sort.toArray()[0];
+    this.cuDanList.paginator = this.tablePaginator;
+    this.cuDanList.sort = this.tableSort;
+    this.dichVuList.paginator = this.tableOnePaginator;
+    this.dichVuList.sort = this.tableOneSort;
+    this.dichVuKhacList.paginator = this.tableTwoPaginator;
+    this.dichVuKhacList.sort = this.tableTwoSort;
+    // this.dichVuList.paginator = this.paginator.toArray()[0];
+    // this.dichVuList.sort = this.sort.toArray()[0];
   }
   applyFilterDichVu(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dichVuList.filter = filterValue.trim().toLowerCase();
     if (this.dichVuList.paginator) {
       this.dichVuList.paginator.firstPage();
+    }
+  }
+  applyFilterDichVuKhac(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dichVuKhacList.filter = filterValue.trim().toLowerCase();
+    if (this.dichVuKhacList.paginator) {
+      this.dichVuKhacList.paginator.firstPage();
     }
   }
   applyFilterCuDan(event: Event) {
@@ -283,6 +311,17 @@ export class DetailEmployeeComponent implements OnInit {
       (data) => {
         this.dichVuList.data = data;
         console.log(this.dichVuList.data);
+      },
+      (error) => {
+        throwError(error);
+      }
+    );
+  }
+  getAllDichVuKhacByCanHo() {
+    this.dichVuService.getAllDichVuKhacByIdCanHo(this.idCanHo).subscribe(
+      (data) => {
+        this.dichVuKhacList.data = data;
+        console.log(this.dichVuKhacList.data);
       },
       (error) => {
         throwError(error);

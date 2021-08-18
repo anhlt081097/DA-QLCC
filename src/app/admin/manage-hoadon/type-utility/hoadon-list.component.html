@@ -25,7 +25,8 @@
           <mat-label>Tìm kiếm</mat-label>
           <input matInput placeholder="Nhập mục cần tìm..." #input>
         </mat-form-field>
-        <table mat-table [dataSource]="hoaDonDichVu" multiTemplateDataRows class="mat-elevation-z8" matSort>
+        <table mat-table [dataSource]="hoaDonDichVu" multiTemplateDataRows class="mat-elevation-z8"
+          #TableOneSort="matSort" matSort>
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let row">
@@ -92,7 +93,7 @@
           </tr>
           <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]">
+        <mat-paginator #TableOnePaginator="matPaginator" [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
       </mat-tab>
       <mat-tab label="Hoá đơn sửa chữa">
@@ -109,7 +110,8 @@
           <mat-label>Tìm kiếm</mat-label>
           <input matInput placeholder="Nhập mục cần tìm..." #input>
         </mat-form-field>
-        <table mat-table [dataSource]="hoaDonSuaChua" multiTemplateDataRows class="mat-elevation-z8" matSort>
+        <table mat-table #TableTwoSort="matSort" [dataSource]="hoaDonSuaChua" multiTemplateDataRows
+          class="mat-elevation-z8" matSort>
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let row">
@@ -182,7 +184,7 @@
           </tr>
           <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]">
+        <mat-paginator #TableTwoPaginator="matPaginator" [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
       </mat-tab>
     </mat-tab-group>

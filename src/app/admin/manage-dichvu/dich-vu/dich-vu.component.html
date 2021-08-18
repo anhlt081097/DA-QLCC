@@ -23,9 +23,10 @@
         </div>
         <mat-form-field>
           <mat-label>Tìm kiếm</mat-label>
-          <input matInput placeholder="Nhập mục cần tìm..." #input>
+          <input matInput (keyup)="applyFilterDichVuKhac($event)" placeholder="Nhập mục cần tìm..." #input>
         </mat-form-field>
-        <table mat-table [dataSource]="dichVuKhac" multiTemplateDataRows class="mat-elevation-z8" matSort>
+        <table mat-table [dataSource]="dichVuKhac" multiTemplateDataRows class="mat-elevation-z8"
+          #TableOneSort="matSort" matSort>
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let row">
@@ -66,7 +67,7 @@
           </tr>
           <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
         </table>
-        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+        <mat-paginator #TableOnePaginator="matPaginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
       </mat-tab>
       <mat-tab label="Dịch vụ cố định">
         <br>
@@ -80,9 +81,10 @@
         </div>
         <mat-form-field>
           <mat-label>Tìm kiếm</mat-label>
-          <input matInput placeholder="Nhập mục cần tìm..." #input>
+          <input matInput (keyup)="applyFilterDichVu($event)" placeholder="Nhập mục cần tìm..." #input>
         </mat-form-field>
-        <table mat-table [dataSource]="dichVuCoDinh" multiTemplateDataRows class="mat-elevation-z8" matSort>
+        <table mat-table [dataSource]="dichVuCoDinh" #TableTwoSort="matSort" multiTemplateDataRows
+          class="mat-elevation-z8" matSort>
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let row">
@@ -123,7 +125,7 @@
           </tr>
           <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        <mat-paginator #TableTwoPaginator="matPaginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
       </mat-tab>
     </mat-tab-group>
   </nb-card-body>
