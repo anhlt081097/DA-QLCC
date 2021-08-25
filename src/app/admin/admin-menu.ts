@@ -73,11 +73,11 @@ export const Admin_ITEMS: NbMenuItem[] = [
     icon: "person",
     children: [
       {
-        title: "Xem thông báo",
-        link: "/admin/manage-post/type-post",
+        title: "Thông báo chung",
+        link: "/admin/manage-post/post",
       },
       {
-        title: "Gửi thông báo",
+        title: "Thông báo riêng",
         link: "/admin/manage-post/type-post",
       },
     ],

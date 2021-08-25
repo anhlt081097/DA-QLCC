@@ -1,0 +1,85 @@
+
+.card-row {
+  margin: 0 -0.5rem;
+}
+.color{
+  background-color: paleturquoise;
+}
+.card-col {
+  flex: 1 0 calc(50% - 1rem);
+  margin: 0 0.5rem;
+}
+table {
+  width: 100%;
+}
+mat-icon {
+  cursor: pointer;
+}
+.link-caption {
+  color: grey;
+  padding-left: 5px;
+}
+
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px 0 16px 35px;
+}
+
+.example-element-description-attribution {
+  padding-left: 20px;
+  font-weight: bold;
+  opacity: 2.5;
+  color: #8e9d92;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 15%;
+}

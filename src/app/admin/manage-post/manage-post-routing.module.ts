@@ -15,12 +15,12 @@ const routes: Routes = [
         component: TypePostComponent,
       },
       {
-        path: "post/:id",
+        path: "post",
         component: PostComponent,
       },
       {
         path: "",
-        redirectTo: "type-post",
+        redirectTo: "post",
         pathMatch: "full",
       },
     ],

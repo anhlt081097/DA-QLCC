@@ -14,6 +14,7 @@ import { CanHo } from "../../../../../shared/model/canHo/canho";
 import { DichVuChiTiet } from "../../../../../shared/model/dichVu/dichvu";
 import { CanhoService } from "../../../../../shared/service/canHo/canho.service";
 import { DichvuService } from "../../../../../shared/service/dichVu/dichvu.service";
+import { AddEditTypeUtilityComponent } from "../../../../manage-hoadon/type-utility/add-edit-type-utility/add-edit-type-utility.component";
 import { PrintHoadonComponent } from "../print-hoadon/print-hoadon.component";
 
 @Component({
@@ -28,6 +29,7 @@ export class DetailDichvuComponent implements OnInit {
   expandedElement: DichVuChiTiet | null;
   chiTietDichVu = new MatTableDataSource();
   canHo: CanHo = new CanHo();
+  type: string;
   constructor(
     private dialog: MatDialog,
     private dichVuService: DichvuService,
@@ -36,7 +38,13 @@ export class DetailDichvuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getChiTietHoaDonDichVu();
+    this.type = this.data.type;
+    if (this.type == "HDDV") {
+      this.getChiTietHoaDonDichVu();
+    } else if (this.type == "HDSC") {
+      this.getChiTietHoaDonSuaChua();
+    }
+
     this.getCanHoById();
   }
   ngAfterViewInit() {
@@ -45,12 +53,25 @@ export class DetailDichvuComponent implements OnInit {
     this.chiTietDichVu.paginator = this.paginator.toArray()[0];
     this.chiTietDichVu.sort = this.sort.toArray()[0];
   }
+  openAddHoaDonSuaChuaChiTiet() {
+    const type = "HDSCCT";
+    const hoaDon = this.data.hoaDon;
+    const dialogRef = this.dialog.open(AddEditTypeUtilityComponent, {
+      data: { type, hoaDon },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.getChiTietHoaDonSuaChua();
+      }
+    });
+  }
   openPrintHoaDonDichVu() {
     const dataDichVu = this.chiTietDichVu.data;
     const dataCanHo = this.canHo;
     const month = this.data.month;
+    const type = this.type;
     const dialogRef = this.dialog.open(PrintHoadonComponent, {
-      data: { dataDichVu, dataCanHo, month },
+      data: { dataDichVu, dataCanHo, month, type },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
@@ -59,6 +80,17 @@ export class DetailDichvuComponent implements OnInit {
   }
   getChiTietHoaDonDichVu() {
     this.dichVuService.getChiTietHoaDonDichVu(this.data.idHoaDon).subscribe(
+      (data) => {
+        this.chiTietDichVu.data = data;
+        console.log(this.chiTietDichVu.data);
+      },
+      (error) => {
+        throwError(error);
+      }
+    );
+  }
+  getChiTietHoaDonSuaChua() {
+    this.dichVuService.getChiTietHoaDonSuaChua(this.data.idHoaDon).subscribe(
       (data) => {
         this.chiTietDichVu.data = data;
         console.log(this.chiTietDichVu.data);

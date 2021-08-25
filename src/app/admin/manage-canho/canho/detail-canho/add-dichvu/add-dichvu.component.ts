@@ -15,6 +15,7 @@ export class AddDichvuComponent implements OnInit {
   thanhToanForm: FormGroup;
   thanhToan: ThanhToanHDDV;
   idHoaDon: any;
+  type: string;
   constructor(
     private dichVuService: DichvuService,
     private toastrService: ToastService,
@@ -23,7 +24,8 @@ export class AddDichvuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.idHoaDon = this.data;
+    this.idHoaDon = this.data.id;
+    this.type = this.data.type;
     console.log(this.idHoaDon);
     this.thanhToan = {
       id: undefined,
@@ -37,7 +39,34 @@ export class AddDichvuComponent implements OnInit {
       loaiHinhThanhToan: new FormControl(null, Validators.required),
     });
   }
-  createThanhToan() {
+  createThanhToanSc() {
+    this.thanhToan.id = this.idHoaDon;
+    this.thanhToan.tenNguoiThanhToan =
+      this.thanhToanForm.get("tenNguoiThanhToan").value;
+    this.thanhToan.soDienThoai = this.thanhToanForm.get("soDienThoai").value;
+    this.thanhToan.loaiHinhThanhToan =
+      this.thanhToanForm.get("loaiHinhThanhToan").value;
+    console.log(this.thanhToan);
+    this.dichVuService.thanhToanHDSC(this.thanhToan).subscribe(
+      (data) => {
+        this.dialogRef.close(true);
+        this.toastrService.showToast(
+          "success",
+          "Thành công",
+          "Thanh toán thành công"
+        );
+      },
+      (error) => {
+        throwError(error);
+        this.toastrService.showToast(
+          "danger",
+          "Thất bại",
+          "Thanh toán thất bại"
+        );
+      }
+    );
+  }
+  createThanhToanDv() {
     this.thanhToan.id = this.idHoaDon;
     this.thanhToan.tenNguoiThanhToan =
       this.thanhToanForm.get("tenNguoiThanhToan").value;
@@ -63,5 +92,12 @@ export class AddDichvuComponent implements OnInit {
         );
       }
     );
+  }
+  createThanhToan() {
+    if (this.type == "DVCD") {
+      this.createThanhToanDv();
+    } else if (this.type == "DCSC") {
+      this.createThanhToanSc();
+    }
   }
 }

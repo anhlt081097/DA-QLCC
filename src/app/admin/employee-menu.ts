@@ -2,7 +2,13 @@ import { NbMenuItem } from "@nebular/theme";
 
 export const Employee_ITEMS: NbMenuItem[] = [
   {
-    title: "Chức năng nhân viên",
+    title: "Thông báo",
+    icon: "pie-chart-outline",
+    link: "/admin/manage-statistics/statistics",
+    home: true,
+  },
+  {
+    title: "Chức năng khách hàng",
     group: true,
   },
   {

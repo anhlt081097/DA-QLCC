@@ -1,19 +1,61 @@
-<h4 *ngIf="idType" mat-dialog-title>SỬA LOẠI BÀI VIẾT</h4>
-<h4 *ngIf="!idType" mat-dialog-title>THÊM LOẠI BÀI VIẾT</h4>
-<form (ngSubmit)="submitAction()" [formGroup]="typePostForm">
+<h4 *ngIf="this.type =='Edit'" mat-dialog-title>SỬA THÔNG BÁO</h4>
+<h4 *ngIf="this.type =='Add'" mat-dialog-title>THÊM THÔNG BÁO</h4>
+<form *ngIf="this.type =='Add'" (ngSubmit)="submitAction()" [formGroup]="postForm">
   <p>
     <mat-form-field appearance="standard">
-      <mat-label>Tên loại bài viết</mat-label>
-      <input matInput placeholder="Vui lòng nhập tên loại" [formControlName]="'typeName'" required>
-      <mat-icon [ngClass]="{'red-icon': !typePostForm.get('typeName').valid && typePostForm.get('typeName').touched}"
-        matSuffix>assignment</mat-icon>
-      <mat-hint *ngIf="!typePostForm.get('typeName').valid && typePostForm.get('typeName').touched"
+      <mat-label>Căn hộ</mat-label>
+      <mat-select [formControlName]="'canHo'">
+        <mat-option *ngFor="let ch of canHo" [value]="ch">
+          {{ch.tenCanHo}}
+        </mat-option>
+      </mat-select>
+      <mat-icon [ngClass]="{'red-icon': !postForm.get('canHo').valid && postForm.get('canHo').touched}" matSuffix>
+        description</mat-icon>
+      <mat-hint *ngIf="!postForm.get('canHo').valid && postForm.get('canHo').touched"
         style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
     </mat-form-field>
   </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Tiêu đề</mat-label>
+      <input matInput placeholder="Vui lòng nhập tiêu đề" [formControlName]="'tieuDe'" required>
+      <mat-icon [ngClass]="{'red-icon': !postForm.get('tieuDe').valid && postForm.get('tieuDe').touched}" matSuffix>
+        Title
+      </mat-icon>
+      <mat-hint *ngIf="!postForm.get('tieuDe').valid && postForm.get('tieuDe').touched"
+        style="color: rgb(211, 102, 102);">Error is blank
+      </mat-hint>
+    </mat-form-field>
+  </p>
+
+  <div style="font-size: 16px; padding-bottom: 5px; ">Bài viết:</div>
+  <ckeditor [config]="{ extraPlugins: 'divarea', height: '150', width:'750'}" [formControlName]="'noiDung'">
+  </ckeditor>
   <mat-dialog-actions align="end">
     <button mat-flat-button mat-dialog-close>Thoát</button>
-  <button *ngIf="idType" [disabled]="(!typePostForm.valid)" mat-flat-button color="primary">Sửa</button>
-  <button *ngIf="!idType" [disabled]="(!typePostForm.valid)" mat-flat-button color="primary">Thêm</button>
-</mat-dialog-actions>
+    <button [disabled]="(!postForm.valid)" mat-flat-button color="primary">Thêm</button>
+  </mat-dialog-actions>
+</form>
+<form *ngIf="this.type =='Edit'" (ngSubmit)="submitAction()" [formGroup]="postEditForm">
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Tiêu đề</mat-label>
+      <input matInput placeholder="Vui lòng nhập tiêu đề" [formControlName]="'tieuDe'" required>
+      <mat-icon [ngClass]="{'red-icon': !postEditForm.get('tieuDe').valid && postEditForm.get('tieuDe').touched}"
+        matSuffix>
+        Title
+      </mat-icon>
+      <mat-hint *ngIf="!postEditForm.get('tieuDe').valid && postEditForm.get('tieuDe').touched"
+        style="color: rgb(211, 102, 102);">Error is blank
+      </mat-hint>
+    </mat-form-field>
+  </p>
+
+  <div style="font-size: 16px; padding-bottom: 5px; ">Bài viết:</div>
+  <ckeditor [config]="{ extraPlugins: 'divarea', height: '150', width:'750'}" [formControlName]="'noiDung'">
+  </ckeditor>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button [disabled]="(!postEditForm.valid)" mat-flat-button color="primary">Sửa</button>
+  </mat-dialog-actions>
 </form>

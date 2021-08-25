@@ -18,8 +18,11 @@
     <div class="titleBody">
       <p>Thông báo thu phí tháng {{this.data.month}}</p>
     </div>
-    <div class="numberTB">
+    <div class="numberTB" *ngIf="this.type == 'HDDV'">
       <p>Số: {{this.chiTietDichVu[0].hoaDonDichVu.id}}</p>
+    </div>
+    <div class="numberTB" *ngIf="this.type == 'HDSC'">
+      <p>Số: {{this.chiTietDichVu[0].hoaDonSuaChua.id}}</p>
     </div>
   </div>
   <div class="body-content2">
@@ -38,7 +41,7 @@
       I.Phí quản lý
     </div>
     <div class="title-content3">
-      <table border="1" style="width: 100%;">
+      <table border="1" style="width: 100%;" *ngIf="this.type =='HDDV'">
         <tr>
           <th>STT</th>
           <th>Tên dịch vụ</th>
@@ -50,6 +53,28 @@
         <tr *ngFor="let data of chiTietDichVu; let i = index">
           <th>{{i+1}}</th>
           <th>{{data.dichVuCoDinh.ten}}</th>
+          <th>{{data.soLuong}}</th>
+          <th>{{data.donGia}}</th>
+          <th>{{data.donGia * data.soLuong}}</th>
+        </tr>
+        <tr>
+          <td colspan="4">Tổng cộng</td>
+          <td>{{sum()}}</td>
+        </tr>
+
+      </table>
+      <table border="1" style="width: 100%;" *ngIf="this.type =='HDSC'">
+        <tr>
+          <th>STT</th>
+          <th>Tên dịch vụ</th>
+          <th>Đơn giá</th>
+          <th>Số lượng</th>
+          <th>Thành tiền</th>
+        </tr>
+
+        <tr *ngFor="let data of chiTietDichVu; let i = index">
+          <th>{{i+1}}</th>
+          <th>{{data.loaiSuaChua.ten}}</th>
           <th>{{data.soLuong}}</th>
           <th>{{data.donGia}}</th>
           <th>{{data.donGia * data.soLuong}}</th>

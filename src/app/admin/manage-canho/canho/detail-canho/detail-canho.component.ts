@@ -86,6 +86,13 @@ export class DetailEmployeeComponent implements OnInit {
   displayedColumns: string[] = ["position", "name", "weight", "symbol"];
   columnsToDisplay = ["image", "userName", "fullName", "email", "phone", "id"];
   columnsToDisplayDichVu = ["stt", "ngayTao", "trangThai", "id"];
+  columnsToDisplayDichVuSuaChua = [
+    "stt",
+    "ngayTao",
+    "trangThai",
+    "nhanVien",
+    "id",
+  ];
   // dataSource = new MatTableDataSource();
   expandedElement: CuDan | null;
   theCuDanList: TheCuDan[] = [];
@@ -199,10 +206,10 @@ export class DetailEmployeeComponent implements OnInit {
       }
     });
   }
-  openAddDichVu(idHoaDon) {
+  openAddDichVu(idHoaDon, type: string) {
     const id = idHoaDon;
     const dialogRef = this.dialog.open(AddDichvuComponent, {
-      data: id,
+      data: { id, type },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
@@ -235,12 +242,26 @@ export class DetailEmployeeComponent implements OnInit {
     });
   }
   openDetailDichVu(hoaDon: any) {
-    const type = "edit";
+    const type = "HDDV";
     const idCanHo = this.idCanHo;
     const idHoaDon = hoaDon.id;
     const month = hoaDon.ngayTao[1];
     const dialogRef = this.dialog.open(DetailDichvuComponent, {
       data: { type, idHoaDon, idCanHo, month },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.getAllTheCuDanByCanHo();
+      }
+    });
+  }
+  openDetailSuaChua(hoaDon: any) {
+    const type = "HDSC";
+    const idCanHo = this.idCanHo;
+    const idHoaDon = hoaDon.id;
+    const month = hoaDon.ngayTao[1];
+    const dialogRef = this.dialog.open(DetailDichvuComponent, {
+      data: { type, idHoaDon, idCanHo, month, hoaDon },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {

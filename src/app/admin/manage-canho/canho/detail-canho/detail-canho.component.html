@@ -220,7 +220,7 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng Thái </th>
                     <td mat-cell *matCellDef="let element">
                       <button *ngIf="element.trangThai == false && role == 'Admin'" mat-icon-button color="primary"
-                        (click)="openAddDichVu(element.id)">
+                        (click)="openAddDichVu(element.id,'DVCD')">
                         Thanh toán
                       </button>
 
@@ -290,7 +290,7 @@
                         <mat-icon>more_vert</mat-icon>
                       </button>
                       <mat-menu #menu="matMenu">
-                        <button (click)="openDetailDichVu(row)" mat-menu-item>
+                        <button (click)="openDetailSuaChua(row)" mat-menu-item>
                           <mat-icon>edit</mat-icon>
                           <span>Chi tiết</span>
                         </button>
@@ -312,15 +312,21 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng Thái </th>
                     <td mat-cell *matCellDef="let element">
                       <button *ngIf="element.trangThai == false && role == 'Admin'" mat-icon-button color="primary"
-                        (click)="openAddDichVu(element.id)">
+                        (click)="openAddDichVu(element.id,'DVSC')">
                         Thanh toán
                       </button>
 
                       {{element.trangThai ? "Đã thanh toán" : role == 'User' ? "Chưa thanh toán": ""}}
                     </td>
                   </ng-container>
+                  <ng-container matColumnDef="nhanVien">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nhân viên </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.nhanVien.hoTen}}
+                    </td>
+                  </ng-container>
                   <ng-container matColumnDef="expandedDetail">
-                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayDichVu.length">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayDichVuSuaChua.length">
                       <div class="example-element-detail"
                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
                         *ngIf="element.trangThai == true">
@@ -345,9 +351,9 @@
                       </div>
                     </td>
                   </ng-container>
-                  <tr mat-header-row *matHeaderRowDef="columnsToDisplayDichVu"></tr>
-                  <tr mat-row *matRowDef="let element; columns: columnsToDisplayDichVu;" class="example-element-row"
-                    [class.example-expanded-row]="expandedElement === element"
+                  <tr mat-header-row *matHeaderRowDef="columnsToDisplayDichVuSuaChua"></tr>
+                  <tr mat-row *matRowDef="let element; columns: columnsToDisplayDichVuSuaChua;"
+                    class="example-element-row" [class.example-expanded-row]="expandedElement === element"
                     (click)="expandedElement = expandedElement === element ? null : element">
                   </tr>
                   <tr class="mat-row" *matNoDataRow>

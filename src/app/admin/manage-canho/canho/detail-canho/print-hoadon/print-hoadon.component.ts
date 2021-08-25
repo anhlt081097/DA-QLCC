@@ -12,6 +12,7 @@ export class PrintHoadonComponent implements OnInit {
   canHo: any;
   chiTietDichVu: any;
   tongTien: number = 0;
+  type: string;
   constructor(
     private dialogRef: MatDialogRef<PrintHoadonComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -20,7 +21,9 @@ export class PrintHoadonComponent implements OnInit {
     this.chiTietDichVu = this.data.dataDichVu;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.type = this.data.type;
+  }
   ngAfterViewInit() {
     this.printTransfer();
     this.dialogRef.close();

@@ -34,7 +34,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button (click)="openDetailDichVu(row)" mat-menu-item>
+                <button (click)="openDetailDichVu(row,'HDDV')" mat-menu-item>
                   <mat-icon>edit</mat-icon>
                   <span>Chi tiết</span>
                 </button>
@@ -56,7 +56,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng Thái </th>
             <td mat-cell *matCellDef="let element">
               <button *ngIf="element.trangThai == false" mat-icon-button color="primary"
-                (click)="openAddDichVu(element.id)">
+                (click)="openAddDichVu(element.id,'DVCD')">
                 Thanh toán
               </button>
               {{element.trangThai ? "Đã thanh toán" : ""}}
@@ -99,7 +99,7 @@
       <mat-tab label="Hoá đơn sửa chữa">
         <br>
         <div style="display: flex">
-          <!-- <button mat-flat-button color="primary">Thêm hoá đơn sửa chữa</button> -->
+          <button mat-flat-button color="primary" (click)="openAddHoaDonSuaChua()">Thêm hoá đơn sửa chữa</button>
           <!-- <nb-actions size="medium">
             <nb-action nbPopoverTrigger="hover" [nbPopover]="card" icon="person-outline" [badgeText]="check.length"
               badgePosition="top right" badgeStatus="warning">
@@ -119,7 +119,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button (click)="openDetailDichVu(row)" mat-menu-item>
+                <button (click)="openDetailDichVu(row,'HDSC')" mat-menu-item>
                   <mat-icon>edit</mat-icon>
                   <span>Chi tiết</span>
                 </button>
@@ -141,10 +141,16 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng Thái </th>
             <td mat-cell *matCellDef="let element">
               <button *ngIf="element.trangThai == false" mat-icon-button color="primary"
-                (click)="openAddDichVu(element.id)">
+                (click)="openAddDichVu(element.id,'DVSC')">
                 Thanh toán
               </button>
               {{element.trangThai ? "Đã thanh toán" : ""}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="nhanVien">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nhân viên </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.nhanVien.hoTen}}
             </td>
           </ng-container>
           <ng-container matColumnDef="canHo">

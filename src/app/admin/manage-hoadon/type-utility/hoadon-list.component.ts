@@ -66,7 +66,14 @@ export class HoaDonListComponent implements OnInit {
   hoaDonSuaChua = new MatTableDataSource();
   columnsToDisplay = ["stt", "tenDichVu", "donGia", "id"];
   columnsToDisplayDichVu = ["stt", "ngayTao", "trangThai", "id"];
-  columnsToDisplaySuaChua = ["stt", "ngayTao", "trangThai", "canHo", "id"];
+  columnsToDisplaySuaChua = [
+    "stt",
+    "ngayTao",
+    "trangThai",
+    "nhanVien",
+    "canHo",
+    "id",
+  ];
   expandedElement: DichVu | null;
   expandedElementSuaChua: DichVu | null;
   constructor(
@@ -105,13 +112,12 @@ export class HoaDonListComponent implements OnInit {
     return new Date(date[0], date[1] - 1, date[2]);
   }
 
-  openDetailDichVu(hoaDon: any) {
-    const type = "edit";
+  openDetailDichVu(hoaDon: any, type: string) {
     const idCanHo = hoaDon.canHo.id;
     const idHoaDon = hoaDon.id;
     const month = hoaDon.ngayTao[1];
     const dialogRef = this.dialog.open(DetailDichvuComponent, {
-      data: { type, idHoaDon, idCanHo, month },
+      data: { type, idHoaDon, idCanHo, month, hoaDon },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
@@ -119,14 +125,25 @@ export class HoaDonListComponent implements OnInit {
       }
     });
   }
-  openAddDichVu(idHoaDon) {
+  openAddDichVu(idHoaDon, type: string) {
     const id = idHoaDon;
     const dialogRef = this.dialog.open(AddDichvuComponent, {
-      data: id,
+      data: { id, type },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
         // this.dataSource;
+      }
+    });
+  }
+  openAddHoaDonSuaChua() {
+    const type = "HDSC";
+    const dialogRef = this.dialog.open(AddEditTypeUtilityComponent, {
+      data: { type },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.getAllHoaDonSuaChua();
       }
     });
   }

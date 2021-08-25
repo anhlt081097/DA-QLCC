@@ -1,19 +1,105 @@
-<h4 *ngIf="idType" mat-dialog-title>SỬA LOẠI TIỆN ÍCH</h4>
-<h4 *ngIf="!idType" mat-dialog-title>THÊM LOẠI TIỆN ÍCH </h4>
-<form (ngSubmit)="submitAction()" [formGroup]="typeUtilityForm">
+<h4 *ngIf="this.type =='HDSC'" mat-dialog-title>THÊM HOÁ ĐƠN SỬA CHỮA</h4>
+<form *ngIf="this.type =='HDSC'" (ngSubmit)="submitAction()" [formGroup]="hoaDonSuaChuaForm">
   <p>
     <mat-form-field appearance="standard">
-      <mat-label>Tên loại tiện ích</mat-label>
-      <input matInput placeholder="Vui lòng nhập tên loại" [formControlName]="'typeName'" required>
-      <mat-icon [ngClass]="{'red-icon': !typeUtilityForm.get('typeName').valid && typeUtilityForm.get('typeName').touched}"
+      <mat-label>Căn hộ</mat-label>
+      <mat-select [formControlName]="'canHo'">
+        <mat-option *ngFor="let ch of canHo" [value]="ch">
+          {{ch.tenCanHo}}
+        </mat-option>
+      </mat-select>
+      <mat-icon
+        [ngClass]="{'red-icon': !hoaDonSuaChuaForm.get('canHo').valid && hoaDonSuaChuaForm.get('canHo').touched}"
+        matSuffix>
+        description</mat-icon>
+      <mat-hint *ngIf="!hoaDonSuaChuaForm.get('canHo').valid && hoaDonSuaChuaForm.get('canHo').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Phòng ban</mat-label>
+      <mat-select [formControlName]="'boPhan'">
+        <mat-option *ngFor="let dv of boPhan" [value]="dv" (click)="getAllNhanVien(dv.id)">
+          {{dv.ten}}
+        </mat-option>
+      </mat-select>
+      <mat-icon
+        [ngClass]="{'red-icon': !hoaDonSuaChuaForm.get('boPhan').valid && hoaDonSuaChuaForm.get('boPhan').touched}"
+        matSuffix>
+        description</mat-icon>
+      <mat-hint *ngIf="!hoaDonSuaChuaForm.get('boPhan').valid && hoaDonSuaChuaForm.get('boPhan').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Nhân viên</mat-label>
+      <mat-select [formControlName]="'nhanVien'">
+        <mat-option *ngFor="let dv of nhanVien" [value]="dv">
+          {{dv.hoTen}} - {{dv.soDienThoai}}
+        </mat-option>
+      </mat-select>
+      <mat-icon
+        [ngClass]="{'red-icon': !hoaDonSuaChuaForm.get('nhanVien').valid && hoaDonSuaChuaForm.get('nhanVien').touched}"
+        matSuffix>
+        description</mat-icon>
+      <mat-hint *ngIf="!hoaDonSuaChuaForm.get('nhanVien').valid && hoaDonSuaChuaForm.get('nhanVien').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button *ngIf="idType" [disabled]="(!hoaDonSuaChuaForm.valid)" mat-flat-button color="primary">Sửa</button>
+    <button *ngIf="!idType" [disabled]="(!hoaDonSuaChuaForm.valid)" mat-flat-button color="primary">Thêm</button>
+  </mat-dialog-actions>
+</form>
+<form *ngIf="this.type =='HDSCCT'" (ngSubmit)="submitAction()" [formGroup]="hoaDonSuaChuaChiTietForm">
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Loại sửa chữa</mat-label>
+      <mat-select [formControlName]="'loaiSuaChua'">
+        <mat-option *ngFor="let dv of dichVuKhac" [value]="dv">
+          {{dv.ten}} - {{dv.donGia | currency:'VND'}}
+        </mat-option>
+      </mat-select>
+      <mat-icon
+        [ngClass]="{'red-icon': !hoaDonSuaChuaChiTietForm.get('loaiSuaChua').valid && hoaDonSuaChuaChiTietForm.get('loaiSuaChua').touched}"
+        matSuffix>
+        description</mat-icon>
+      <mat-hint
+        *ngIf="!hoaDonSuaChuaChiTietForm.get('loaiSuaChua').valid && hoaDonSuaChuaChiTietForm.get('loaiSuaChua').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Số lượng</mat-label>
+      <input matInput placeholder="Vui lòng số lượng" [formControlName]="'soLuong'" required>
+      <mat-icon
+        [ngClass]="{'red-icon': !hoaDonSuaChuaChiTietForm.get('soLuong').valid && hoaDonSuaChuaChiTietForm.get('soLuong').touched}"
         matSuffix>assignment</mat-icon>
-      <mat-hint *ngIf="!typeUtilityForm.get('typeName').valid && typeUtilityForm.get('typeName').touched"
+      <mat-hint
+        *ngIf="!hoaDonSuaChuaChiTietForm.get('soLuong').valid && hoaDonSuaChuaChiTietForm.get('soLuong').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Mô tả</mat-label>
+      <textarea matInput placeholder="Vui lòng nhập mô tả" [formControlName]="'moTa'" required></textarea>
+      <mat-icon
+        [ngClass]="{'red-icon': !hoaDonSuaChuaChiTietForm.get('moTa').valid && hoaDonSuaChuaChiTietForm.get('moTa').touched}"
+        matSuffix>assignment</mat-icon>
+      <mat-hint *ngIf="!hoaDonSuaChuaChiTietForm.get('moTa').valid && hoaDonSuaChuaChiTietForm.get('moTa').touched"
         style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
     </mat-form-field>
   </p>
   <mat-dialog-actions align="end">
     <button mat-flat-button mat-dialog-close>Thoát</button>
-  <button *ngIf="idType" [disabled]="(!typeUtilityForm.valid)" mat-flat-button color="primary">Sửa</button>
-  <button *ngIf="!idType" [disabled]="(!typeUtilityForm.valid)" mat-flat-button color="primary">Thêm</button>
-</mat-dialog-actions>
+    <button *ngIf="idType" [disabled]="(!hoaDonSuaChuaChiTietForm.valid)" mat-flat-button color="primary">Sửa</button>
+    <button *ngIf="!idType" [disabled]="(!hoaDonSuaChuaChiTietForm.valid)" mat-flat-button color="primary">Thêm</button>
+  </mat-dialog-actions>
 </form>
