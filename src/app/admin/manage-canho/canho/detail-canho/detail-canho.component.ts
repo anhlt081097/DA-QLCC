@@ -17,7 +17,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { throwError } from "rxjs";
 import { DialogSubmitLockComponent } from "../../../../shared/component/dialog-submit-lock/dialog-submit-lock.component";
 import { CuDan } from "../../../../shared/model/cuDan/cudan";
@@ -110,7 +110,8 @@ export class DetailEmployeeComponent implements OnInit {
     private cuDanService: CudanService,
     private toastrService: ToastService,
     private dichVuService: DichvuService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -128,6 +129,12 @@ export class DetailEmployeeComponent implements OnInit {
     this.getAllDichVuByCanHo();
     this.getAllDichVuKhacByCanHo();
   }
+  thanhToanPayPalHddv(id: any) {
+    this.router.navigateByUrl("/banking/hddv/" + id);
+  }
+  thanhToanPayPalHdsc(id: any) {
+    this.router.navigateByUrl("/banking/hdsc/" + id);
+  }
   setDateTime(dateTime) {
     let pipe = new DatePipe("en-US");
 
@@ -140,6 +147,7 @@ export class DetailEmployeeComponent implements OnInit {
   convertDateToTimeStamp(date: any) {
     return new Date(date[0], date[1] - 1, date[2]);
   }
+
   openAddTheCuDan() {
     const type = "add";
     const id = this.idCanHo;

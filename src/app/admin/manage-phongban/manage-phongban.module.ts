@@ -47,9 +47,11 @@ import { PhongBanComponent } from "./phongBan/phongban.component";
 import { NhanVienComponent } from './nhan-vien/nhan-vien.component';
 import { NhanVienProfileComponent } from './nhan-vien-profile/nhan-vien-profile.component';
 import { EditProfileComponent } from './nhan-vien-profile/edit-profile/edit-profile.component';
+import { AddNhanVienComponent } from './add-nhan-vien/add-nhan-vien.component';
+import { AddBoPhanComponent } from './add-bo-phan/add-bo-phan.component';
 
 @NgModule({
-  declarations: [ManageHouseComponent, PhongBanComponent, NhanVienComponent, NhanVienProfileComponent, EditProfileComponent],
+  declarations: [ManageHouseComponent, PhongBanComponent, NhanVienComponent, NhanVienProfileComponent, EditProfileComponent, AddNhanVienComponent, AddBoPhanComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

@@ -48,22 +48,22 @@ export const Admin_ITEMS: NbMenuItem[] = [
         title: "Danh sách hoá đơn",
         link: "/admin/manage-hoadon/hoadon-list",
       },
-      {
-        title: "Thu và thanh toán online",
-        link: "/admin/manage-untility/type-untility",
-      },
-      {
-        title: "Hoá đơn thu phí dịch vụ",
-        link: "/admin/manage-untility/type-untility",
-      },
+      // {
+      //   title: "Thu và thanh toán online",
+      //   link: "/admin/manage-untility/type-untility",
+      // },
+      // {
+      //   title: "Hoá đơn thu phí dịch vụ",
+      //   link: "/admin/manage-untility/type-untility",
+      // },
     ],
   },
   {
-    title: "Quản lý phòng ban",
+    title: "Quản lý bộ phận",
     icon: "person",
     children: [
       {
-        title: "Danh sách phòng ban",
+        title: "Danh sách bộ phận",
         link: "/admin/manage-phongban/phongBan",
       },
     ],

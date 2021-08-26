@@ -223,8 +223,11 @@
                         (click)="openAddDichVu(element.id,'DVCD')">
                         Thanh toán
                       </button>
-
-                      {{element.trangThai ? "Đã thanh toán" : role == 'User' ? "Chưa thanh toán": ""}}
+                      <button *ngIf="element.trangThai == false && role == 'User'" mat-icon-button color="primary"
+                        (click)="thanhToanPayPalHddv(element.id)">Thanh
+                        toán
+                        Paypal</button>
+                      {{element.trangThai ? "Đã thanh toán" : ""}}
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="expandedDetail">
@@ -315,8 +318,11 @@
                         (click)="openAddDichVu(element.id,'DVSC')">
                         Thanh toán
                       </button>
-
-                      {{element.trangThai ? "Đã thanh toán" : role == 'User' ? "Chưa thanh toán": ""}}
+                      <button *ngIf="element.trangThai == false && role == 'User'" mat-icon-button color="primary"
+                        (click)="thanhToanPayPalHdsc(element.id)">Thanh
+                        toán
+                        Paypal</button>
+                      {{element.trangThai ? "Đã thanh toán" : ""}}
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="nhanVien">

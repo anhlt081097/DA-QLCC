@@ -12,6 +12,8 @@ import { TransactionResponse } from "../../../shared/model/transaction/transacti
 import { PdfComponent } from "../../../shared/component/pdf/pdf.component";
 import { EmployeeResponse } from "../../../shared/model/employee/employee-response";
 import { AddCanHoComponent } from "../../manage-canho/canho/add-canho/add-canho.component";
+import { BoPhanService } from "../../../shared/service/boPhan/bo-phan.service";
+import { AddBoPhanComponent } from "../add-bo-phan/add-bo-phan.component";
 
 @Component({
   selector: "ngx-transaction",
@@ -19,14 +21,7 @@ import { AddCanHoComponent } from "../../manage-canho/canho/add-canho/add-canho.
   styleUrls: ["./phongban.component.scss"],
 })
 export class PhongBanComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = [
-    "id",
-    "fullname",
-    "dateIn",
-    "dateOut",
-    "dateRelease",
-    "action",
-  ];
+  displayedColumns: string[] = ["id", "ten", "action"];
   dataSource = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -38,43 +33,60 @@ export class PhongBanComponent implements OnInit, AfterViewInit {
   constructor(
     private transactionService: TransactionService,
     private dialog: MatDialog,
-    private toastrService: ToastService
+    private toastrService: ToastService,
+    private boPhanService: BoPhanService
   ) {}
 
   ngOnInit(): void {
-    // this.getAllTransaction();
-    this.dataSource.data = [
-      {
-        id: 1,
-        tenPhongBan: "Vận chuyển",
-        nguoiPhuTrach: "Lê Tuấn Anh",
-        soDienThoai: "0967789821",
-        soNhanVien: 20,
-      },
-    ];
+    this.getAllBoPhan();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  openAdd() {
-    const dialogRef = this.dialog.open(AddCanHoComponent);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === true) {
-        // this.getAllEmployee();
-      }
-    });
-  }
-  getAllTransaction() {
-    this.transactionService.getAllTransaction().subscribe(
+  getAllBoPhan() {
+    this.boPhanService.getAllBoPhan().subscribe(
       (data) => {
         this.dataSource.data = data;
-        this.transactionResponses = data;
-        this.bookingResponses = data.map((value) => value.bookingResponse);
+        console.log(data);
       },
       (error) => {
         throwError(error);
+      }
+    );
+  }
+  openAdd() {
+    const type = "add";
+    const dialogRef = this.dialog.open(AddBoPhanComponent, {
+      data: { type },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.getAllBoPhan();
+      }
+    });
+  }
+  openEdit(boPhan: any) {
+    const type = "edit";
+    const dialogRef = this.dialog.open(AddBoPhanComponent, {
+      data: { type, boPhan },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.getAllBoPhan();
+      }
+    });
+  }
+  deleteBoPhan(boPhan: any) {
+    this.boPhanService.deleteBoPhan(boPhan).subscribe(
+      (data) => {
+        this.toastrService.showToast("success", "Thành công", "Xoá thành công");
+        this.getAllBoPhan();
+      },
+      (error) => {
+        throwError(error);
+        this.toastrService.showToast("danger", "Thất bại", "Xoá thất bại");
       }
     );
   }

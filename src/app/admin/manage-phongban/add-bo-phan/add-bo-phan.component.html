@@ -1,0 +1,20 @@
+<h4 mat-dialog-title *ngIf="this.type == 'add'">THÊM BỘ PHẬN</h4>
+<h4 mat-dialog-title *ngIf="this.type == 'edit'">SỮA BỘ PHẬN</h4>
+<form (ngSubmit)="submitAction()" [formGroup]="boPhanForm">
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Tên bộ phận</mat-label>
+      <input matInput placeholder="Vui lòng nhập tên bộ phận" [formControlName]="'ten'" required>
+      <mat-icon [ngClass]="{'red-icon': !boPhanForm.get('ten').valid && boPhanForm.get('ten').touched}" matSuffix>
+        assignment</mat-icon>
+      <mat-hint *ngIf="!boPhanForm.get('ten').valid && boPhanForm.get('ten').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button *ngIf="this.type == 'edit'" [disabled]="(!boPhanForm.valid)" mat-flat-button color="primary">Sửa</button>
+    <button *ngIf="this.type == 'add'" [disabled]="(!boPhanForm.valid)" mat-flat-button color="primary">Thêm</button>
+  </mat-dialog-actions>
+</form>

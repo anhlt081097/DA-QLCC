@@ -22,7 +22,7 @@ export const routes: Routes = [
     loadChildren: () => import("./user/user.module").then((m) => m.UserModule),
     // canActivate: [MemberSharedGuard],
   },
-  { path: "banking/:id", component: PaypalComponent },
+  { path: "banking/:type/:id", component: PaypalComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "forgot-password", component: ForgotPasswordComponent },

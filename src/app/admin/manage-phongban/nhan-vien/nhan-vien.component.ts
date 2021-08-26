@@ -11,6 +11,9 @@ import { ToastService } from "../../../shared/service/toast.service";
 import { TransactionService } from "../../../shared/service/transaction.service";
 import { Images } from "../../manage-dichvu/home-stay/add-edit-home-stay/add-edit-home-stay.component";
 import { AddCanHoComponent } from "../../manage-canho/canho/add-canho/add-canho.component";
+import { BoPhanService } from "../../../shared/service/boPhan/bo-phan.service";
+import { throwError } from "rxjs";
+import { AddNhanVienComponent } from "../add-nhan-vien/add-nhan-vien.component";
 
 @Component({
   selector: "ngx-nhan-vien",
@@ -34,40 +37,82 @@ export class NhanVienComponent implements OnInit {
   transactionResponses: TransactionResponse[];
   check: EmployeeResponse[] = [];
   id: number;
+  idBoPhan: any;
   constructor(
     private transactionService: TransactionService,
     private dialog: MatDialog,
     private toastrService: ToastService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private boPhanService: BoPhanService
   ) {}
 
   ngOnInit(): void {
     // this.getAllTransaction();
     this.id = this.activateRoute.snapshot.params.id;
-    this.dataSource.data = [
-      {
-        id: 1,
-        hoVaTen: "Lê Tuấn Anh",
-        soDienThoai: "0967789821",
-        email: "anhlt@gmail.com",
-        soNhanVien: 20,
-      },
-    ];
+    this.getAllNhanVienByIdBoPhan();
+    this.getBoPhanById();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+  getAllNhanVienByIdBoPhan() {
+    this.boPhanService.getAllNhanVienByIdBoPhan(this.id).subscribe(
+      (data) => {
+        this.dataSource.data = data;
+        console.log(data);
+      },
+      (error) => {
+        throwError(error);
+      }
+    );
+  }
+  getBoPhanById() {
+    this.boPhanService.getBoPhanById(this.id).subscribe(
+      (data) => {
+        this.idBoPhan = data;
+      },
+      (error) => {
+        throwError(error);
+      }
+    );
+  }
   openAdd() {
-    const dialogRef = this.dialog.open(AddCanHoComponent);
+    const type = "add";
+    const idBoPhan = this.idBoPhan;
+    const dialogRef = this.dialog.open(AddNhanVienComponent, {
+      data: { type, idBoPhan },
+    });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        // this.getAllEmployee();
+        this.getAllNhanVienByIdBoPhan();
       }
     });
   }
-
+  openEdit(nhanVien: any) {
+    const type = "edit";
+    const dialogRef = this.dialog.open(AddNhanVienComponent, {
+      data: { type, nhanVien },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.getAllNhanVienByIdBoPhan();
+      }
+    });
+  }
+  deleteNhanVien(nhanVien: any) {
+    this.boPhanService.deleteNhanVien(nhanVien).subscribe(
+      (data) => {
+        this.toastrService.showToast("success", "Thành công", "Xoá thành công");
+        this.getAllNhanVienByIdBoPhan();
+      },
+      (error) => {
+        throwError(error);
+        this.toastrService.showToast("danger", "Thất bại", "Xoá thất bại");
+      }
+    );
+  }
   history(id) {
     // const dialogRef = this.dialog.open(HistoryOrderComponent, {
     //   data: {

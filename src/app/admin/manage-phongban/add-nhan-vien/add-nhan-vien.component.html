@@ -1,0 +1,44 @@
+<h4 mat-dialog-title *ngIf="this.type == 'add'">THÊM NHÂN VIÊN</h4>
+<h4 mat-dialog-title *ngIf="this.type == 'edit'">SỮA NHÂN VIÊN</h4>
+<form (ngSubmit)="submitAction()" [formGroup]="nhanVienForm">
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Họ tên</mat-label>
+      <input matInput placeholder="Vui lòng nhập họ tên" [formControlName]="'hoTen'" required>
+      <mat-icon [ngClass]="{'red-icon': !nhanVienForm.get('hoTen').valid && nhanVienForm.get('hoTen').touched}"
+        matSuffix>
+        assignment</mat-icon>
+      <mat-hint *ngIf="!nhanVienForm.get('hoTen').valid && nhanVienForm.get('hoTen').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Số điện thoại</mat-label>
+      <input matInput placeholder="Vui lòng nhập số điện thoại" [formControlName]="'soDienThoai'" required>
+      <mat-icon
+        [ngClass]="{'red-icon': !nhanVienForm.get('soDienThoai').valid && nhanVienForm.get('soDienThoai').touched}"
+        matSuffix>
+        assignment</mat-icon>
+      <mat-hint *ngIf="!nhanVienForm.get('soDienThoai').valid && nhanVienForm.get('soDienThoai').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Vui lòng nhập email" [formControlName]="'email'" required>
+      <mat-icon [ngClass]="{'red-icon': !nhanVienForm.get('email').valid && nhanVienForm.get('email').touched}"
+        matSuffix>
+        assignment</mat-icon>
+      <mat-hint *ngIf="!nhanVienForm.get('email').valid && nhanVienForm.get('email').touched"
+        style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+    </mat-form-field>
+  </p>
+
+  <mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Thoát</button>
+    <button *ngIf="this.type == 'edit'" [disabled]="(!nhanVienForm.valid)" mat-flat-button color="primary">Sửa</button>
+    <button *ngIf="this.type == 'add'" [disabled]="(!nhanVienForm.valid)" mat-flat-button color="primary">Thêm</button>
+  </mat-dialog-actions>
+</form>

@@ -96,7 +96,7 @@ export class AuthService {
     });
   }
 
-  editPassword(resetPasswordRequest: ResetPasswordRequest): Observable<any> {
+  editPassword(resetPasswordRequest: any): Observable<any> {
     return this.http.post("/api/auth/editPassword", resetPasswordRequest, {
       responseType: "text",
     });
@@ -105,16 +105,16 @@ export class AuthService {
   logout() {
     this.refreshTokenPayload.userName = this.getUserName();
     this.refreshTokenPayload.refreshToken = this.getRefreshToken();
-    // this.http
-    //   .post("/api/auth/logout", this.refreshTokenPayload, {
-    //     responseType: "text",
-    //   })
-    //   .subscribe(
-    //     (data) => {},
-    //     (error) => {
-    //       throwError(error);
-    //     }
-    //   );
+    this.http
+      .post("/api/auth/logout", this.refreshTokenPayload, {
+        responseType: "text",
+      })
+      .subscribe(
+        (data) => {},
+        (error) => {
+          throwError(error);
+        }
+      );
     this.localStorage.clear("authenticationToken");
     this.localStorage.clear("username");
     this.localStorage.clear("tokenType");
