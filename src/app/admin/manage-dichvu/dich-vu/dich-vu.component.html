@@ -25,6 +25,14 @@
           <mat-label>Tìm kiếm</mat-label>
           <input matInput (keyup)="applyFilterDichVuKhac($event)" placeholder="Nhập mục cần tìm..." #input>
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>Chọn bộ phận</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let bp of boPhanList" (click)="getAllDichVuKhacByBoPhan(bp.id)" [value]="bp">
+              {{bp.ten}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <table mat-table [dataSource]="dichVuKhac" multiTemplateDataRows class="mat-elevation-z8"
           #TableOneSort="matSort" matSort>
           <ng-container matColumnDef="id">
@@ -49,6 +57,10 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>STT </th>
             <td mat-cell *matCellDef="let element;let i = index;"> {{element.id}}</td>
           </ng-container>
+          <ng-container matColumnDef="boPhan">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên bộ phận </th>
+            <td mat-cell *matCellDef="let element"> {{element.boPhan.ten}} </td>
+          </ng-container>
           <ng-container matColumnDef="tenDichVu">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên dịch vụ </th>
             <td mat-cell *matCellDef="let element"> {{element.ten}} </td>
@@ -57,8 +69,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Giá </th>
             <td mat-cell *matCellDef="let element"> {{element.donGia}} </td>
           </ng-container>
-          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-          <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayDvk"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplayDvk;" class="example-element-row"
             [class.example-expanded-row]="expandedElement === element"
             (click)="expandedElement = expandedElement === element ? null : element">
           </tr>

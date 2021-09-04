@@ -12,7 +12,7 @@
         <nb-card size="medium">
           <nb-card-header>
             Cư dân thuộc căn hộ
-            <button mat-icon-button color="primary" *ngIf="role == 'Admin'" (click)="openAddCuDan()"
+            <button mat-icon-button color="primary" *ngIf="role == 'Staff_bql'" (click)="openAddCuDan()"
               style="float:right;margin-top: -10px;">
               <mat-icon>add</mat-icon>
             </button>
@@ -36,7 +36,7 @@
                       <mat-icon>edit</mat-icon>
                       <span>Chỉnh sửa</span>
                     </button>
-                    <button *ngIf="role == 'Admin'" mat-menu-item>
+                    <button *ngIf="role == 'Staff_bql'" mat-menu-item>
                       <mat-icon>lock</mat-icon>
                       <span>Xoá</span>
                     </button>
@@ -115,7 +115,7 @@
                     Thông tin thẻ
                   </div>
                   <div class="col-4">
-                    <button mat-icon-button color="primary" *ngIf="role == 'Admin'" (click)="openAddTheCuDan()"
+                    <button mat-icon-button color="primary" *ngIf="role == 'Staff_bql'" (click)="openAddTheCuDan()"
                       style="float:right;margin-top: -10px;">
                       <mat-icon>add</mat-icon>
                     </button>
@@ -125,9 +125,10 @@
               <nb-card-body>
                 <mat-list>
                   <mat-list-item *ngFor="let theCuDan of theCuDanList">
-                    <h4 mat-line>{{theCuDan.maThe}} - {{theCuDan.ngayTao | date}} - {{theCuDan.kichHoat}}</h4>
-                    <mat-icon *ngIf="role == 'Admin'" (click)="openEditTheCuDan(theCuDan.maThe)">edit</mat-icon>
-                    <mat-icon *ngIf="role == 'Admin'" (click)="onDeleteTheCuDan(theCuDan.id)">clear</mat-icon>
+                    <h4 mat-line>{{theCuDan.maThe}} - {{theCuDan.ngayTao | date}} -
+                      {{theCuDan.kichHoat ? "Đã sử dụng" : "Chưa sử dụng"}}</h4>
+                    <mat-icon *ngIf="role == 'Staff_bql'" (click)="openEditTheCuDan(theCuDan.maThe)">edit</mat-icon>
+                    <mat-icon *ngIf="role == 'Staff_bql'" (click)="onDeleteTheCuDan(theCuDan.id)">clear</mat-icon>
                   </mat-list-item>
                   <span *ngIf="theCuDanList.length == 0">Không có dữ liệu</span>
                 </mat-list>
@@ -142,7 +143,7 @@
             <nb-card size="tiny">
               <nb-card-header>
                 Thông tin xe cộ
-                <button mat-icon-button color="primary" *ngIf="role == 'Admin'" (click)="openAddXeCo()"
+                <button mat-icon-button color="primary" *ngIf="role == 'Staff_bql'" (click)="openAddXeCo()"
                   style="float:right;margin-top: -10px;">
                   <mat-icon>add</mat-icon>
                 </button>
@@ -151,8 +152,8 @@
                 <mat-list>
                   <!-- <h6><strong>Ô tô</strong></h6> -->
                   <mat-list-item *ngFor="let xeCo of xeCoList">
-                    <h6 mat-line>{{xeCo.tenXe}} - {{xeCo.bienKiemSoat}} </h6>
-                    <mat-icon *ngIf="role == 'Admin'" (click)="onDeletePhuongTien(xeCo.id)">clear</mat-icon>
+                    <h6 mat-line>{{xeCo.loaiXe}} - {{xeCo.tenXe}} - {{xeCo.bienKiemSoat}} </h6>
+                    <mat-icon *ngIf="role == 'Staff_bql'" (click)="onDeletePhuongTien(xeCo.id)">clear</mat-icon>
                   </mat-list-item>
                   <!-- <h6><strong>Xe máy</strong></h6>
                   <mat-list-item *ngFor="let xeCo of xeCoList">
@@ -219,7 +220,7 @@
                   <ng-container matColumnDef="trangThai">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng Thái </th>
                     <td mat-cell *matCellDef="let element">
-                      <button *ngIf="element.trangThai == false && role == 'Admin'" mat-icon-button color="primary"
+                      <button *ngIf="element.trangThai == false && role == 'Staff_bql'" mat-icon-button color="primary"
                         (click)="openAddDichVu(element.id,'DVCD')">
                         Thanh toán
                       </button>
@@ -314,7 +315,7 @@
                   <ng-container matColumnDef="trangThai">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng Thái </th>
                     <td mat-cell *matCellDef="let element">
-                      <button *ngIf="element.trangThai == false && role == 'Admin'" mat-icon-button color="primary"
+                      <button *ngIf="element.trangThai == false && role == 'Staff_bql'" mat-icon-button color="primary"
                         (click)="openAddDichVu(element.id,'DVSC')">
                         Thanh toán
                       </button>

@@ -17,7 +17,7 @@ const routes: Routes = [
           import("./manage-canho/manage-canho.module").then(
             (m) => m.ManageCanHoModule
           ),
-        // canActivate: [AdminGuard],
+        canActivate: [AdminGuard],
       },
       {
         path: "manage-dichvu",
@@ -25,7 +25,7 @@ const routes: Routes = [
           import("./manage-dichvu/manage-dichvu.module").then(
             (m) => m.ManageHomeStayModule
           ),
-        // canActivate: [AdminGuard],
+        canActivate: [AdminGuard],
       },
       {
         path: "manage-hoadon",
@@ -33,7 +33,7 @@ const routes: Routes = [
           import("./manage-hoadon/manage-hoadon.module").then(
             (m) => m.ManageUtilityModule
           ),
-        // canActivate: [AdminGuard],
+        canActivate: [AdminGuard],
       },
       {
         path: "manage-phongban",
@@ -41,6 +41,7 @@ const routes: Routes = [
           import("./manage-phongban/manage-phongban.module").then(
             (m) => m.ManageHouseModule
           ),
+        canActivate: [AdminGuard],
       },
       {
         path: "manage-post",
@@ -48,6 +49,7 @@ const routes: Routes = [
           import("./manage-post/manage-post.module").then(
             (m) => m.ManagePostModule
           ),
+        canActivate: [AdminGuard],
       },
       {
         path: "manage-statistics",
@@ -55,7 +57,7 @@ const routes: Routes = [
           import("./manage-statistics/manage-statistics.module").then(
             (m) => m.ManageStatisticsModule
           ),
-        // canActivate: [AdminGuard],
+        canActivate: [AdminGuard],
       },
       {
         path: "dashboard",

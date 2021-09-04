@@ -29,6 +29,7 @@
         <mat-label>Hình thức thanh toán</mat-label>
         <mat-select [formControlName]="'loaiHinhThanhToan'">
           <mat-option [value]="'Tiền mặt'" selected="true">Tiền mặt</mat-option>
+          <mat-option [value]="'Chuyển khoản'" selected="true">Chuyển khoản</mat-option>
         </mat-select>
         <mat-icon
           [ngClass]="{'red-icon': !thanhToanForm.get('loaiHinhThanhToan').valid && thanhToanForm.get('loaiHinhThanhToan').touched}"
