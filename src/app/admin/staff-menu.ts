@@ -1,83 +1,82 @@
 import { NbMenuItem } from "@nebular/theme";
 
-export const Employee_ITEMS: NbMenuItem[] = [
+export const Staff_ITEMS: NbMenuItem[] = [
   {
-    title: "Thông báo",
+    title: "Thống kê",
     icon: "pie-chart-outline",
     link: "/admin/manage-statistics/statistics",
     home: true,
   },
   {
-    title: "Chức năng khách hàng",
+    title: "Chức năng ban quản lý ",
     group: true,
   },
   {
-    title: "Thông tin căn hộ",
+    title: "Quản lý căn hộ",
     icon: "person",
     children: [
       {
-        title: "Căn hộ",
-        link: "/admin/manage-canho/detail/infor",
+        title: "Danh sách căn hộ",
+        link: "/admin/manage-canho/canho",
+      },
+      {
+        title: "Thông tin thẻ/phương tiện",
+        link: "/admin/manage-canho/the-phuongtien",
+      },
+      // {
+      //   title: "Thông tin phương tiện",
+      //   link: "/admin/manage-user/member",
+      // },
+    ],
+  },
+  {
+    title: "Quản lý dịch vụ",
+    icon: "person",
+    expanded: true,
+    children: [
+      {
+        title: "Danh sách dịch vụ",
+        link: "/admin/manage-dichvu/dich-vu",
+      },
+    ],
+  },
+  {
+    title: "Quản lý hoá đơn",
+    icon: "person",
+    children: [
+      {
+        title: "Danh sách hoá đơn",
+        link: "/admin/manage-hoadon/hoadon-list",
+      },
+      // {
+      //   title: "Thu và thanh toán online",
+      //   link: "/admin/manage-untility/type-untility",
+      // },
+      // {
+      //   title: "Hoá đơn thu phí dịch vụ",
+      //   link: "/admin/manage-untility/type-untility",
+      // },
+    ],
+  },
+  {
+    title: "Quản lý thông báo",
+    icon: "person",
+    children: [
+      {
+        title: "Thông báo chung",
+        link: "/admin/manage-post/post",
+      },
+      {
+        title: "Thông báo riêng",
+        link: "/admin/manage-post/type-post",
       },
     ],
   },
   // {
-  //   title: 'Quản lý nhà',
-  //   icon: 'home',
-  //   children: [
-  //     {
-  //       title: 'Nhà',
-  //       link: '/admin/manage-house/house',
-  //       home: true,
-  //     },
-  //     {
-  //       title: 'Cảnh quan',
-  //       link: '/admin/manage-house/view',
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: 'Quản lý đặt phòng',
-  //   icon: 'shopping-cart-outline',
-  //   expanded: true,
-  //   children: [
-  //     {
-  //       title: 'Đặt phòng',
-  //       link: '/admin/manage-house/booking',
-  //     },
-  //     {
-  //       title: 'Danh sách đặt phòng',
-  //       link: '/admin/manage-house/order',
-  //     },
-  //     {
-  //       title: 'Danh sách đang sử dụng',
-  //       link: '/admin/manage-house/check-in',
-  //     },
-  //     {
-  //       title: 'Hóa đơn',
-  //       link: '/admin/manage-house/transaction',
-  //     },
-  //     {
-  //       title: 'Đơn đã hủy',
-  //       link: '/admin/manage-house/refund',
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: 'Quản lý bài viết',
-  //   icon: 'edit-2-outline',
-  //   children: [
-  //     {
-  //       title: 'Bài viết',
-  //       link: '/admin/manage-post/type-post',
-  //     },
-  //   ],
-  // },
-  // {
   //   title: "Tham khảo",
   //   expanded: false,
   //   icon: "layout-outline",
-  //   hidden: true,
+  //   hidden: false,
   //   children: [
   //     {
   //       title: "E-commerce",

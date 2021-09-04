@@ -15,6 +15,7 @@ export class DichVuCoDinh {
   id: any;
   ten: any;
   donGia: boolean;
+  boPhan: any;
 }
 export class ThanhToanHDDV {
   id: any;

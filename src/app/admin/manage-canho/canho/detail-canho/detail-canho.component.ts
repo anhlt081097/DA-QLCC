@@ -116,7 +116,7 @@ export class DetailEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.role = this.authService.getRole();
-    if (this.role == "Admin") {
+    if (this.role == "Staff_bql") {
       this.idCanHo = this.activateRoute.snapshot.params.id;
     } else if (this.role == "User") {
       this.idCanHo = this.authService.getIdCanHo();

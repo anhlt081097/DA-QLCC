@@ -166,6 +166,7 @@ export class StatisticsSharedComponent implements OnInit {
     this.dashBoardService.getAllSinhNhat().subscribe(
       (data) => {
         this.data.data = data;
+        console.log("Sinh nhật");
         console.log(data);
       },
       (error) => {

@@ -3,7 +3,7 @@ import { AuthService } from "../shared/service/auth.service";
 
 import { Admin_ITEMS } from "./admin-menu";
 import { Employee_ITEMS } from "./employee-menu";
-
+import { Staff_ITEMS } from "./staff-menu";
 @Component({
   selector: "admin-root",
   styleUrls: ["admin.component.scss"],
@@ -20,15 +20,18 @@ export class AdminComponent {
   constructor(private authService: AuthService) {
     const getRole = this.authService.getRole();
     this.ActionMenu = this.menu;
-    if (getRole === "Admin") {
+    if (getRole === "Staff_bql") {
       this.ActionMenu = this.menu;
     } else if (getRole === "User") {
       this.ActionMenu = this.menu2;
+    } else if (getRole === "Admin") {
+      this.ActionMenu = this.menu3;
     } else {
       return;
     }
   }
 
-  menu = Admin_ITEMS;
+  menu = Staff_ITEMS;
   menu2 = Employee_ITEMS;
+  menu3 = Admin_ITEMS;
 }

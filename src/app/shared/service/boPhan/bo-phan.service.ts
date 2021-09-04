@@ -14,6 +14,9 @@ export class BoPhanService {
   getBoPhanById(id: any): Observable<any> {
     return this.http.get<any>(baseUrl + id);
   }
+  getLoaiSuaCHuaByBoPhanById(id: any): Observable<any> {
+    return this.http.get<any>(baseUrl + id + "/loai-sua-chua");
+  }
   getAllNhanVienByIdBoPhan(id: any): Observable<any> {
     return this.http.get<any>(baseUrl + `${id}/nhan-vien`);
   }

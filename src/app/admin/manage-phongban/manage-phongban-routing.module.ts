@@ -6,6 +6,7 @@ import { PhongBanComponent } from "./phongBan/phongban.component";
 import { EmployeeGuard } from "../../shared/guard/employee.guard";
 import { NhanVienComponent } from "./nhan-vien/nhan-vien.component";
 import { NhanVienProfileComponent } from "./nhan-vien-profile/nhan-vien-profile.component";
+import { ListTaikhoanComponent } from "./list-taikhoan/list-taikhoan.component";
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: "phongBan",
         component: PhongBanComponent,
+      },
+      {
+        path: "taiKhoan",
+        component: ListTaikhoanComponent,
       },
       {
         path: "detail/:id",

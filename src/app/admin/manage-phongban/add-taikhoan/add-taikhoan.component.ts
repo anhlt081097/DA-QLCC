@@ -2,22 +2,23 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { throwError } from "rxjs";
-import { TaiKhoan } from "../../../../shared/model/taikhoan/taikhoan";
-import { AuthService } from "../../../../shared/service/auth.service";
-import { ToastService } from "../../../../shared/service/toast.service";
+import { TaiKhoan } from "../../../shared/model/taikhoan/taikhoan";
+import { AuthService } from "../../../shared/service/auth.service";
+import { BoPhanService } from "../../../shared/service/boPhan/bo-phan.service";
+import { ToastService } from "../../../shared/service/toast.service";
 
 @Component({
-  selector: "ngx-add-taikhoan-canho",
-  templateUrl: "./add-taikhoan-canho.component.html",
-  styleUrls: ["./add-taikhoan-canho.component.scss"],
+  selector: "ngx-add-taikhoan",
+  templateUrl: "./add-taikhoan.component.html",
+  styleUrls: ["./add-taikhoan.component.scss"],
 })
-export class AddTaikhoanCanhoComponent implements OnInit {
+export class AddTaikhoanComponent implements OnInit {
   taiKhoan: any;
   taiKhoanForm: FormGroup;
   isError: boolean;
   constructor(
     private toastrService: ToastService,
-    private dialogRef: MatDialogRef<AddTaikhoanCanhoComponent>,
+    private dialogRef: MatDialogRef<AddTaikhoanComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private authService: AuthService
   ) {}
@@ -32,7 +33,6 @@ export class AddTaikhoanCanhoComponent implements OnInit {
       created: undefined,
       role: undefined,
       image: undefined,
-      idCanHo: undefined,
     };
     this.taiKhoanForm = new FormGroup(
       {
@@ -53,35 +53,35 @@ export class AddTaikhoanCanhoComponent implements OnInit {
     }
     return null;
   }
-  getImage(url: string) {
-    this.taiKhoanForm.get("image").setValue(url);
-  }
   createTaiKhoan() {
     if (this.taiKhoanForm.invalid) {
       return;
     }
-    this.taiKhoan.idCanHo = this.data;
+    //https://firebasestorage.googleapis.com/v0/b/angular-56426.appspot.com/o/test%2F1629284253249_71287.jpg?alt=media&token=f0133c71-a906-41a9-9fd9-452deaa356dd
+    this.taiKhoan.image = this.taiKhoanForm.get("image").value;
     this.taiKhoan.email = this.taiKhoanForm.get("email").value;
     this.taiKhoan.username = this.taiKhoanForm.get("username").value;
     this.taiKhoan.password = this.taiKhoanForm.get("password").value;
     this.taiKhoan.enabled = false;
-    this.taiKhoan.role = "User";
-    this.taiKhoan.image = this.taiKhoanForm.get("image").value;
+    this.taiKhoan.role = "Staff_bql";
     console.log(this.taiKhoan);
-    this.authService.createTaiKhoanCanHo(this.taiKhoan).subscribe(
+    this.authService.createTaiKhoan(this.taiKhoan).subscribe(
       (data) => {
-        this.isError = false;
         this.dialogRef.close(true);
         this.toastrService.showToast(
           "success",
           "Thành công",
           "Thêm thành công"
         );
+        this.isError = false;
       },
       (error) => {
         throwError(error);
         this.isError = true;
       }
     );
+  }
+  getImage(url: string) {
+    this.taiKhoanForm.get("image").setValue(url);
   }
 }

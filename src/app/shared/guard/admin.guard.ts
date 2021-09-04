@@ -28,10 +28,12 @@ export class AdminGuard implements CanActivate {
 
     if (isAuthenticated && getRole === "Admin") {
       return true;
+    } else if (isAuthenticated && getRole === "Staff_bql") {
+      return true;
     } else if (isAuthenticated && getRole === "User") {
-      this.router.navigateByUrl("/admin/manage-house");
+      this.router.navigateByUrl("/admin");
     } else {
-      this.router.navigateByUrl("/user");
+      this.router.navigateByUrl("/login");
     }
   }
 }
