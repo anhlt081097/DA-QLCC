@@ -65,7 +65,7 @@ export class HoaDonListComponent implements OnInit {
   hoaDonDichVu = new MatTableDataSource();
   hoaDonSuaChua = new MatTableDataSource();
   columnsToDisplay = ["stt", "tenDichVu", "donGia", "id"];
-  columnsToDisplayDichVu = ["stt", "ngayTao", "trangThai", "id"];
+  columnsToDisplayDichVu = ["stt", "ngayTao", "trangThai", "canHo", "id"];
   columnsToDisplaySuaChua = [
     "stt",
     "ngayTao",
@@ -90,6 +90,7 @@ export class HoaDonListComponent implements OnInit {
   private getAllHoaDonDichVu() {
     this.dichVuService.getAllDichVu().subscribe(
       (data) => {
+        console.log(data);
         this.hoaDonDichVu.data = data;
       },
       (error) => {

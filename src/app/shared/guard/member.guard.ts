@@ -26,7 +26,7 @@ export class MemberGuard implements CanActivate {
     const isAuthenticated = this.authService.isLoggedIn();
     const getRole = this.authService.getRole();
 
-    if (isAuthenticated && getRole === "Admin") {
+    if (isAuthenticated && getRole === "Staff_bql") {
       this.router.navigateByUrl("/admin");
     } else if (isAuthenticated && getRole === "User") {
       this.router.navigateByUrl("/admin");

@@ -31,6 +31,16 @@
     style="color: rgb(211, 102, 102);">
     Bạn nhập sai định dạng email
   </span>
+  <div class="form-input">
+    <p>
+      <ngx-uploader type="Kéo thả ảnh mới" height="190px" width="205px " hiddenImage="true" hiddenForm="false"
+        (linkFile)="getImage($event)"></ngx-uploader>
+    </p>
+    <p>
+      <img [src]="this.taiKhoanForm.get('image').value"
+        style="padding-top: 8px; border-radius: 8%; height: 197px; width: 205px">
+    </p>
+  </div>
 
   <p class="login-failed-text" *ngIf='this.isError' style="color: rgb(211, 102, 102);">Tạo tài khoản không thành công
   </p>

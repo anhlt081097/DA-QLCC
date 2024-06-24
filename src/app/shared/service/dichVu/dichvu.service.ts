@@ -48,6 +48,9 @@ export class DichvuService {
   getAllLoaiSuaChua(): Observable<DichVu[]> {
     return this.http.get<DichVu[]>(dichVuKhacUrl);
   }
+  getAllLoaiSuaChuaByBoPhan(boPhan: any): Observable<DichVu[]> {
+    return this.http.get<DichVu[]>("/api/bo-phan/" + boPhan + "/loai-sua-chua");
+  }
   updateDvCoDinh(dichVuCoDinh: DichVuCoDinh): Observable<any> {
     return this.http.put(dichVuUrl + `/${dichVuCoDinh.id}`, dichVuCoDinh);
   }

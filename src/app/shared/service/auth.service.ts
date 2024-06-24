@@ -75,7 +75,16 @@ export class AuthService {
       responseType: "text",
     });
   }
-
+  createTaiKhoan(registerRequest: any): Observable<any> {
+    return this.http.post("/api/auth/register", registerRequest, {
+      responseType: "text",
+    });
+  }
+  createTaiKhoanCanHo(registerRequest: any): Observable<any> {
+    return this.http.post("/api/auth/register2", registerRequest, {
+      responseType: "text",
+    });
+  }
   confirmEmail(token: string): Observable<any> {
     return this.http.get("/api/auth/accountVerification/" + token, {
       responseType: "text",

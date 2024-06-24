@@ -8,33 +8,36 @@
     </div>
     <div class="hedaer-text">
       <p>CÔNG TY TNHH TMDV PICKONE</p>
-      <p>BAN QUẢN LÍ CHUNG CƯ GREEN PARK TOWER</p>
-      <p>SĐT: Sảnh A: 0123456789 Sảnh B: 0987654321</p>
-      <p>Gmail: bqlccgreenpark@gmail.com</p>
+      <p>BAN QUẢN LÍ CHUNG CƯ ABC</p>
+      <p>SĐT: 113</p>
+      <p>Gmail: banquanly.chungcuabc@gmail.com</p>
     </div>
   </div>
   <div class="body-content">
     <hr>
     <div class="titleBody">
-      <p>Thông báo thu phí tháng {{this.data.month}}</p>
+      <p *ngIf="this.type == 'HDDV'">Thông báo thu phí dịch vụ cố định tháng {{this.data.month}} -Hoá đơn số:
+        {{this.chiTietDichVu[0].hoaDonDichVu.id}}</p>
+      <p *ngIf="this.type == 'HDSC'">Thông báo thu phí sửa chữa tháng {{this.data.month}} - Hoá đơn số:
+        {{this.chiTietDichVu[0].hoaDonSuaChua.id}}</p>
     </div>
-    <div class="numberTB" *ngIf="this.type == 'HDDV'">
-      <p>Số: {{this.chiTietDichVu[0].hoaDonDichVu.id}}</p>
+    <!-- <div class="numberTB" *ngIf="this.type == 'HDDV'">
+      <p>Hoá đơn số: {{this.chiTietDichVu[0].hoaDonDichVu.id}}</p>
     </div>
     <div class="numberTB" *ngIf="this.type == 'HDSC'">
-      <p>Số: {{this.chiTietDichVu[0].hoaDonSuaChua.id}}</p>
-    </div>
+      <p>Hoá đơn số: {{this.chiTietDichVu[0].hoaDonSuaChua.id}}</p>
+    </div> -->
   </div>
   <div class="body-content2">
     <div class="nameLeft">
       <p>Tên khách hàng: {{this.canHo.chuCanHo.hoTen}}</p>
       <p>Mã căn hộ: {{this.canHo.tenCanHo}}</p>
     </div>
-    <div class="nameRight">
+    <!-- <div class="nameRight">
       <p>Ngày: 21/07/2021</p>
       <h5>Chung cư Green Park</h5>
       <p>234</p>
-    </div>
+    </div> -->
   </div>
   <div class="content1">
     <div class="title-content1">
@@ -283,10 +286,11 @@
       <p>Xin vui lòng thanh toán số tiền trên cho BQL tại quầy lễ tân hoặc chuyển vào tài khoản công ty.</p>
       <p>Tên người nhận/At: CÔNG TY TNHH TM DV PJK ONE</p>
       <p>Số tài khoản / Account No: 1231232121 - Ngân hàng Vietinbank - Chi nhánh 6</p>
-      <h4>Vui lòng ghi đầy đủ khi nộp tiền qua TK với nội dụng: Mã căn: ... tháp ... nộp phí QL tháng ... + Phí ...</h4>
+      <h4>Vui lòng ghi đầy đủ khi nộp tiền qua TK với nội dụng: Mã căn: {{this.canHo.tenCanHo}} nộp phí
+        {{this.type == 'HDDV' ? "Dịch vụ":"Sửa chữa"}}</h4>
       <h4>Ghi chú:</h4>
       <p style="font-style: italic;">* Nếu có thắc mắc hoặc sai sót trong số liệu công thu phí kính mong quý cư dân
-        thông cảm và vui lòng liên hệ BQL tại quầy lễ tân hoặc liên hệ qua SĐT: Sảnh A: 0123456789 - Sảnh B: 0987654321
+        thông cảm và vui lòng liên hệ BQL tại quầy lễ tân hoặc liên hệ qua SĐT: 113
         để được giải đáp và khắc phục</p>
     </div>
   </div>

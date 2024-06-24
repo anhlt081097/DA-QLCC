@@ -66,6 +66,25 @@
   <div class="full-name-inputs">
     <p>
       <mat-form-field appearance="standard">
+        <mat-label>Bộ phận</mat-label>
+        <mat-select [formControlName]="'boPhan'">
+          <mat-option *ngFor="let dv of boPhan" [value]="dv">
+            {{dv.ten}}
+          </mat-option>
+        </mat-select>
+        <mat-icon [ngClass]="{'red-icon': !dichVuForm.get('boPhan').valid && dichVuForm.get('boPhan').touched}"
+          matSuffix>
+          description</mat-icon>
+        <mat-hint *ngIf="!dichVuForm.get('boPhan').valid && dichVuForm.get('boPhan').touched"
+          style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+
+  <div class="full-name-inputs">
+
+    <p>
+      <mat-form-field appearance="standard">
         <mat-label>Tên dịch vụ</mat-label>
         <input matInput placeholder="Vui lòng nhập tên dịch vụ" [formControlName]="'tenDichVu'" required>
         <mat-icon [ngClass]="{'red-icon': !dichVuForm.get('tenDichVu').valid && dichVuForm.get('tenDichVu').touched}"

@@ -18,7 +18,7 @@
   </p>
   <p>
     <mat-form-field appearance="standard">
-      <mat-label>Phòng ban</mat-label>
+      <mat-label>Bộ phận</mat-label>
       <mat-select [formControlName]="'boPhan'">
         <mat-option *ngFor="let dv of boPhan" [value]="dv" (click)="getAllNhanVien(dv.id)">
           {{dv.ten}}
@@ -48,14 +48,64 @@
         style="color: rgb(211, 102, 102);">Error is blank</mat-hint>
     </mat-form-field>
   </p>
-
-  <mat-dialog-actions align="end">
-    <button mat-flat-button mat-dialog-close>Thoát</button>
-    <button *ngIf="idType" [disabled]="(!hoaDonSuaChuaForm.valid)" mat-flat-button color="primary">Sửa</button>
-    <button *ngIf="!idType" [disabled]="(!hoaDonSuaChuaForm.valid)" mat-flat-button color="primary">Thêm</button>
-  </mat-dialog-actions>
 </form>
-<form *ngIf="this.type =='HDSCCT'" (ngSubmit)="submitAction()" [formGroup]="hoaDonSuaChuaChiTietForm">
+<p>
+  <mat-form-field appearance="standard" *ngIf="this.type == 'HDSCCT'">
+    <mat-label>Bộ phận</mat-label>
+    <mat-select name="boPhan" [(ngModel)]="boPhan2">
+      <mat-option *ngFor="let dv of boPhan" [value]="dv" (click)="getAllNhanVien(dv.id)">
+        {{dv.ten}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</p>
+<a href="javascript:void(0);" (click)="addNewCriteria()"><i class="fas fa-plus-circle"></i> Thêm sửa
+  chữa</a>
+<div class="row form-group">
+  <table class="table table-hover table-center">
+    <thead>
+      <tr>
+        <th style="min-width: 200px">Loại sửa chữa</th>
+        <th style="min-width: 80px;">Số lượng</th>
+        <th style="min-width: 80px">Mô tả</th>
+        <th style="min-width: 80px;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hdscct of listHoaDonSuaChuaCT; let i = index">
+        <td>
+          <mat-select name="loaiSuaChua" [(ngModel)]="hdscct.loaiSuaChua">
+            <mat-option *ngFor="let dv of dichVuKhac" [value]="dv">
+              {{dv.ten}} - {{dv.donGia | currency:'VND'}}
+            </mat-option>
+          </mat-select>
+        </td>
+        <td>
+          <input matInput placeholder="Vui lòng số lượng" name="soLuong" [(ngModel)]="hdscct.soLuong" required>
+        </td>
+        <td>
+          <textarea matInput placeholder="Vui lòng nhập mô tả" name="moTa" [(ngModel)]="hdscct.moTa"
+            required></textarea>
+        </td>
+        <td>
+          <a class="btn bg-danger-light trash" (click)="deleteNewCriteria(i)"><i class="far fa-trash-alt"></i></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<mat-dialog-actions align="end">
+  <button *ngIf="this.type =='HDSC'" mat-flat-button mat-dialog-close>Thoát</button>
+  <!-- <button *ngIf="idType" [disabled]="(!hoaDonSuaChuaForm.valid)" mat-flat-button color="primary">Sửa</button> -->
+  <button *ngIf="this.type =='HDSC'" [disabled]="(!hoaDonSuaChuaForm.valid)" (click)="submitAction()" mat-flat-button
+    color="primary">Thêm</button>
+</mat-dialog-actions>
+<mat-dialog-actions align="end">
+  <button *ngIf="this.type =='HDSCCT'" mat-flat-button mat-dialog-close>Thoát</button>
+  <button *ngIf="this.type =='HDSCCT'" (click)="submitAction()" mat-flat-button color="primary">Thêm</button>
+</mat-dialog-actions>
+<!-- <form *ngIf="this.type =='HDSCCT'" (ngSubmit)="submitAction()" [formGroup]="hoaDonSuaChuaChiTietForm">
   <p>
     <mat-form-field appearance="standard">
       <mat-label>Loại sửa chữa</mat-label>
@@ -102,4 +152,4 @@
     <button *ngIf="idType" [disabled]="(!hoaDonSuaChuaChiTietForm.valid)" mat-flat-button color="primary">Sửa</button>
     <button *ngIf="!idType" [disabled]="(!hoaDonSuaChuaChiTietForm.valid)" mat-flat-button color="primary">Thêm</button>
   </mat-dialog-actions>
-</form>
+</form> -->

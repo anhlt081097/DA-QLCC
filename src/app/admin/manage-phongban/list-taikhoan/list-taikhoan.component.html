@@ -1,0 +1,113 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <mat-icon type="button" aria-hidden="false" routerLink="/admin/" aria-label="Example home icon">home</mat-icon>
+    <li class="breadcrumb-item"><a routerLink="/admin/">Trang chủ</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Quản lý tài khoản</li>
+  </ol>
+</nav>
+<nb-card>
+  <nb-card-header>
+    Danh sách tài khoản
+  </nb-card-header>
+  <nb-card-body>
+    <div style="display: flex">
+      <button mat-flat-button (click)="openAdd()" color="primary">Thêm tài khoản</button>
+
+    </div>
+    <mat-form-field>
+      <mat-label>Tìm kiếm</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Nhập mục cần tìm..." #input>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Loại tài khoản</mat-label>
+      <mat-select [formControlName]="'gioiTinh'">
+        <mat-option (click)="getAllUSer('Staff_bql')">Nhân viên</mat-option>
+        <mat-option (click)="getAllUSer('User')">Khách hàng</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Mã bộ phận</th>
+          <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)" [nbPopover]="card"> {{row.id}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <!-- <button (click)="openEdit(row)" mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span>Chỉnh sửa</span>
+              </button> -->
+              <button (click)="deleteBoPhan(row)" mat-menu-item>
+                <mat-icon>delete</mat-icon>
+                <span>Xoá</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="image">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+          <td mat-cell *matCellDef="let element"> <img src="{{element.image}}" style="width:50px;height:50px;">
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Username</th>
+          <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)" [nbPopover]="card">
+            {{row.username}} </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email</th>
+          <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)" [nbPopover]="card">
+            {{row.email}} </td>
+        </ng-container>
+        <ng-container matColumnDef="enabled">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Kích hoạt/Chưa kích hoạt</th>
+          <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)" [nbPopover]="card"
+            [ngStyle]="{'color': row.enabled == false ? 'red':''}">
+            {{row.enabled ? "Đã kích hoạt": "Chưa kích hoạt"}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tình trạng</th>
+          <td mat-cell *matCellDef="let row" (click)="loadOrder(row.id)"
+            [ngStyle]="{'color': row.status == false ? 'red':''}" [nbPopover]="card">
+            {{row.status ? "Đang hoạt động": "Dừng hoạt động"}} </td>
+        </ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">Không có dữ liệu: "{{input.value}}"</td>
+        </tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </nb-card-body>
+</nb-card>
+<ng-template #card>
+  <nb-card class="popover-card">
+    <nb-card-header status="warning">
+      Nhân viên không có cơ sở
+    </nb-card-header>
+    <nb-card-body>
+      <div *ngIf="check.length == 0">Không có dữ liệu</div>
+      <div *ngIf="check.length > 0">
+        <p *ngFor="let checks of check">
+          <b style="color: black">Tài khoản:</b> {{checks.userName}} <button mat-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </p>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</ng-template>

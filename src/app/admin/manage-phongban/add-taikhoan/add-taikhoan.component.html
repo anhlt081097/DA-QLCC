@@ -1,0 +1,51 @@
+<h4 mat-dialog-title>THÊM TÀI KHOẢN</h4>
+<form [formGroup]="taiKhoanForm" (ngSubmit)="createTaiKhoan()">
+  <div class="form-input">
+    <span class="fa fa-user" aria-hidden="true"></span> <input type="text" [formControlName]="'username'" name="text"
+      placeholder="Tài Khoản" required autofocus />
+  </div>
+  <span *ngIf="!taiKhoanForm.get('username').valid && taiKhoanForm.get('username').touched"
+    style="color: rgb(211, 102, 102);">
+    Bạn không được để trống tên tài khoản
+  </span>
+  <div class="form-input">
+    <span class="fa fa-key" aria-hidden="true"></span> <input type="password" [formControlName]="'password'"
+      name="password" placeholder="Mật Khẩu" required />
+  </div>
+  <span *ngIf="!taiKhoanForm.get('password').valid && taiKhoanForm.get('password').touched"
+    style="color: rgb(211, 102, 102);">
+    Bạn không được để trống mật khẩu
+  </span>
+  <div class="form-input">
+    <span class="fa fa-key" aria-hidden="true"></span> <input type="password" [formControlName]="'confirmPassword'"
+      name="confirmPassword" placeholder="Nhập lại mật Khẩu" required />
+  </div>
+  <span *ngIf="taiKhoanForm.hasError('mismatch')" style="color: rgb(211, 102, 102);">
+    Mật khẩu nhập lại không trùng
+  </span>
+  <div class="form-input">
+    <span class="fa fa-envelope" aria-hidden="true"></span> <input type="email" [formControlName]="'email'" name="email"
+      placeholder="Email" required />
+  </div>
+  <span *ngIf="!taiKhoanForm.get('email').valid && taiKhoanForm.get('email').touched"
+    style="color: rgb(211, 102, 102);">
+    Bạn nhập sai định dạng email
+  </span>
+  <div class="form-input">
+    <p>
+      <ngx-uploader type="Kéo thả ảnh mới" height="190px" width="205px " hiddenImage="true" hiddenForm="false"
+        (linkFile)="getImage($event)"></ngx-uploader>
+    </p>
+    <p>
+      <img [src]="this.taiKhoanForm.get('image').value"
+        style="padding-top: 8px; border-radius: 8%; height: 197px; width: 205px">
+    </p>
+  </div>
+
+  <p class="login-failed-text" *ngIf='this.isError' style="color: rgb(211, 102, 102);">Tạo tài khoản không thành công
+  </p>
+  <div class="forgot">
+    <button [disabled]="(!taiKhoanForm.valid)" class="btn theme-button" style="margin-top: 5%; margin-left: 68%;"><a
+        style="display: block; padding: 0; margin: -2px;"></a>Đăng Ký</button>
+  </div>
+</form>

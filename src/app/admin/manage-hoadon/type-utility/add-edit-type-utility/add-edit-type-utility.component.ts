@@ -8,7 +8,13 @@ import { ToastService } from "../../../../shared/service/toast.service";
 import { DichvuService } from "../../../../shared/service/dichVu/dichvu.service";
 import { BoPhanService } from "../../../../shared/service/boPhan/bo-phan.service";
 import { CanhoService } from "../../../../shared/service/canHo/canho.service";
-
+export class hoaDonSuaChuaCT {
+  donGia: any;
+  soLuong: any;
+  moTa: any;
+  loaiSuaChua: any;
+  hoaDonSuaChua: any;
+}
 @Component({
   selector: "ngx-add-edit-type-utility",
   templateUrl: "./add-edit-type-utility.component.html",
@@ -16,15 +22,20 @@ import { CanhoService } from "../../../../shared/service/canHo/canho.service";
 })
 export class AddEditTypeUtilityComponent implements OnInit {
   hoaDonSuaChuaChiTietForm: FormGroup;
+  hoaDonSuaChuaChiTietForm2: FormGroup;
   hoaDonSuaChuaForm: FormGroup;
   hoaDonSuaChua: any;
   hoaDonSuaChuaCT: any;
+  hoaDonSuaChuaCT2: hoaDonSuaChuaCT = new hoaDonSuaChuaCT();
+  listHoaDonSuaChuaCT: hoaDonSuaChuaCT[] = [];
   idType: number;
   dichVuKhac: any;
   boPhan: any;
   nhanVien: any;
   canHo: any;
   type: string;
+  idBoPhan: any;
+  boPhan2: any;
   constructor(
     private toastrService: ToastService,
     private dialogRef: MatDialogRef<AddEditTypeUtilityComponent>,
@@ -37,9 +48,10 @@ export class AddEditTypeUtilityComponent implements OnInit {
 
   ngOnInit(): void {
     this.type = this.data.type;
-    this.getAllDichVuKhac();
+
     this.getAllBoPhan();
     this.getAllCanHo();
+    this.listHoaDonSuaChuaCT.push(new hoaDonSuaChuaCT());
     this.hoaDonSuaChua = {
       trangThai: null,
       canHo: null,
@@ -55,7 +67,7 @@ export class AddEditTypeUtilityComponent implements OnInit {
       donGia: null,
       soLuong: null,
       moTa: null,
-      loaiSuaChua: null,
+      LoaiSuaChua: null,
       hoaDonSuaChua: null,
     };
     this.hoaDonSuaChuaChiTietForm = new FormGroup({
@@ -64,6 +76,12 @@ export class AddEditTypeUtilityComponent implements OnInit {
       soLuong: new FormControl(null, Validators.required),
       moTa: new FormControl(null, Validators.required),
     });
+  }
+  addNewCriteria() {
+    this.listHoaDonSuaChuaCT.push(new hoaDonSuaChuaCT());
+  }
+  deleteNewCriteria(value) {
+    this.listHoaDonSuaChuaCT.splice(value, 1);
   }
   private getAllCanHo() {
     this.canHoService.getAllCanHo().subscribe(
@@ -97,6 +115,18 @@ export class AddEditTypeUtilityComponent implements OnInit {
         throwError(error);
       }
     );
+    this.getAllDichVuKhacByIdBoPhan(id);
+  }
+  getAllDichVuKhacByIdBoPhan(id: any) {
+    this.boPhanService.getLoaiSuaCHuaByBoPhanById(id).subscribe(
+      (data) => {
+        this.dichVuKhac = data;
+        console.log(this.dichVuKhac);
+      },
+      (error) => {
+        throwError(error);
+      }
+    );
   }
   private getAllDichVuKhac() {
     this.dichVuService.getAllLoaiSuaChua().subscribe(
@@ -124,16 +154,23 @@ export class AddEditTypeUtilityComponent implements OnInit {
     if (this.type == "HDSC") {
       this.createHDSC();
     } else if (this.type == "HDSCCT") {
-      this.createHDSCCT();
+      // this.createHDSCCT();
+      this.listHoaDonSuaChuaCT.forEach((element) => {
+        console.log(element);
+        this.createHDSCCT2(element, this.data.hoaDon);
+      });
     }
   }
   createHDSC() {
     this.hoaDonSuaChua.nhanVien = this.hoaDonSuaChuaForm.get("nhanVien").value;
     (this.hoaDonSuaChua.trangThai = false),
       (this.hoaDonSuaChua.canHo = this.hoaDonSuaChuaForm.get("canHo").value);
-    console.log(this.hoaDonSuaChua);
     this.dichVuService.createHDSC(this.hoaDonSuaChua).subscribe(
       (data) => {
+        this.listHoaDonSuaChuaCT.forEach((element) => {
+          console.log(element);
+          this.createHDSCCT2(element, data);
+        });
         this.dialogRef.close(true);
         this.toastrService.showToast(
           "success",
@@ -144,6 +181,33 @@ export class AddEditTypeUtilityComponent implements OnInit {
       (error) => {
         throwError(error);
         this.toastrService.showToast("danger", "Thất bại", "Thêm thất bại");
+      }
+    );
+  }
+  createHDSCCT2(value: any, hoaDon: any) {
+    console.log(value);
+    this.hoaDonSuaChuaCT2.donGia = value.loaiSuaChua.donGia;
+    this.hoaDonSuaChuaCT2.soLuong = value.soLuong;
+    this.hoaDonSuaChuaCT2.moTa = value.moTa;
+    this.hoaDonSuaChuaCT2.loaiSuaChua = value.loaiSuaChua;
+    this.hoaDonSuaChuaCT2.hoaDonSuaChua = hoaDon;
+    console.log(this.hoaDonSuaChuaCT2);
+    this.dichVuService.createHDSCCT(this.hoaDonSuaChuaCT2).subscribe(
+      (data) => {
+        this.dialogRef.close(true);
+        this.toastrService.showToast(
+          "success",
+          "Thành công",
+          "Thêm chi tiết thành công"
+        );
+      },
+      (error) => {
+        throwError(error);
+        this.toastrService.showToast(
+          "danger",
+          "Thất bại",
+          "Thêm chi tiết thất bại"
+        );
       }
     );
   }

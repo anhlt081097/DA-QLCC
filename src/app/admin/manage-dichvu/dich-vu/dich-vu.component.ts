@@ -34,6 +34,7 @@ import { AddEditHomeStayComponent } from "../home-stay/add-edit-home-stay/add-ed
 import { AddDichVuCoDinhComponent } from "./add-dich-vu-co-dinh/add-dich-vu-co-dinh.component";
 import { DichvuService } from "../../../shared/service/dichVu/dichvu.service";
 import { DichVuCoDinh } from "../../../shared/model/dichVu/dichvu";
+import { BoPhanService } from "../../../shared/service/boPhan/bo-phan.service";
 @Component({
   selector: "ngx-dich-vu",
   templateUrl: "./dich-vu.component.html",
@@ -57,6 +58,7 @@ export class DichVuComponent implements OnInit {
   dichVuCoDinh = new MatTableDataSource();
   dichVuKhac = new MatTableDataSource();
   columnsToDisplay = ["stt", "tenDichVu", "donGia", "id"];
+  columnsToDisplayDvk = ["stt", "boPhan", "tenDichVu", "donGia", "id"];
   expandedElement: DichVuCoDinh | null;
   check: EmployeeResponse[] = [];
   selectPlace: number;
@@ -68,7 +70,8 @@ export class DichVuComponent implements OnInit {
   citys: CityResponse[];
   districts: DistrictResponse[];
   places: PlaceResponse[];
-
+  boPhan: any;
+  boPhanList: any;
   settingsTable = {
     actions: {
       columnTitle: "",
@@ -167,7 +170,8 @@ export class DichVuComponent implements OnInit {
     private addressService: AddressService,
     private toastrService: ToastService,
     private placeService: PlaceService,
-    private dichVuService: DichvuService
+    private dichVuService: DichvuService,
+    private boPhanService: BoPhanService
   ) {}
 
   ngOnInit(): void {
@@ -195,7 +199,8 @@ export class DichVuComponent implements OnInit {
       },
     ];
     this.getAllDichVuCoDinh();
-    this.getAllDichVuKhac();
+    this.getAllBoPhan();
+    this.getAllDichVuKhacByBoPhan(1);
   }
   private getAllDichVuCoDinh() {
     this.dichVuService.getAllDichVuCoDinh().subscribe(
@@ -208,8 +213,18 @@ export class DichVuComponent implements OnInit {
       }
     );
   }
-  private getAllDichVuKhac() {
-    this.dichVuService.getAllLoaiSuaChua().subscribe(
+  private getAllBoPhan() {
+    this.boPhanService.getAllBoPhan().subscribe(
+      (data) => {
+        this.boPhanList = data;
+      },
+      (error) => {
+        throwError(error);
+      }
+    );
+  }
+  getAllDichVuKhacByBoPhan(boPhan: any) {
+    this.dichVuService.getAllLoaiSuaChuaByBoPhan(boPhan).subscribe(
       (data) => {
         this.dichVuKhac.data = data;
         console.log(this.dichVuKhac.data);
@@ -304,7 +319,7 @@ export class DichVuComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.getAllDichVuKhac();
+        this.getAllDichVuKhacByBoPhan(this.boPhan);
       }
     });
   }
@@ -330,7 +345,7 @@ export class DichVuComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.getAllDichVuKhac();
+        this.getAllDichVuKhacByBoPhan(this.boPhan);
       }
     });
   }
